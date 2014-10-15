@@ -32,7 +32,7 @@ return function(writer) {
 	
 	dialog.$el.on('beforeShow', function(e, config) {
 		iframe = dialog.$el.find('iframe')[0];
-		iframe.src = 'note.htm';
+		iframe.src = Drupal.settings.basePath + 'cwrc/editor/note.htm';
 		
 		// hack to get the writer
 		function getCwrcWriter() {

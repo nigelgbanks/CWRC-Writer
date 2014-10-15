@@ -261,6 +261,44 @@ return function(writer) {
 	}
 	
 	var entities = {
+    textimagelink: {
+      title: 'TextImageLink',
+      parentTag: {
+        tei: 'ref',
+        events: 'name'
+      },
+      mapping: {
+        tei: function(entity) {
+          var info = entity.info;
+          var id = entity.annotation.range.cwrcAnnotationId;
+          var offsetId = entity.annotation.range.cwrcOffsetId;
+
+          var xml = '<ref';
+          if (id) xml += ' annotationId="'+id+'"';
+          if (offsetId) xml += ' offsetId="'+offsetId+'"';
+          if (info.certainty) xml += ' cert="'+info.certainty+'"';
+          if (info.role) xml += ' role="'+info.role+'"';
+
+          var atts = info.attributes.persName;
+          xml += getAttributeString(atts);
+
+          xml += '>'+TEXT_SELECTION+'</ref>';
+          return xml;
+        },
+        events: function(entity) {
+          return '<NAME>'+TEXT_SELECTION+'</NAME>';
+        }
+      },
+      annotationType: 'foaf:Image',
+      annotation: function(entity, format) {
+        var data = entity.annotation;
+        data.cwrcInfo = entity.info.cwrcInfo;
+        data.cwrcAttributes = {
+          attributes: entity.info.attributes,
+        };
+        return commonAnnotation({data: data, types: 'foaf:Image'}, format);
+      }
+    },
 		person: {
 			title: 'Person',
 			parentTag: {
