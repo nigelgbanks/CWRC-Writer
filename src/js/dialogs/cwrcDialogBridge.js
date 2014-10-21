@@ -19,7 +19,7 @@ define(['jquery', 'jquery-ui'], function ($) {
         } else {
           // @todo Deal with hard coded url.
           result = {
-            id: 'http://cwrc-dev-01.srv.ualberta.ca/islandora/object/' + result.response.pid
+            id: location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + result.response.pid
           };
           writer.dialogManager.show('schema/' + localDialog, {
             cwrcInfo: result
@@ -65,7 +65,7 @@ define(['jquery', 'jquery-ui'], function ($) {
                 result.id = 'http://www.geonames.org/' + $('geonameid', writer.utilities.stringToXML(result.data)).text();
               } else {
                 // @todo Deal with hardcoded URL.
-                result.id = 'http://cwrc-dev-01.srv.ualberta.ca/islandora/object/' + result.id;
+                result.id = location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + result.id;
               }
 
               if ($.isArray(result.name)) {

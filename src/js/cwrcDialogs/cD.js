@@ -2429,7 +2429,7 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			data.gender = $(workingXML).find(genderSelector).first().text();
 
 			// url
-			data.url = "http://cwrc-dev-01.srv.ualberta.ca/islandora/object/" + data.id;
+      data.url = location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + data.id;
 
 			return search.completeHtmlifyPerson(data);
 
@@ -2440,7 +2440,7 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			var data = search.selectedData;
 			var workingXML = $.parseXML(data.data);
 			// url
-			data.url = "http://cwrc-dev-01.srv.ualberta.ca/islandora/object/" + data.id;
+			data.url = location.protocol + '//' + location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + data.id;
 			return search.completeHtmlifyOrganization(data);
 
 		}
@@ -2488,7 +2488,7 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			var dateSelector = "mods > originInfo > dateIssued";
 			data.date = $(workingXML).find(dateSelector).first().text();
 			//URL
-			data.url = "http://cwrc-dev-01.srv.ualberta.ca/islandora/object/" + data.id;
+      data.url = location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + data.id;
 
 			return search.completeHtmlifyTitle(data);
 		}
@@ -2539,7 +2539,7 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			data.long = $(workingXML).find(longSelector).first().text();
 
 
-			data.url = "http://cwrc-dev-01.srv.ualberta.ca/islandora/object/" + data.id;
+      data.url = location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + data.id;
 
 			return search.completeHtmlifyPlace(data);
 		}
@@ -2986,7 +2986,7 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.getResultFromCWRC = function(specs) {
 			// specs has data and source
 			var that = search.result();
-			that.name = specs["solr_doc"]["fgs_label_s"];
+			that.name = specs["object_label"];
 			that.id = specs["PID"];
 
 
