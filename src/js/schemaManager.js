@@ -134,8 +134,20 @@ return function(writer, config) {
 							schemaTags += '.showStructBrackets '+tagName+'[_tag='+tag+']:after { color: #aaa; font-weight: normal; font-style: normal; font-family: monospace; content: "</'+tag+'>"; }';
 						}
 					});
-					elements.sort();
+					schemaTags += '.first_page div[_tag=text]:after { content:none }';
+					schemaTags += '.first_page div[_tag=body]:after { content:none }';
+					schemaTags += 'div.first_page[_tag=TEI]:after { content:none }';
+					schemaTags += '.last_page div[_tag=text]:before { content:none }';
+					schemaTags += '.last_page div[_tag=body]:before { content:none }';
+					schemaTags += 'div.last_page[_tag=TEI]:before { content:none }';
+					schemaTags += '.middle_page div[_tag=text]:after { content:none }';
+					schemaTags += '.middle_page div[_tag=body]:after { content:none }';
+					schemaTags += 'div.middle_page[_tag=TEI]:after { content:none }';
+					schemaTags += '.middle_page div[_tag=text]:before { content:none }';
+					schemaTags += '.middle_page div[_tag=body]:before { content:none }';
+					schemaTags += 'div.middle_page[_tag=TEI]:before { content:none }';
 					
+					elements.sort();
 					// hide the header
 					var tagName = w.utilities.getTagForEditor(w.header);
 					schemaTags += tagName+'[_tag='+w.header+'] { display: none !important; }';

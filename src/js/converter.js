@@ -1024,10 +1024,19 @@ return function(writer) {
 			} else {
 				tagName = w.utilities.getTagForEditor(tag);
 			}
-			
-			editorString += '<'+tagName+' _tag="'+tag+'"';
-			
 			// create structs entries while we build the string
+			editorString += '<'+tagName+' _tag="'+tag+'"';
+
+			var fragment_identifier = location.hash.substr(1)
+			if (fragment_identifier == Drupal.settings.CWRCWriter.documents[0]) {
+				editorString += ' class="first_page"';
+			}
+			else if (fragment_identifier == Drupal.settings.CWRCWriter.documents[Drupal.settings.CWRCWriter.documents.length - 1]) {
+				editorString += ' class="last_page"';
+			}
+			else {
+				editorString += ' class="middle_page"';
+			}
 			
 			// determine the ID
 			// first check our special cwrcStructId attribute, finally generate a new one
