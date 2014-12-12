@@ -1,30 +1,25 @@
 
 
 /* General elements */
-
-body,
-.ui-widget
-{
+#cwrc_wrapper .ui-widget {
   font-family: 'Trebuchet MS', Tahoma, Arial, sans-serif;
 }
 
-a,
-a:visited,
-a:link,
-A:link
+#cwrc_wrapper a,
+#cwrc_wrapper a:visited,
+#cwrc_wrapper a:link,
+#cwrc_wrapper A:link
 {
   color: #000;
 }
 
-a:hover,
-A:hover
+#cwrc_wrapper a:hover,
+#cwrc_wrapper A:hover
 {
   color: #000;
   background: transparent;
   text-decoration: underline;
 }
-
-
 
 /* Header */
 
@@ -139,20 +134,20 @@ A:hover
   margin: 5px 10px 0px 10px;
 }
 
-.annotation-fullscreen .colmask .col1
+#cwrc_wrapper .annotation-fullscreen .colmask .col1
 {
   position: absolute;
   width: 1px;
 }
 
-.annotation-fullscreen .colmask .col3
+#cwrc_wrapper .annotation-fullscreen .colmask .col3
 {
   width: 100%;
   height: 100%;
   left: auto;
 }
 
-.annotation-fullscreen .colmask .colmid .col3 #shared_canvas_iframe
+#cwrc_wrapper .annotation-fullscreen .colmask .colmid .col3 #shared_canvas_iframe
 {
   height: 100%!important;
 }
@@ -163,7 +158,7 @@ A:hover
 
 /* Image annotation */
 
-.image-annotation-wrapper
+#cwrc_wrapper .image-annotation-wrapper
 {
   position: absolute;
   top: 30px;
@@ -172,26 +167,26 @@ A:hover
   right: 0;
 }
 
-.image-annotation-wrapper iframe,
-.image-annotation-wrapper #canvas-body-wrapper
+#cwrc_wrapper .image-annotation-wrapper iframe,
+#cwrc_wrapper .image-annotation-wrapper #canvas-body-wrapper
 {
   height: 100% !important;
   position: absolute;
 }
 
-.image-annotation-wrapper #canvas-body-wrapper
+#cwrc_wrapper .image-annotation-wrapper #canvas-body-wrapper
 {
   overflow: auto;
   
 }
 
-.image-annotation-wrapper #canvas-body
+#cwrc_wrapper .image-annotation-wrapper #canvas-body
 {
   position: relative;
   padding:0px 15px 15px 15px;
 }
 
-.image-annotation-wrapper .shared-canvas-logo
+#cwrc_wrapper .image-annotation-wrapper .shared-canvas-logo
 {
   width: 100%;
   margin-top: 15px;
@@ -355,7 +350,7 @@ A:hover
 
 /* Text annotation */
 
-.text-annotation-wrapper
+#cwrc_wrapper .text-annotation-wrapper
 {
   position: absolute;
   top: 0px;
@@ -363,12 +358,12 @@ A:hover
   width: 100%;
 }
 
-.threecol .col1 form
+#cwrc_wrapper .threecol .col1 form
 {
   
 }
 
-.text-annotation-wrapper
+#cwrc_wrapper .text-annotation-wrapper
 {
 
 }
@@ -411,7 +406,7 @@ A:hover
 
 /* Entities */
 
-.entitiesList li .box
+#cwrc_wrapper .entitiesList li .box
 {
   width: 25px;
   height: 25px;
@@ -458,12 +453,12 @@ A:hover
 
 /* Relations Tab */
 
-ul.relationsList
+#cwrc_wrapper ul.relationsList
 {
   padding-top: 5px;
 }
 
-ul.relationsList li
+#cwrc_wrapper ul.relationsList li
 {
   background: none repeat scroll 0 0 #EEEEEE;
   border-color: #DDDDDD;
@@ -542,7 +537,7 @@ ul.relationsList li:hover
   padding: 5px 10px 10px 10px;
 }
 
-.ui-dialog .ui-dialog-titlebar
+#cwrc_wrapper .ui-dialog .ui-dialog-titlebar
 {
   background: #000;
   color: #fff;
@@ -552,13 +547,13 @@ ul.relationsList li:hover
           border-radius: 5px 5px 0px 0px; /* Opera 10.5, IE9, Saf5, Chrome, FF4+, iOS 4, Android 2.1+ */
 }
 
-.dragHead
+#cwrc_wrapper .dragHead
 {
   border-bottom: 1px solid #aaa;
   text-align: left;
 }
 
-.dragBox
+#cwrc_wrapper .dragBox
 {
   border: 1px solid #666;
 }
@@ -567,18 +562,18 @@ ul.relationsList li:hover
 
 /* JQuery UI overrides */
 
-.ui-state-default,
-.ui-widget-content .ui-state-default,
-.ui-widget-header .ui-state-default
+#cwrc_wrapper .ui-state-default,
+#cwrc_wrapper .ui-widget-content .ui-state-default,
+#cwrc_wrapper .ui-widget-header .ui-state-default
 {
   background: #E6E6E6;
   background-image: none;
   border: 1px solid #bbb;
 }
 
-.ui-state-active,
-.ui-widget-content .ui-state-active,
-.ui-widget-header .ui-state-active
+#cwrc_wrapper .ui-state-active,
+#cwrc_wrapper .ui-widget-content .ui-state-active,
+#cwrc_wrapper .ui-widget-header .ui-state-active
 {
   background: #fff;
   border: 1px solid #aaa;
