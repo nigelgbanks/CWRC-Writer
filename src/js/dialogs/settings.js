@@ -1,30 +1,30 @@
 define(['jquery', 'jquery-ui'], function($, jqueryUi) {
-	
+
 return function(writer, config) {
 	var w = writer;
-	
+
 	var settings = {
 		fontSize: '11pt',
 		fontFamily: 'Book Antiqua',
 		showEntityBrackets: false,
 		showStructBrackets: false
 	};
-	
+
 	$.extend(settings, config);
-	
+
 	var defaultSettings = {
 		mode: w.mode,
 		allowOverlap: w.allowOverlap,
 		validationSchema: w.schemaManager.schemaId
 	};
 	$.extend(defaultSettings, settings);
-	
+
 	var $settingsDialog;
-	
+
 	$('#headerButtons').append(''+
 	'<div id="helpLink"><h2>Help</h2></div>'+
 	'<div id="settingsLink"><h2>Settings</h2></div>');
-	
+
 	$(document.body).append(''+
 	'<div id="settingsDialog">'+
 	'<div>'+
@@ -76,14 +76,14 @@ return function(writer, config) {
 	'<div id="helpDialog">'+
 		'<p>For help with CWRC-Writer click <a href="https://drive.google.com/a/ualberta.ca/?tab=mo#folders/0B3fHpXyQEt3bXzZiT3ppWEdMODQ" target="_blank">here</a>.</p>'+
 	'</div>');
-	
+
 	$settingsDialog = $('#settingsDialog');
-	
+
 	buildSchema();
 	$('select[name="schema"]', $settingsDialog).nextAll('button').button().click(function() {
 		w.dialogManager.show('addschema');
 	});
-	
+
 	$('#settingsLink').click(function() {
 		$('select[name="fontsize"] > option[value="'+settings.fontSize+'"]', $settingsDialog).attr('selected', true);
 		$('select[name="fonttype"] > option[value="'+settings.fontFamily+'"]', $settingsDialog).attr('selected', true);
@@ -97,19 +97,19 @@ return function(writer, config) {
 			} else {
 				$('select[name="editormode"] > option[value="xmlrdf"]', $settingsDialog).attr('selected', true);
 			}
-		}		
+		}
 		$('select[name="schema"] > option[value="'+w.schemaManager.schemaId+'"]', $settingsDialog).attr('selected', true);
 		$settingsDialog.dialog('open');
 	});
-	
+
 	$('#helpLink').click(function() {
 		$('#helpDialog').dialog('open');
 	});
-	
+
 	$settingsDialog.dialog({
 		title: 'Settings',
 		modal: true,
-		resizable: false,
+		resizable: true,
 		dialogClass: 'splitButtons',
 		closeOnEscape: true,
 		height: 350,
@@ -136,7 +136,7 @@ return function(writer, config) {
 			}
 		}]
 	});
-	
+
 	$('#helpDialog').dialog({
 		title: 'Help',
 		modal: true,
@@ -151,7 +151,7 @@ return function(writer, config) {
 			}
 		}
 	});
-	
+
 	function buildSchema() {
 		var schemasHTML;
 		for(var schema in w.schemaManager.schemas){
@@ -161,7 +161,7 @@ return function(writer, config) {
 			$('select[name="schema"]', $settingsDialog).html(schemasHTML);
 		}
 	}
-	
+
 	function applySettings() {
 		var editorMode = $('select[name="editormode"]', $settingsDialog).val();
 		var doModeChange = false;
@@ -178,7 +178,7 @@ return function(writer, config) {
 				doModeChange = true;
 			}
 		}
-		
+
 		if (doModeChange) {
 			if (w.allowOverlap && editorMode !== 'xmlrdfoverlap') {
 				var overlaps = _doEntitiesOverlap();
@@ -206,45 +206,45 @@ return function(writer, config) {
 				}
 			}
 		}
-		
+
 		settings.fontSize = $('select[name="fontsize"]', $settingsDialog).val();
 		settings.fontFamily = $('select[name="fonttype"]', $settingsDialog).val();
-		
+
 		if (settings.showEntityBrackets != $('#showentitybrackets').prop('checked')) {
 			w.editor.$('body').toggleClass('showEntityBrackets');
 		}
 		settings.showEntityBrackets = $('#showentitybrackets').prop('checked');
-		
+
 		if (settings.showStructBrackets != $('#showstructbrackets').prop('checked')) {
 			w.editor.$('body').toggleClass('showStructBrackets');
 		}
 		settings.showStructBrackets = $('#showstructbrackets').prop('checked');
-		
+
 		// TODO add handling for schemaChanged
 		w.schemaManager.schemaId = $('select[name="schema"]', $settingsDialog).val();
 		w.event('schemaChanged').publish(w.schemaManager.schemaId);
-		
+
 		var styles = {
 			fontSize: settings.fontSize,
 			fontFamily: settings.fontFamily
 		};
 		w.editor.dom.setStyles(w.editor.dom.getRoot(), styles);
 	};
-	
+
 	function setDefaults() {
 		$('select[name="fontsize"]', $settingsDialog).val(defaultSettings.fontSize);
 		$('select[name="fonttype"]', $settingsDialog).val(defaultSettings.fontFamily);
 		$('#showentitybrackets').prop('checked', defaultSettings.showEntityBrackets);
 		$('#showstructbrackets').prop('checked', defaultSettings.showStructBrackets);
-		
+
 		$('select[name="editormode"]', $settingsDialog).val(defaultSettings.mode);
 		$('select[name="schema"]', $settingsDialog).val(defaultSettings.validationSchema);
 	};
-	
+
 	function _doEntitiesOverlap() {
 		// remove highlights
 		w.highlightEntity();
-		
+
 		for (var id in w.entities) {
 			var markers = w.editor.dom.select('[name="' + id + '"]');
 			var start = markers[0];
@@ -262,9 +262,9 @@ return function(writer, config) {
 		}
 		return false;
 	};
-	
+
 	w.event('schemaAdded').subscribe(buildSchema);
-	
+
 	return {
 		getSettings: function() {
 			return settings;
