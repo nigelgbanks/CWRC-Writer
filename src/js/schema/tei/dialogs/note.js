@@ -1,3 +1,5 @@
+/*jshint browser: true*/
+/*global define*/
 define(['jquery', 'jquery-ui', 'tinymce', 'dialogForm'], function($, jqueryUi, tinymce, DialogForm) {
     
 return function(id, writer) {

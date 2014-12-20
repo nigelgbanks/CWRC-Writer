@@ -1,3 +1,4 @@
+
 define(['jquery', 'jquery-ui', 'dialogs/cwrcDialogBridge'], function($, jqueryUi, cwrcDialogBridge) {
     
 return function(writer) {

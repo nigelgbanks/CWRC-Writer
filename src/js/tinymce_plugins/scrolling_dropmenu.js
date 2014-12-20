@@ -1,21 +1,28 @@
+/*jshint browser: true*/
+/*global tinymce, tinyMCE, require*/
 (function(tinymce) {
-    var DOM = tinymce.DOM, Event = tinymce.dom.Event;
-    var $ = require('jquery');
+    'use strict';
+    var DOM = tinymce.DOM,
+        Event = tinymce.dom.Event,
+        $ = require('jquery');
     tinymce.create('tinymce.ui.ScrollingMenuButton:tinymce.ui.MenuButton', {
-        ScrollingMenuButton : function(id, s, ed) {
+        ScrollingMenuButton: function(id, s, ed) {
             this.parent(id, s, ed);
-
             this.beforeShowMenu = new tinymce.util.Dispatcher(this);
             this.onRenderMenu = new tinymce.util.Dispatcher(this);
-
+            // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
             s.menu_container = s.menu_container || DOM.doc.body;
+            // jscs:enabled requireCamelCaseOrUpperCaseIdentifiers
         },
+        showMenu: function() {
+            var t = this,
+                p2,
+                e = DOM.get(t.id),
+                m;
 
-        showMenu : function() {
-            var t = this, p2, e = DOM.get(t.id), m;
-
-            if (t.isDisabled())
+            if (t.isDisabled()) {
                 return;
+            }
 
             t.beforeShowMenu.dispatch(t);
             
@@ -24,10 +31,10 @@
                 t.isMenuRendered = true;
             }
 
-            if (t.isMenuVisible)
+            if (t.isMenuVisible) {
                 return t.hideMenu();
+            }
 
-            p1 = DOM.getPos(t.settings.menu_container);
             p2 = DOM.getPos(e);
 
             m = t.menu;
@@ -43,15 +50,14 @@
 
             t.isMenuVisible = 1;
         },
-        
-        renderMenu : function() {
+        renderMenu: function() {
             var t = this, m;
 
             m = t.settings.control_manager.createDropMenu(t.id + '_menu', {
-                menu_line : 1,
-                'class' : this.classPrefix + 'Menu',
-                icons : t.settings.icons,
-                menuType : t.settings.menuType
+                menu_line: 1,
+                'class': this.classPrefix + 'Menu',
+                icons: t.settings.icons,
+                menuType: t.settings.menuType
             }, tinymce.ui.ScrollingDropMenu);
 
             m.onHideMenu.add(function() {
@@ -66,10 +72,15 @@
 })(tinymce);
 
 (function(tinymce) {
-    var is = tinymce.is, DOM = tinymce.DOM, each = tinymce.each, Event = tinymce.dom.Event, Element = tinymce.dom.Element;
-    var $ = require('jquery');
+    'use strict';
+    var is = tinymce.is,
+        DOM = tinymce.DOM,
+        each = tinymce.each,
+        Event = tinymce.dom.Event,
+        Element = tinymce.dom.Element,
+        $ = require('jquery');
     tinymce.create('tinymce.ui.ScrollingDropMenu:tinymce.ui.DropMenu', {
-        ScrollingDropMenu : function(id, s) {
+        ScrollingDropMenu: function(id, s) {
             s = s || {};
             s.container = s.container || DOM.doc.body;
             s.offset_x = s.offset_x || 0;
@@ -77,56 +88,58 @@
             s.vp_offset_x = s.vp_offset_x || 0;
             s.vp_offset_y = s.vp_offset_y || 0;
 
-            if (is(s.icons) && !s.icons)
+            if (is(s.icons) && !s.icons) {
                 s['class'] += ' mceNoIcons';
+            }
 
             this.parent(id, s);
             this.beforeShowMenu = new tinymce.util.Dispatcher(this);
             this.onShowMenu = new tinymce.util.Dispatcher(this);
             this.onHideMenu = new tinymce.util.Dispatcher(this);
             this.classPrefix = 'mceMenu';
-            
             this.scrollbarSize = this.getScrollbarSize();
         },
-
-        getScrollbarSize : function() {
+        getScrollbarSize: function() {
+            var width;
             document.body.style.overflow = 'hidden';
-            var width = document.body.clientWidth;
+            width = document.body.clientWidth;
             
             document.body.style.overflow = 'scroll';
             width -= document.body.clientWidth;
             
-            if(!width) width = document.body.offsetWidth-document.body.clientWidth;
-            
+            if (!width) {
+                width = document.body.offsetWidth - document.body.clientWidth;
+            }
             document.body.style.overflow = '';
-            
             return width;
         },
-        
-        update : function() {
-            var t = this, s = t.settings, tb = DOM.get('menu_' + t.id + '_tbl'), co = DOM.get('menu_' + t.id + '_co'), tw, th;
-
+        update: function() {
+            var doScroll;
+            var t = this,
+                s = t.settings,
+                tb = DOM.get('menu_' + t.id + '_tbl'),
+                co = DOM.get('menu_' + t.id + '_co'),
+                tw,
+                th;
             var max_height = tinyMCE.activeEditor.getContentAreaContainer().offsetHeight - 50;
             
-            tw = s.max_width ? Math.min(tb.clientWidth, s.max_width) : tb.clientWidth;
-            th = max_height ? Math.min(tb.clientHeight, max_height) : tb.clientHeight;
+            tw = s.max_width ? Math.min(tb.clientWidth, s.max_width): tb.clientWidth;
+            th = max_height ? Math.min(tb.clientHeight, max_height): tb.clientHeight;
 
-            var doScroll = tb.clientHeight > max_height;
+            doScroll = tb.clientHeight > max_height;
             if (doScroll) {
                 tw += t.scrollbarSize;
             }
-            
             if (!DOM.boxModel) {
-                t.element.setStyles({width : tw + 2, height : th + 2});
+                t.element.setStyles({ width: tw + 2, height: th + 2 });
                 DOM.setStyle(co, 'height', th + 2);
             } else {
-                t.element.setStyles({width : tw, height : th});
+                t.element.setStyles({ width: tw, height: th });
                 DOM.setStyle(co, 'height', th);
             }
-
-            if (s.max_width)
+            if (s.max_width) {
                 DOM.setStyle(co, 'width', tw);
-
+            }
             if (doScroll) {
                 DOM.setStyle(co, 'overflow', 'auto');
                 DOM.setStyle(co, 'width', tw);
@@ -139,7 +152,7 @@
             $(co).scrollTop(0);
         },
 
-        showMenu : function(x, y, px) {
+        showMenu: function(x, y, px) {
             var t = this, s = t.settings, co, vp = DOM.getViewPort(), w, h, mx, my, ot = 2, dm, cp = t.classPrefix;
 
             t.collapse(1);
@@ -154,13 +167,13 @@
                     o.postRender();
                 });
 
-                t.element = new Element('menu_' + t.id, {blocker : 1, container : s.container});
+                t.element = new Element('menu_' + t.id, {blocker: 1, container: s.container});
             } else
                 co = DOM.get('menu_' + t.id);
 
             // Move layer out of sight unless it's Opera since it scrolls to top of page due to an bug
             if (!tinymce.isOpera)
-                DOM.setStyles(co, {left : -0xFFFF , top : -0xFFFF});
+                DOM.setStyles(co, {left: -0xFFFF , top: -0xFFFF});
 
             t.beforeShowMenu.dispatch(t);
             
@@ -185,13 +198,13 @@
                 my = vp.y + vp.h;
 
                 if ((x + s.vp_offset_x + w) > mx)
-                    x = px ? px - w : Math.max(0, (mx - s.vp_offset_x) - w);
+                    x = px ? px - w: Math.max(0, (mx - s.vp_offset_x) - w);
 
                 if ((y + s.vp_offset_y + h) > my)
                     y = Math.max(0, (my - s.vp_offset_y) - h);
             }
 
-            DOM.setStyles(co, {left : x , top : y});
+            DOM.setStyles(co, {left: x , top: y});
             t.element.update();
 
             t.isMenuVisible = 1;
@@ -257,7 +270,7 @@
             $(t.textInput).focus();
         },
         
-        addMenu : function(o) {
+        addMenu: function(o) {
             if (!o.collapse)
                 o = this.createMenu(o);
 
@@ -266,7 +279,7 @@
             return this.add(o);
         },
         
-        createMenu : function(s) {
+        createMenu: function(s) {
             var t = this, cs = t.settings, m;
 
             s.container = s.container || cs.container;
@@ -283,10 +296,10 @@
             return m;
         },
         
-        renderNode : function() {
+        renderNode: function() {
             var t = this, s = t.settings, n, tb, co, w;
 
-            w = DOM.create('div', {role: 'listbox', id : 'menu_' + t.id, 'class' : s['class'], 'style' : 'position:absolute;left:0;top:0;z-index:200000;outline:0'});
+            w = DOM.create('div', {role: 'listbox', id: 'menu_' + t.id, 'class': s['class'], 'style': 'position:absolute;left:0;top:0;z-index:200000;outline:0'});
             if (t.settings.parent) {
                 DOM.setAttrib(w, 'aria-parent', 'menu_' + t.settings.parent.id);
             }
@@ -296,20 +309,20 @@
                 containerClass = 'scrollingMenuContainer ';
                 
                 // add input box
-                var inputDiv = DOM.add(w, 'div', {id : 'menu_' + t.id + '_inputParent', 'class' : 'inputParent '+t.classPrefix + (s['class'] ? ' ' + s['class'] : '')}, '<span>Filter</span>');
-                t.textInput = DOM.add(inputDiv, 'input', {id : 'menu_' + t.id + '_input', type: 'text', 'class' : t.classPrefix + (s['class'] ? ' ' + s['class'] : '')});
+                var inputDiv = DOM.add(w, 'div', {id: 'menu_' + t.id + '_inputParent', 'class': 'inputParent '+t.classPrefix + (s['class'] ? ' ' + s['class']: '')}, '<span>Filter</span>');
+                t.textInput = DOM.add(inputDiv, 'input', {id: 'menu_' + t.id + '_input', type: 'text', 'class': t.classPrefix + (s['class'] ? ' ' + s['class']: '')});
             
                 Event.add(t.textInput, 'keyup', t.filterMenuItems, t);
             }
             
-            co = DOM.add(w, 'div', {role: 'presentation', id : 'menu_' + t.id + '_co', 'class' : containerClass + t.classPrefix + (s['class'] ? ' ' + s['class'] : '')});
-            t.element = new Element('menu_' + t.id, {blocker : 1, container : s.container});
+            co = DOM.add(w, 'div', {role: 'presentation', id: 'menu_' + t.id + '_co', 'class': containerClass + t.classPrefix + (s['class'] ? ' ' + s['class']: '')});
+            t.element = new Element('menu_' + t.id, {blocker: 1, container: s.container});
 
             if (s.menu_line)
-                DOM.add(co, 'span', {'class' : t.classPrefix + 'Line'});
+                DOM.add(co, 'span', {'class': t.classPrefix + 'Line'});
 
-//            n = DOM.add(co, 'div', {id : 'menu_' + t.id + '_co', 'class' : 'mceMenuContainer'});
-            n = DOM.add(co, 'table', {role: 'presentation', id : 'menu_' + t.id + '_tbl', border : 0, cellPadding : 0, cellSpacing : 0});
+//            n = DOM.add(co, 'div', {id: 'menu_' + t.id + '_co', 'class': 'mceMenuContainer'});
+            n = DOM.add(co, 'table', {role: 'presentation', id: 'menu_' + t.id + '_tbl', border: 0, cellPadding: 0, cellSpacing: 0});
             tb = DOM.add(n, 'tbody');
 
             each(t.items, function(o) {
@@ -321,7 +334,7 @@
             return w;
         },
         
-        _setupKeyboardNav : function(){
+        _setupKeyboardNav: function(){
             var contextMenu, menuItems, t=this; 
             contextMenu = DOM.get('menu_' + t.id);
             menuItems = DOM.select('a[role=option]', 'menu_' + t.id);
@@ -379,7 +392,7 @@
     var Event = tinymce.dom.Event, each = tinymce.each;
     var $ = require('jquery');
     tinymce.create('tinymce.ui.FilterMenuKeyboardNav:tinymce.ui.KeyboardNavigation', {
-        FilterMenuKeyboardNav : function(settings, dom) {
+        FilterMenuKeyboardNav: function(settings, dom) {
             var t = this, root = settings.root, items = settings.items,
             enableUpDown = settings.enableUpDown, enableLeftRight = settings.enableLeftRight || !settings.enableUpDown,
             excludeFromTabOrder = settings.excludeFromTabOrder,
@@ -554,7 +567,7 @@
                     dom.bind(elm, 'blur', itemBlurred);
                     tabindex = '-1';
                 } else {
-                    tabindex = (idx === 0 ? '0' : '-1');
+                    tabindex = (idx === 0 ? '0': '-1');
                 }
         
                 elm.setAttribute('tabindex', tabindex);

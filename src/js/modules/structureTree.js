@@ -1,7 +1,7 @@
 define(['jquery', 'jquery-ui', 'jquery.jstree'], function($, jqueryUi, jsTree) {
 
 // overwrite show submenu, add our custom filter input
-$.vakata.context._show_submenu = function (o) {
+$.vakata.context._show_submenu = function(o) {
     o = $(o);
     o.parent().find('.filterParent').hide();
     if(!o.length || !o.children("ul").length) { return; }
@@ -183,7 +183,7 @@ return function(config) {
         var treeRef = $.jstree.reference('#'+id);
         // store open nodes to re-open after updating
         var openNodes = [];
-        $('#cwrc_tree_root', $tree).find('li.jstree-open').each(function () {
+        $('#cwrc_tree_root', $tree).find('li.jstree-open').each(function() {
             var id = $(this).attr('name');
             openNodes.push(id);
         });
@@ -197,7 +197,7 @@ return function(config) {
 //            treeRef._themeroller();
             _onNodeLoad($('#cwrc_tree_root', $tree).first());
             
-            $.each(openNodes, function (i, val) {
+            $.each(openNodes, function(i, val) {
                 treeRef.open_node($('li[name='+val+']', $tree), false, true); 
             });
         }

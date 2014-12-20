@@ -1,6 +1,11 @@
+/*jshint browser: true*/
+/*global tinymce, require*/
 (function() {
-    var Event = tinymce.dom.Event, each = tinymce.each, DOM = tinymce.DOM;
-    var $ = require('jquery');
+    'use strict';
+    var Event = tinymce.dom.Event,
+        each = tinymce.each,
+        DOM = tinymce.DOM,
+        $ = require('jquery');
     /**
      * This plugin a context menu to TinyMCE editor instances.
      *
@@ -16,14 +21,14 @@
          * @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
          * @param {string} url Absolute URL to where the plugin is located.
          */
-        init : function(ed, url) {
+        init: function(ed, url) {
             var t = this, showMenu, hideMenu, contextmenuNeverUseNative, realCtrlKey;
             t.url = url;
             t.editor = ed;
             t.showContextMenu = false; // whether to trigger the context menu (needed on mac)
-
+            // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
             contextmenuNeverUseNative = ed.settings.contextmenu_never_use_native;
-
+            // jscs:enabled requireCamelCaseOrUpperCaseIdentifiers
             /**
              * This event gets fired when the context menu is shown.
              *
@@ -36,14 +41,15 @@
             hideMenu = function(e) {
                 hide(ed, e);
             };
-            
+
             showMenu = ed.onContextMenu.add(function(ed, e) {
                 // Block TinyMCE menu on ctrlKey and work around Safari issue
-                if ((realCtrlKey !== 0 ? realCtrlKey : e.ctrlKey) && !contextmenuNeverUseNative)
+                if ((realCtrlKey !== 0 ? realCtrlKey : e.ctrlKey) && !contextmenuNeverUseNative) {
                     return;
+                }
 
                 Event.cancel(e);
-                
+
                 if (tinymce.isMac) {
                     t.showContextMenu = true;
                 } else {
@@ -56,39 +62,38 @@
                     t._menu.removeAll();
                 }
             });
-            
+
             function show(ed, e) {
                 // Select the image if it's clicked. WebKit would other wise expand the selection
-                if (e.target.nodeName == 'IMG') ed.selection.select(e.target);
-                
-                var x = e.clientX || e.pageX;
-                var y = e.clientY || e.pageY;
+                var x, y;
+
+                if (e.target.nodeName === 'IMG') {
+                    ed.selection.select(e.target);
+                }
+
+                x = e.clientX || e.pageX;
+                y = e.clientY || e.pageY;
 
                 ed.currentBookmark = ed.selection.getBookmark(1);
                 
                 t._getMenu(ed).showMenu(x, y);
-//                Event.add(ed.getDoc(), 'click', hideMenu);
-
-//                ed.nodeChanged();
-            };
+            }
 
             function hide(ed, e) {
                 realCtrlKey = 0;
 
                 // Since the contextmenu event moves
                 // the selection we need to store it away
-                if (e && e.button == 2) {
+                if (e && e.button === 2) {
                     realCtrlKey = e.ctrlKey;
-//                    return; // don't return: if the user right clicks somewhere else, we want this menu to close
                 }
                 
                 if (t._menu) {
                     t._menu.removeAll();
                     t._menu.destroy();
-//                    Event.remove(ed.getDoc(), 'click', hideMenu);
                     t._menu = null;
                 }
-            };
+            }
             ed.addCommand('hideContextMenu', function(ed, e) {
                 hideMenu(e);
             });
@@ -110,8 +115,17 @@
             });
         },
 
-        _getMenu : function(ed) {
-            var t = this, m = t._menu, se = ed.selection, col = se.isCollapsed(), el = se.getNode() || ed.getBody(), am, p1, p2;
+        _getMenu: function(ed) {
+            var changeTagMenu;
+            var tagMenu;
+            var url;
+            var t = this,
+                m = t._menu,
+                se = ed.selection,
+                col = se.isCollapsed(),
+                el = se.getNode() || ed.getBody(),
+                am,
+                p1;
 
             if (m) {
                 m.removeAll();
@@ -119,152 +133,148 @@
             }
 
             p1 = DOM.getPos(ed.getContentAreaContainer());
-            p2 = DOM.getPos(ed.getContainer());
             
             m = ed.controlManager.createDropMenu('contextmenu', {
-                offset_x : p1.x + ed.getParam('contextmenu_offset_x', 0),
-                offset_y : p1.y + ed.getParam('contextmenu_offset_y', 0),
-                constrain : 1,
+                offset_x: p1.x + ed.getParam('contextmenu_offset_x', 0),
+                offset_y: p1.y + ed.getParam('contextmenu_offset_y', 0),
+                constrain: 1,
                 keyboard_focus: true
             }, tinymce.ui.ScrollingDropMenu);
             
             t._menu = m;
 
-            var url = t.url+'/../../img/';
+            url = t.url + '/../../img/';
             m.add({
                 title: 'Tag Person',
-                icon_src: url+'user.png',
-                onclick : function() {
+                icon_src: url + 'user.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('person');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Place',
-                icon_src: url+'world.png',
-                onclick : function() {
+                icon_src: url + 'world.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('place');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Date',
-                icon_src: url+'calendar.png',
-                onclick : function() {
+                icon_src: url + 'calendar.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('date');
                 }
             }).setDisabled(col);
-//            m.add({
-//                title: 'Tag Event',
-//                icon_src: url+'cake.png',
-//                onclick : function() {
-//                    ed.writer.tagger.addEntity('event');
-//                }
-//            }).setDisabled(col);
             m.add({
                 title: 'Tag Organization',
-                icon_src: url+'group.png',
-                onclick : function() {
+                icon_src: url + 'group.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('org');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Citation',
-                icon_src: url+'vcard.png',
-                onclick : function() {
+                icon_src: url + 'vcard.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('citation');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Note',
-                icon_src: url+'note.png',
-                onclick : function() {
+                icon_src: url + 'note.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('note');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Text/Title',
-                icon_src: url+'book.png',
-                onclick : function() {
+                icon_src: url + 'book.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('title');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Correction',
-                icon_src: url+'error.png',
-                onclick : function() {
+                icon_src: url + 'error.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('correction');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Keyword',
-                icon_src: url+'page_key.png',
-                onclick : function() {
+                icon_src: url + 'page_key.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('keyword');
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Tag Link',
-                icon_src: url+'link.png',
-                onclick : function() {
+                icon_src: url + 'link.png',
+                onclick: function() {
                     ed.writer.tagger.addEntity('link');
                 }
             }).setDisabled(col);
             
             m.addSeparator();
-            var tagMenu = m.addMenu({
+            tagMenu = m.addMenu({
                 id: 'structTagsContextMenu',
                 title: 'Structural Tags',
-                icon_src: url+'tag.png',
+                icon_src: url + 'tag.png',
                 menuType: 'filterMenu'
             });
             tagMenu.beforeShowMenu.add(function(m) {
                 m.element.addClass('defaultSkin');
                 m.element.addClass('mceDropDown');
             });
-            ed.execCommand('createSchemaTagsControl', {menu: tagMenu, disabled: col});
+            ed.execCommand('createSchemaTagsControl', { menu: tagMenu, disabled: col });
             m.addSeparator();
             
-            col = (ed.writer.entitiesManager.getCurrentEntity() == null && ed.currentStruct == null);
+            col = (ed.writer.entitiesManager.getCurrentEntity() === null && ed.currentStruct === null);
             
-            var changeTagMenu = m.addMenu({
+            changeTagMenu = m.addMenu({
                 id: 'changeTagContextMenu',
                 title: 'Change Tag',
-                icon_src: url+'tag_blue_edit.png',
+                icon_src: url + 'tag_blue_edit.png',
                 menuType: 'filterMenu'
             });
             changeTagMenu.beforeShowMenu.add(function(m) {
                 m.element.addClass('defaultSkin');
                 m.element.addClass('mceDropDown');
             });
-            ed.execCommand('createSchemaTagsControl', {menu: changeTagMenu, disabled: col, mode: 'change'});
-            
+            ed.execCommand('createSchemaTagsControl', {
+                menu: changeTagMenu,
+                disabled: col,
+                mode: 'change'
+            });
+
             m.add({
                 title: 'Edit Tag',
-                icon_src: url+'tag_blue_edit.png',
-                onclick : function() {
+                icon_src: url + 'tag_blue_edit.png',
+                onclick: function() {
                     ed.execCommand('editTag', null);
                 }
             }).setDisabled(col);
             m.add({
                 title: 'Remove Tag',
-                icon_src: url+'tag_blue_delete.png',
-                onclick : function() {
+                icon_src: url + 'tag_blue_delete.png',
+                onclick: function() {
                     ed.execCommand('removeTag');
                 }
             }).setDisabled(col);
             m.addSeparator();
-            col = ed.writer.entitiesManager.getCurrentEntity() == null;
+            col = ed.writer.entitiesManager.getCurrentEntity() === null;
             m.add({
                 title: 'Copy Entity',
-                icon_src: url+'tag_blue_copy.png',
-                onclick : function() {
+                icon_src: url + 'tag_blue_copy.png',
+                onclick: function() {
                     ed.execCommand('copyEntity', null);
                 }
             }).setDisabled(col);
-            col = ed.entityCopy == null;
+            col = ed.entityCopy === null;
             m.add({
                 title: 'Paste Entity',
-                icon_src: url+'tag_blue_paste.png',
-                onclick : function() {
+                icon_src: url + 'tag_blue_paste.png',
+                onclick: function() {
                     ed.execCommand('pasteEntity', null);
                 }
             }).setDisabled(col);

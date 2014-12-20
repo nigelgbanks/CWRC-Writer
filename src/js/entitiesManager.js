@@ -1,3 +1,4 @@
+
 define(['jquery', 'entity'], function($, Entity) {
 
 /**

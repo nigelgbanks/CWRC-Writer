@@ -109,7 +109,7 @@
 				}
 				
 				(function() {
-					var configXHR = $.ajax({url: 'js/writerConfig.js', dataType: 'json'});
+					var configXHR = $.ajax({url: 'js/writerConfig.json', dataType: 'json'});
 					var projectXHR = $.ajax({url: 'http://apps.testing.cwrc.ca/editor/documents/info/projectname'});
 					$.when(
 						configXHR,
@@ -126,7 +126,7 @@
 							config.cwrcRootUrl = window.location.protocol+'//'+window.location.host+window.location.pathname.replace(window.location.pathname.split('/').pop(),'');
 							doInit(config);
 						} else {
-							alert('Error loading writerConfig.js');
+							alert('Error loading writerConfig.json');
 						}
 					});
 				}());

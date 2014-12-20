@@ -1,34 +1,36 @@
+/*jshint browser: true*/
+/*global require, tinymce*/
 (function(tinymce) {
+    'use strict';
     // make sure snippet is available
     var $ = require('jquery');
-    require(['jquery.snippet']);
+    require([ 'jquery.snippet' ]);
 
     tinymce.create('tinymce.plugins.ViewSource', {
         init: function(ed, url) {
-            var t = this;
-            t.url = url;
-            t.editor = ed;
-            
+            var that = this;
+            that.url = url;
+            that.editor = ed;
+
             ed.addCommand('viewSource', function() {
                 var content = ed.writer.converter.getDocumentContent(false);
-                var source = '<pre>'+t.htmlEncode(content)+'</pre>';
-                $('#viewSourceDialog').html(source);
-                $('#viewSourceDialog > pre').snippet('html', {
+                var source = '<pre>' + that.htmlEncode(content) + '</pre>';
+                var dialog = $('#viewSourceDialog');
+                dialog.html(source);
+                dialog.find('> pre').snippet('html', {
                     style: 'typical',
                     transparent: true,
                     showNum: false,
                     menu: false
                 });
-                t.d.dialog('open');
+                that.d.dialog('open');
             });
-            
-            $(document.body).append(''+
-                '<div id="viewSourceDialog">'+
+            $(document.body).append('' +
+                '<div id="viewSourceDialog">' +
                 '</div>'
             );
-            
-            t.d = $('#viewSourceDialog');
-            t.d.dialog({
+            that.d = $('#viewSourceDialog');
+            that.d.dialog({
                 title: 'View Source',
                 modal: true,
                 resizable: true,
@@ -38,36 +40,38 @@
                 autoOpen: false,
                 buttons: {
                     'Ok': function() {
-                        t.d.dialog('close');
+                        that.d.dialog('close');
                     }
                 }
             });
         },
         htmlEncode: function(str) {
             return str.replace(/[&<>"']/g, function($0) {
-                return "&" + {"&":"amp", "<":"lt", ">":"gt", '"':"quot", "'":"#39"}[$0] + ";";
+                return '&' + {
+                    '&': 'amp',
+                    '<': 'lt',
+                    '>': 'gt',
+                    '\'': 'quot',
+                    '"': '#39'
+                }[$0] + ';';
             });
         },
         createControl: function(n, cm) {
-            if (n == 'viewsource') {
-                var t = this;
-                var url = t.url+'/../../img/';
-                var c = cm.createButton('viewSourceButton', {
+            var that = this,
+                url = that.url + '/../../img/';
+            if (n === 'viewsource') {
+                return cm.createButton('viewSourceButton', {
                     title: 'View Source',
-                    image: url+'viewsource.gif',
+                    image: url + 'viewsource.gif',
                     'class': 'wideButton',
                     onclick: function() {
-                        t.editor.execCommand('removeHighlights');
-                        t.editor.execCommand('viewSource');
+                        that.editor.execCommand('removeHighlights');
+                        that.editor.execCommand('viewSource');
                     }
                 });
-                
-                return c;
             }
-    
             return null;
         }
     });
-    
     tinymce.PluginManager.add('viewsource', tinymce.plugins.ViewSource);
 })(tinymce);

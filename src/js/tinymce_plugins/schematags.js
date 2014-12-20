@@ -1,3 +1,5 @@
+/*jshint browser: true*/
+/*global tinymce, require*/
 (function(tinymce) {
     var $ = require('jquery');
     tinymce.create('tinymce.plugins.SchemaTags', {
@@ -5,7 +7,7 @@
             var t = this;
             t.url = url;
             //TODO: this needs to be more configurable.
-            t.imageUrl = ed.writer.cwrcRootUrl+'img/';
+            t.imageUrl = ed.writer.cwrcRootUrl + 'img/';
             t.editor = ed;
             
             t.editor.addCommand('createSchemaTagsControl', function(config) {
@@ -73,7 +75,7 @@
                         }
                     }
                     if (count == disCount) {
-                        m.items['no_tags_'+m.id].setDisabled(false);
+                        m.items['no_tags_' + m.id].setDisabled(false);
                     }
                 });
                 
@@ -93,7 +95,7 @@
             for (var key in menu.items) {
                 var item = menu.items[key];
                 item.destroy();
-                $('#'+item.id).remove();
+                $('#' + item.id).remove();
                 delete menu.items[key];
             }
             
@@ -112,7 +114,7 @@
             }
             var menuitem = menu.add({
                 title: 'No tags available for current parent tag.',
-                id: 'no_tags_'+menu.id,
+                id: 'no_tags_' + menu.id,
                 icon_src: t.imageUrl + 'cross.png',
                 onclick : function() {}
             });
@@ -126,7 +128,7 @@
                 
                 t.menuButton = cm.createMenuButton('schemaTagsButton', {
                     title: 'Tags',
-                    image: t.imageUrl+'tag_text.png',
+                    image: t.imageUrl + 'tag_text.png',
                     'class': 'wideButton',
                     menuType: 'filterMenu'
                 }, tinymce.ui.ScrollingMenuButton);
