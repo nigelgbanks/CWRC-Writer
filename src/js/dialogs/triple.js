@@ -123,13 +123,13 @@ define([
                     if (id != null) {
                         uri = w.entitiesManager.getEntity(id).getUris().annotationId;
                     }
-                    components[index] = {text: w.utilities.escapeHTMLString(s.text()), uri: uri, external: false};
+                    components[index] = { text: w.utilities.escapeHTMLString(s.text()), uri: uri, external: false };
                 }
             });
             $('#tripleColumnsParent input').each(function(index, el) {
                 var val = $(this).val();
                 if (val != '') {
-                    components[index] = {text: w.utilities.escapeHTMLString(val), uri: w.utilities.escapeHTMLString(val), external: true};
+                    components[index] = { text: w.utilities.escapeHTMLString(val), uri: w.utilities.escapeHTMLString(val), external: true };
                 }
             });
 

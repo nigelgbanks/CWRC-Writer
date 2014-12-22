@@ -108,7 +108,7 @@
                     initialFilterState: null,
                     icon_src: t.imageUrl + 'tag_blue.png',
                     onclick : function() {
-                        t.editor.writer.dialogManager.schemaTags.addSchemaTag({key: this.key});
+                        t.editor.writer.dialogManager.schemaTags.addSchemaTag({ key: this.key });
                     }
                 });
             }

@@ -350,7 +350,7 @@ define([
                 nodeData = {
                     text: tag,
                     li_attr: {name: id}, // 'class': type}
-                    state: {opened: level < 3}
+                    state: { opened: level < 3}
                 };
 
                 if (w.schemaManager.mapper.isEntityTypeNote(type)) {
@@ -361,7 +361,7 @@ define([
                             for (var i = 0; i < content.length; i++) {
                                 nodeData.children.push({
                                     text: content[i],
-                                    li_attr: {name: id}
+                                    li_attr: { name: id }
                                 });
                             }
                             break;
@@ -369,7 +369,7 @@ define([
                             nodeData.children = [];
                             nodeData.children.push({
                                 text: content,
-                                li_attr: {name: id}
+                                li_attr: { name: id }
                             });
                             break;
                         case 'object':
@@ -383,7 +383,7 @@ define([
                                         }
                                         var childData = {
                                             text: el.nodeName,
-                                            li_attr: {name: id}
+                                            li_attr: { name: id }
                                         };
                                         parent.children.push(childData);
 
@@ -446,8 +446,8 @@ define([
                 if (info) {
                     nodeData = {
                         text: info._tag,
-                        li_attr: {name: id},
-                        state: {opened: level < 3}
+                        li_attr: { name: id },
+                        state: { opened: level < 3}
                     };
                 }
             }
@@ -598,13 +598,13 @@ define([
                         var parentText = obj.element.find('.submenu.vakata-context-hover').find('a:first').text();
                         if (parentText.indexOf('Change') !== -1) {
                             var id = obj.reference.parent('li').attr('name');
-                            w.tagger.changeTag({key: obj.item.key, id: id});
+                            w.tagger.changeTag({ key: obj.item.key, id: id });
                         } else {
                             var actionType = parentText.match(/\w+$/)[0].toLowerCase();
                             w.editor.currentBookmark = w.editor.selection.getBookmark(1);
                             w.editor.currentBookmark.tagId = tagInfo.id;
                             var parentTag = $('#' + tagInfo.id, w.editor.getBody());
-                            w.dialogManager.schemaTags.addSchemaTag({key: obj.item.key, action: actionType, parentTag: parentTag});
+                            w.dialogManager.schemaTags.addSchemaTag({ key: obj.item.key, action: actionType, parentTag: parentTag });
                         }
                     }
                 };
@@ -662,7 +662,7 @@ define([
                 data: {
                     text: 'Tags',
                     li_attr: {id: 'cwrc_tree_root'},
-                    state: {opened: true}
+                    state: { opened: true }
                 }
             },
             contextmenu: {

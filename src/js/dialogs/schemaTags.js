@@ -330,7 +330,7 @@ define([
                 path += '/' + key;
 
                 mode = ADD;
-                this.show({tagName: key, tagPath: path});
+                this.show({ tagName: key, tagPath: path });
             },
 
             editSchemaTag: function($tag) {
@@ -345,7 +345,7 @@ define([
                 currentTagName = tagName;
                 tag = $tag;
                 mode = EDIT;
-                this.show({tagName: tagName, tagPath: path});
+                this.show({ tagName: tagName, tagPath: path });
             },
 
             changeSchemaTag: function(params) {
@@ -353,7 +353,7 @@ define([
                 tag = params.tag;
                 var path = w.utilities.getElementXPath(params.tag[0]);
                 mode = EDIT;
-                this.show({tagName: params.key, tagPath: path});
+                this.show({ tagName: params.key, tagPath: path });
             }
         };
     };

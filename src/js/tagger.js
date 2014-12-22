@@ -264,7 +264,7 @@ define([ 'jquery', 'entity' ], function($, Entity) {
         };
 
         tagger.getCurrentTag = function(id) {
-            var tag = {entity: null, struct: null};
+            var tag = { entity: null, struct: null };
             if (id !== null) {
                 if (w.entitiesManager.getEntity(id) !== undefined) tag.entity = w.entitiesManager.getEntity(id); else if (w.structs[id]) tag.struct = $('#' + id, w.editor.getBody());
             } else {
@@ -279,7 +279,7 @@ define([ 'jquery', 'entity' ], function($, Entity) {
             if (tag.entity) {
                 w.editor.currentBookmark = w.editor.selection.getBookmark(1);
                 var type = tag.entity.getType();
-                w.dialogManager.show(type, {type: type, entry: tag.entity});
+                w.dialogManager.show(type, { type: type, entry: tag.entity });
             } else if (tag.struct) {
                 if ($(tag.struct, w.editor.getBody()).attr('_tag')) {
                     w.dialogManager.schemaTags.editSchemaTag(tag.struct);
@@ -325,13 +325,13 @@ define([ 'jquery', 'entity' ], function($, Entity) {
                             w.editor.selection.select(selectionContents[0].firstChild);
                             w.editor.currentBookmark = w.editor.selection.getBookmark();
                             selectionContents.contents().unwrap();
-                            w.dialogManager.schemaTags.addSchemaTag({key: params.key, parentTag: parentTag});
+                            w.dialogManager.schemaTags.addSchemaTag({ key: params.key, parentTag: parentTag });
                         }
                     }
                 });
             } else if (tag.struct) {
                 if ($(tag.struct, w.editor.getBody()).attr('_tag')) {
-                    w.dialogManager.schemaTags.changeSchemaTag({tag: tag.struct, key: params.key});
+                    w.dialogManager.schemaTags.changeSchemaTag({ tag: tag.struct, key: params.key });
                 }
             }
         };
@@ -377,7 +377,7 @@ define([ 'jquery', 'entity' ], function($, Entity) {
             var result = w.utilities.isSelectionValid();
             if (result === w.VALID) {
                 w.editor.currentBookmark = w.editor.selection.getBookmark(1);
-                w.dialogManager.show(type, {type: type});
+                w.dialogManager.show(type, { type: type });
             } else if (result === w.NO_SELECTION) {
                 w.dialogManager.show('message', {
                     title: 'Error',
@@ -387,7 +387,7 @@ define([ 'jquery', 'entity' ], function($, Entity) {
             } else if (result === w.OVERLAP) {
                 if (w.allowOverlap === true) {
                     w.editor.currentBookmark = w.editor.selection.getBookmark(1);
-                    w.dialogManager.show(type, {type: type});
+                    w.dialogManager.show(type, { type: type });
                 } else {
                     w.dialogManager.confirm({
                         title: 'Warning',
@@ -397,7 +397,7 @@ define([ 'jquery', 'entity' ], function($, Entity) {
                                 w.allowOverlap = true;
                                 w.mode = w.XMLRDF;
                                 w.editor.currentBookmark = w.editor.selection.getBookmark(1);
-                                w.dialogManager.show(type, {type: type});
+                                w.dialogManager.show(type, { type: type });
                             }
                         }
                     });

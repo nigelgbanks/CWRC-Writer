@@ -632,7 +632,7 @@ define([
                     ed.currentNode = null; // the node that the cursor is currently in
                     ed.entityCopy = null; // store a copy of an entity for pasting
                     ed.contextMenuPos = null; // the position of the context menu (used to position related dialog box)
-                    ed.copiedElement = {selectionType: null, element: null}; // the element that was copied (when first selected through the structure tree)
+                    ed.copiedElement = { selectionType: null, element: null }; // the element that was copied (when first selected through the structure tree)
                     ed.lastKeyPress = null; // the last key the user pressed
 
                     ed.onInit.add(function(ed) {

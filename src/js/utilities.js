@@ -742,7 +742,7 @@ define([ 'jquery', 'objtree' ], function($, objTree) {
                 if (!defHits[name]) {
                     defHits[name] = true;
                     var def = _getDefinition(name);
-                    _getChildrenJSON(def, defHits, level + 1, type, children, {optional: optional});
+                    _getChildrenJSON(def, defHits, level + 1, type, children, { optional: optional });
                 }
             }
         }
@@ -970,7 +970,7 @@ define([ 'jquery', 'objtree' ], function($, objTree) {
             var element = $('element[name="' + tag + '"]', w.schemaManager.schemaXML);
             var defHits = {};
             var level = 0;
-            var canContainText = {isTrue: false}; // needs to be an object so change is visible outside of checkForText
+            var canContainText = { isTrue: false }; // needs to be an object so change is visible outside of checkForText
             checkForText(element, defHits, level, canContainText);
 
             if (useLocalStorage) {

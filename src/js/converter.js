@@ -115,7 +115,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
 
             if (separateRDF) {
                 xmlString = bodyString + tags[1];
-                return {xml: xmlString, rdf: rdfString};
+                return { xml: xmlString, rdf: rdfString };
             } else {
                 xmlString += rdfString + bodyString + tags[1];
                 return xmlString;
@@ -1179,7 +1179,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                     startNode = entityNode[0];
                     endNode = entityNode[0];
 
-                    entityNodes.push({entity: entry, node: entityNode});
+                    entityNodes.push({ entity: entry, node: entityNode });
                 }
 
                 if (startNode !== null && endNode !== null) {

@@ -173,7 +173,7 @@
 
             // Move layer out of sight unless it's Opera since it scrolls to top of page due to an bug
             if (!tinymce.isOpera)
-                DOM.setStyles(co, {left: -0xFFFF , top: -0xFFFF});
+                DOM.setStyles(co, { left: -0xFFFF , top: -0xFFFF });
 
             t.beforeShowMenu.dispatch(t);
             
@@ -204,7 +204,7 @@
                     y = Math.max(0, (my - s.vp_offset_y) - h);
             }
 
-            DOM.setStyles(co, {left: x , top: y});
+            DOM.setStyles(co, { left: x , top: y });
             t.element.update();
 
             t.isMenuVisible = 1;
