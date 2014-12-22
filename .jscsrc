@@ -69,5 +69,6 @@
   "disallowSpaceAfterPrefixUnaryOperators": true,
   "disallowSpaceBeforePostfixUnaryOperators": true,
   "disallowSpaceBeforeBinaryOperators": [ ",", ":" ],
-  "disallowMultipleLineBreaks": true
+  "disallowMultipleLineBreaks": true,
+  "excludeFiles": [ "src/js/lib/**" ]
 }

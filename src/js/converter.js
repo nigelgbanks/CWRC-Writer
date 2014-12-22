@@ -1,7 +1,11 @@
+/*global define*/
 /**
  * Converts between CWRCWriter format and XML format.
  */
-define([ 'jquery', 'tinymce' ], function($, tinymce) {
+define([
+    'jquery',
+    'tinymce'
+], function($, tinymce) {
     'use strict';
     /**
      * @class Converter
@@ -11,8 +15,8 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
         var w = writer;
         var converter = {};
 
-        $(document.body).append(''+
-            '<div id="entitiesConverter"></div>' // used by _htmlEntitiesToUnicode
+        $(document.body).append('' +
+                '<div id="entitiesConverter"></div>' // used by _htmlEntitiesToUnicode
         );
 
         // a list of reserved attribute names that are used by the editor
@@ -162,7 +166,10 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                 array.push('</' + tag + '>');
             } else {
                 // not a valid tag so return empty strings
-                array = ['', ''];
+                array = [
+                    '',
+                    ''
+                ];
             }
 
             return array;
@@ -213,7 +220,6 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
             rdfString += '<rdf:Description rdf:about="' + uri + '">\n\t<cw:mode>' + w.mode + '</cw:mode>\n</rdf:Description>';
 
             format = format || 'xml';
-
 
             w.entitiesManager.eachEntity(function(id, entity) {
                 // TODO temp fix for entities that don't have URIs
@@ -274,10 +280,10 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
             // triples
             for (i = 0; i < w.triples.length; i++) {
                 t = w.triples[i];
-                rdfString += '\n<rdf:Description rdf:about="' + t.subject.uri + '" cw:external="' + t.subject.external + '">'+
-                    '\n\t<cw:' + t.predicate.name + ' cw:text="' + t.predicate.text + '" cw:external="' + t.predicate.external + '">'+
-                    '\n\t\t<rdf:Description rdf:about="' + t.object.uri + '" cw:external="' + t.object.external + '" />'+
-                    '\n\t</cw:' + t.predicate.name + '>'+
+                rdfString += '\n<rdf:Description rdf:about="' + t.subject.uri + '" cw:external="' + t.subject.external + '">' +
+                    '\n\t<cw:' + t.predicate.name + ' cw:text="' + t.predicate.text + '" cw:external="' + t.predicate.external + '">' +
+                    '\n\t\t<rdf:Description rdf:about="' + t.object.uri + '" cw:external="' + t.object.external + '" />' +
+                    '\n\t</cw:' + t.predicate.name + '>' +
                     '\n</rdf:Description>';
             }
 
@@ -301,6 +307,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
             function getOffsetFromParentForEntity(id, parent, isEnd) {
                 var currentOffset = 0;
                 var offset = 0;
+
                 function getOffset(parent) {
                     parent.contents().each(function(index, element) {
                         var el = $(this);
@@ -330,9 +337,12 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                     w.entitiesManager.getEntity(parentId).getRange().offsetId = parentId;
                 }
                 parent.attr('offsetId', parentId);
-                xpath = '//' + parent.attr('_tag')+'[@offsetId="' + parentId + '"]';
+                xpath = '//' + parent.attr('_tag') + '[@offsetId="' + parentId + '"]';
                 offset = getOffsetFromParentForEntity(entityId, parent, isEnd);
-                return [xpath, offset];
+                return [
+                    xpath,
+                    offset
+                ];
             }
 
             var entitySpans = $('[name="' + entityId + '"]', w.editor.getBody());
@@ -395,7 +405,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                     _htmlEntitiesToUnicode(el);
                 }
             });
-        };
+        }
 
         /**
          * For debug
@@ -421,13 +431,15 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
         function _getNodeOffsetsFromParent(parent) {
             var currentOffset = 0;
             var offsets = [];
+
             function getOffsets(parent) {
                 parent.contents().each(function(index, element) {
                     var el = $(this);
+                    var id;
                     if (this.nodeType === Node.TEXT_NODE && this.data !== ' ') {
                         currentOffset += this.length;
                     } else if (el.attr('_tag')) {
-                        var id = el.attr('id');
+                        id = el.attr('id');
                         offsets.push({
                             id: id,
                             offset: currentOffset,
@@ -435,7 +447,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                         });
                         getOffsets(el);
                     } else if (el.attr('_entity') && el.hasClass('start')) {
-                        var id = el.attr('name');
+                        id = el.attr('name');
                         offsets.push({
                             id: id,
                             offset: currentOffset,
@@ -445,10 +457,9 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                     }
                 });
             }
-
             getOffsets(parent);
             return offsets;
-        };
+        }
 
         function _determineOffsetRelationships(offsets) {
             var relationships = {};
@@ -487,12 +498,9 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
             return relationships;
         };
 
-
-
         /////////////////////////////////////////////////////////////////////
         // XML -> CWRCWriter Methods
         /////////////////////////////////////////////////////////////////////
-
 
         /**
          * Processes a document and loads it into the editor.
@@ -705,7 +713,9 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                         parentId = w.getUniqueId('struct_');
                     } else {
                         var idNum = parseInt(parentId.split('_')[1]);
-                        if (idNum >= tinymce.DOM.counter) tinymce.DOM.counter = idNum+1;
+                        if (idNum >= tinymce.DOM.counter) {
+                            tinymce.DOM.counter = idNum + 1;
+                        }
                     }
                     xpathEl.attr('cwrcStructId', parentId);
 
@@ -782,7 +792,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                     }
 
                     // triple
-                } else if (rdf.attr('cw:external')){
+                } else if (rdf.attr('cw:external')) {
                     triples.push(rdf);
 
                     // rdf/xml
@@ -1097,7 +1107,9 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
                 editorString += ' id="' + id + '"';
 
                 var idNum = parseInt(id.split('_')[1], 10);
-                if (idNum >= tinymce.DOM.counter) tinymce.DOM.counter = idNum+1;
+                if (idNum >= tinymce.DOM.counter) {
+                    tinymce.DOM.counter = idNum + 1;
+                }
 
                 var canContainText = w.utilities.canTagContainText(tag);
                 // TODO find non-intensive way to check if tags can possess attributes
@@ -1299,6 +1311,7 @@ define([ 'jquery', 'tinymce' ], function($, tinymce) {
         function _getTextNodeFromParentAndOffset(parent, offset) {
             var currentOffset = 0;
             var textNode = null;
+
             function getTextNode(parent) {
                 parent.contents().each(function(index, element) {
                     if (this.nodeType === Node.TEXT_NODE && this.data !== ' ') {
