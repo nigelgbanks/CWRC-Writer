@@ -1,4 +1,4 @@
-/*jshint browser: true, devel: true*/
+/*jshint devel: true*/
 /*global define, CwrcApi, ko*/
 define('cwrcDialogs', [ 'jquery', 'jquery-ui', 'bootstrap-datepicker' ], function($) {
     'use strict';

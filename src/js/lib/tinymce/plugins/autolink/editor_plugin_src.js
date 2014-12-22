@@ -97,8 +97,7 @@
 				}
 
 				if (r.endOffset == 1)
-					end = 2;
-				else
+					end = 2; else
 					end = r.endOffset - 1 - end_offset;
 			}
 
@@ -121,8 +120,7 @@
 			} else if (r.startOffset == 0) {
 				r.setStart(endContainer, 0);
 				r.setEnd(endContainer, start);
-			}
-			else {
+			} else {
 				r.setStart(endContainer, end);
 				r.setEnd(endContainer, start);
 			}

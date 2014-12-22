@@ -3,11 +3,9 @@
 	"use strict";
 	if (typeof define === 'function' && define.amd) {
 		define(['jquery'], factory);
-	}
-	else if(typeof exports === 'object') {
+	} else if(typeof exports === 'object') {
 		factory(require('jquery'));
-	}
-	else {
+	} else {
 		factory(jQuery);
 	}
 }(function ($, undefined) {
@@ -23,7 +21,7 @@
  */
 /*!
  * if using jslint please allow for the jQuery global and use following options: 
- * jslint: browser: true, ass: true, bitwise: true, continue: true, nomen: true, plusplus: true, regexp: true, unparam: true, todo: true, white: true
+ * jslint: ass: true, bitwise: true, continue: true, nomen: true, plusplus: true, regexp: true, unparam: true, todo: true, white: true
  */
 	var jQuery = $;
 	// prevent another load? maybe there is a better way?
@@ -163,8 +161,7 @@
 		}
 		if(obj && obj.length && (obj = obj.closest('.jstree')).length && (obj = obj.data('jstree'))) {
 			tmp = obj;
-		}
-		else {
+		} else {
 			$('.jstree').each(function () {
 				var inst = $(this).data('jstree');
 				if(inst && inst._model.data[needle]) {
@@ -527,8 +524,7 @@
 				.on("dblclick.jstree", function () {
 						if(document.selection && document.selection.empty) {
 							document.selection.empty();
-						}
-						else {
+						} else {
 							if(window.getSelection) {
 								var sel = window.getSelection();
 								try {
@@ -559,8 +555,7 @@
 								e.preventDefault();
 								if(this.is_open(e.currentTarget)) {
 									this.close_node(e.currentTarget);
-								}
-								else {
+								} else {
 									o = this.get_prev_dom(e.currentTarget);
 									if(o && o.length) { o.children('.jstree-anchor').focus(); }
 								}
@@ -574,8 +569,7 @@
 								e.preventDefault();
 								if(this.is_closed(e.currentTarget)) {
 									this.open_node(e.currentTarget, function (o) { this.get_node(o, true).children('.jstree-anchor').focus(); });
-								}
-								else {
+								} else {
 									o = this.get_next_dom(e.currentTarget);
 									if(o && o.length) { o.children('.jstree-anchor').focus(); }
 								}
@@ -779,14 +773,11 @@
 			try {
 				if(this._model.data[obj]) {
 					obj = this._model.data[obj];
-				}
-				else if(((dom = $(obj, this.element)).length || (dom = $('#' + obj.replace($.jstree.idregex,'\\$&'), this.element)).length) && this._model.data[dom.closest('li').attr('id')]) {
+				} else if(((dom = $(obj, this.element)).length || (dom = $('#' + obj.replace($.jstree.idregex,'\\$&'), this.element)).length) && this._model.data[dom.closest('li').attr('id')]) {
 					obj = this._model.data[dom.closest('li').attr('id')];
-				}
-				else if((dom = $(obj, this.element)).length && dom.hasClass('jstree')) {
+				} else if((dom = $(obj, this.element)).length && dom.hasClass('jstree')) {
 					obj = this._model.data['#'];
-				}
-				else {
+				} else {
 					return false;
 				}
 
@@ -1171,8 +1162,7 @@
 			if(par !== '#') {
 				this._node_changed(par);
 				this.redraw();
-			}
-			else {
+			} else {
 				this.get_container_ul().children('.jstree-initial-node').remove();
 				this.redraw(true);
 			}
@@ -1233,8 +1223,7 @@
 					}
 				}
 				// ?) three_state selection - p.state.selected && t - (if three_state foreach(dat => ch) -> foreach(parents) if(parent.selected) child.selected = true;
-			}
-			else {
+			} else {
 				for(i = 0, j = dat.length; i < j; i++) {
 					tmp = this._parse_model_from_json(dat[i], par, p.parents.concat());
 					if(tmp) {
@@ -1256,8 +1245,7 @@
 			if(par !== '#') {
 				this._node_changed(par);
 				this.redraw();
-			}
-			else {
+			} else {
 				// this.get_container_ul().children('.jstree-initial-node').remove();
 				this.redraw(true);
 			}
@@ -1276,8 +1264,7 @@
 		 * @return {String} the ID of the object added to the model
 		 */
 		_parse_model_from_html : function (d, p, ps) {
-			if(!ps) { ps = []; }
-			else { ps = [].concat(ps); }
+			if(!ps) { ps = []; } else { ps = [].concat(ps); }
 			if(p) { ps.unshift(p); }
 			var c, e, m = this._model.data,
 				data = {
@@ -1357,8 +1344,7 @@
 					}
 				}, this));
 				data.children_d = data.children_d.concat(data.children);
-			}
-			else {
+			} else {
 				if(d.hasClass('jstree-closed')) {
 					data.state.loaded = false;
 				}
@@ -1385,8 +1371,7 @@
 		 * @return {String} the ID of the object added to the model
 		 */
 		_parse_model_from_flat_json : function (d, p, ps) {
-			if(!ps) { ps = []; }
-			else { ps = ps.concat(); }
+			if(!ps) { ps = []; } else { ps = ps.concat(); }
 			if(p) { ps.unshift(p); }
 			var tid = d.id.toString(),
 				m = this._model.data,
@@ -1480,8 +1465,7 @@
 		 * @return {String} the ID of the object added to the model
 		 */
 		_parse_model_from_json : function (d, p, ps) {
-			if(!ps) { ps = []; }
-			else { ps = ps.concat(); }
+			if(!ps) { ps = []; } else { ps = ps.concat(); }
 			if(p) { ps.unshift(p); }
 			var tid = false, i, j, c, e, m = this._model.data, df = this._model.default_state, tmp;
 			do {
@@ -1657,8 +1641,7 @@
 					}
 					ind = $.inArray(obj.id, par === null ? m['#'].children : m[obj.parent].children);
 				}
-			}
-			else {
+			} else {
 				node = $(node);
 				if(!is_callback) {
 					par = node.parent().parent()[0];
@@ -1689,8 +1672,7 @@
 					if(i === 'id') { continue; }
 					if(i !== 'class') {
 						node.setAttribute(i, obj.li_attr[i]);
-					}
-					else {
+					} else {
 						c += obj.li_attr[i];
 					}
 				}
@@ -1700,8 +1682,7 @@
 			}
 			if(obj.state.loaded && !obj.children.length) {
 				c += ' jstree-leaf';
-			}
-			else {
+			} else {
 				c += obj.state.opened && obj.state.loaded ? ' jstree-open' : ' jstree-closed';
 				node.setAttribute('aria-expanded', (obj.state.opened && obj.state.loaded) );
 			}
@@ -1716,8 +1697,7 @@
 					if(j === 'href' && obj.a_attr[j] === '#') { continue; }
 					if(j !== 'class') {
 						node.childNodes[1].setAttribute(j, obj.a_attr[j]);
-					}
-					else {
+					} else {
 						c += ' ' + obj.a_attr[j];
 					}
 				}
@@ -1728,11 +1708,9 @@
 			if((obj.icon && obj.icon !== true) || obj.icon === false) {
 				if(obj.icon === false) {
 					node.childNodes[1].childNodes[0].className += ' jstree-themeicon-hidden';
-				}
-				else if(obj.icon.indexOf('/') === -1 && obj.icon.indexOf('.') === -1) {
+				} else if(obj.icon.indexOf('/') === -1 && obj.icon.indexOf('.') === -1) {
 					node.childNodes[1].childNodes[0].className += ' ' + obj.icon + ' jstree-themeicon-custom';
-				}
-				else {
+				} else {
 					node.childNodes[1].childNodes[0].style.backgroundImage = 'url('+obj.icon+')';
 					node.childNodes[1].childNodes[0].style.backgroundPosition = 'center center';
 					node.childNodes[1].childNodes[0].style.backgroundSize = 'auto';
@@ -1766,15 +1744,13 @@
 					i.className = 'jstree-children';
 					par.appendChild(i);
 					par = i;
-				}
-				else {
+				} else {
 					par = par.getElementsByTagName('UL')[0];
 				}
 
 				if(ind < par.childNodes.length) {
 					par.insertBefore(node, par.childNodes[ind]);
-				}
-				else {
+				} else {
 					par.appendChild(node);
 				}
 				if(f) {
@@ -1826,8 +1802,7 @@
 				this.load_node(obj, function (o, ok) {
 					return ok ? this.open_node(o, callback, animation) : (callback ? callback.call(this, o, false) : false);
 				});
-			}
-			else {
+			} else {
 				d = this.get_node(obj, true);
 				t = this;
 				if(d.length) {
@@ -1840,8 +1815,7 @@
 						this.trigger('before_open', { "node" : obj });
 						d[0].className = d[0].className.replace('jstree-closed', 'jstree-open');
 						d[0].setAttribute("aria-expanded", true);
-					}
-					else {
+					} else {
 						this.trigger('before_open', { "node" : obj });
 						d
 							.children("ul").css("display","none").end()
@@ -1933,8 +1907,7 @@
 				if(!animation) {
 					d[0].className = d[0].className.replace('jstree-open', 'jstree-closed');
 					d.attr("aria-expanded", false).children('ul').remove();
-				}
-				else {
+				} else {
 					d
 						.children("ul").attr("style","display:block !important").end()
 						.removeClass("jstree-open").addClass("jstree-closed").attr("aria-expanded", false)
@@ -2143,14 +2116,12 @@
 			if(!this.settings.core.multiple || (!e.metaKey && !e.ctrlKey && !e.shiftKey) || (e.shiftKey && (!this._data.core.last_clicked || !this.get_parent(obj) || this.get_parent(obj) !== this._data.core.last_clicked.parent ) )) {
 				if(!this.settings.core.multiple && (e.metaKey || e.ctrlKey || e.shiftKey) && this.is_selected(obj)) {
 					this.deselect_node(obj, false, false, e);
-				}
-				else {
+				} else {
 					this.deselect_all(true);
 					this.select_node(obj, false, false, e);
 					this._data.core.last_clicked = this.get_node(obj);
 				}
-			}
-			else {
+			} else {
 				if(e.shiftKey) {
 					var o = this.get_node(obj).id,
 						l = this._data.core.last_clicked.id,
@@ -2167,17 +2138,14 @@
 						}
 						if(c || p[i] === o || p[i] === l) {
 							this.select_node(p[i], false, false, e);
-						}
-						else {
+						} else {
 							this.deselect_node(p[i], false, false, e);
 						}
 					}
-				}
-				else {
+				} else {
 					if(!this.is_selected(obj)) {
 						this.select_node(obj, false, false, e);
-					}
-					else {
+					} else {
 						this.deselect_node(obj, false, false, e);
 					}
 				}
@@ -2518,8 +2486,7 @@
 									if(state && state.core && state.core.open) {
 										$.vakata.array_remove_item(state.core.open, v);
 									}
-								}
-								else {
+								} else {
 									if(!t.is_loading(v)) {
 										t.open_node(v, $.proxy(function (o, s) {
 											if(!s && state && state.core && state.core.open) {
@@ -2772,8 +2739,7 @@
 			}, i, j;
 			if(options && options.flat) {
 				tmp.parent = obj.parent;
-			}
-			else {
+			} else {
 				tmp.children = [];
 			}
 			if(!options || !options.no_state) {
@@ -2796,8 +2762,7 @@
 				for(i = 0, j = obj.children.length; i < j; i++) {
 					if(options && options.flat) {
 						this.get_json(obj.children[i], options, flat);
-					}
-					else {
+					} else {
 						tmp.children.push(this.get_json(obj.children[i], options));
 					}
 				}
@@ -3116,8 +3081,7 @@
 				new_par.children = tmp;
 				this._node_changed(new_par.id);
 				this.redraw(new_par.id === '#');
-			}
-			else {
+			} else {
 				// clean old parent and up
 				tmp = obj.children_d.concat();
 				tmp.push(obj.id);
@@ -3589,15 +3553,12 @@
 			dom = this.get_node(obj, true).children(".jstree-anchor").children(".jstree-themeicon");
 			if(icon === false) {
 				this.hide_icon(obj);
-			}
-			else if(icon === true) {
+			} else if(icon === true) {
 				dom.removeClass('jstree-themeicon-custom ' + old).css("background","").removeAttr("rel");
-			}
-			else if(icon.indexOf("/") === -1 && icon.indexOf(".") === -1) {
+			} else if(icon.indexOf("/") === -1 && icon.indexOf(".") === -1) {
 				dom.removeClass(old).css("background","");
 				dom.addClass(icon + ' jstree-themeicon-custom').attr("rel",icon);
-			}
-			else {
+			} else {
 				dom.removeClass(old).css("background","");
 				dom.addClass('jstree-themeicon-custom').css("background", "url('" + icon + "') center center no-repeat").attr("rel",icon);
 			}
@@ -3667,8 +3628,7 @@
 			$.each(node.attributes, function (i, v) {
 				if($.inArray(v.nodeName.toLowerCase(),['style','contenteditable','hasfocus','tabindex']) !== -1) { return; }
 				if(v.nodeValue !== null && $.trim(v.nodeValue) !== '') {
-					if(with_values) { attr[v.nodeName] = v.nodeValue; }
-					else { attr.push(v.nodeName); }
+					if(with_values) { attr[v.nodeName] = v.nodeValue; } else { attr.push(v.nodeName); }
 				}
 			});
 		}
@@ -3722,8 +3682,7 @@
 		}
 		if(browser.chrome) {
 			browser.webkit = true;
-		}
-		else if(browser.webkit) {
+		} else if(browser.webkit) {
 			browser.safari = true;
 		}
 		$.vakata.browser = browser;
@@ -3805,8 +3764,7 @@
 									m[dpc[i]].state.selected = true;
 								}
 								this._data.core.selected = this._data.core.selected.concat(dpc);
-							}
-							else {
+							} else {
 								for(i = 0, j = dpc.length; i < j; i++) {
 									if(m[dpc[i]].state.selected) {
 										for(k = 0, l = m[dpc[i]].children_d.length; k < l; k++) {
@@ -3838,8 +3796,7 @@
 										if(tmp && tmp.length) {
 											tmp.children('.jstree-anchor').addClass('jstree-clicked');
 										}
-									}
-									else {
+									} else {
 										break;
 									}
 									p = this.get_node(p.parent);
@@ -3874,8 +3831,7 @@
 									if(tmp && tmp.length) {
 										tmp.children('.jstree-anchor').addClass('jstree-clicked');
 									}
-								}
-								else {
+								} else {
 									break;
 								}
 								par = this.get_node(par.parent);
@@ -3947,8 +3903,7 @@
 									if(tmp && tmp.length) {
 										tmp.children('.jstree-anchor').addClass('jstree-clicked');
 									}
-								}
-								else {
+								} else {
 									break;
 								}
 								p = this.get_node(p.parent);
@@ -3974,8 +3929,7 @@
 										if(tmp && tmp.length) {
 											tmp.children('.jstree-anchor').addClass('jstree-clicked');
 										}
-									}
-									else {
+									} else {
 										break;
 									}
 									p = this.get_node(p.parent);
@@ -3996,8 +3950,7 @@
 											tmp.children('.jstree-anchor').addClass('jstree-clicked');
 										}
 									}
-								}
-								else {
+								} else {
 									if(p.state.selected) {
 										p.state.selected = false;
 										this._data.core.selected = $.vakata.array_remove_item(this._data.core.selected, p.id);
@@ -4005,8 +3958,7 @@
 										if(tmp && tmp.length) {
 											tmp.children('.jstree-anchor').removeClass('jstree-clicked');
 										}
-									}
-									else {
+									} else {
 										break;
 									}
 								}
@@ -4037,8 +3989,7 @@
 							p.push(tmp.id);
 							p = p.concat(tmp.parents);
 						}
-					}
-					else {
+					} else {
 						for(i = 0, j = tmp.children_d.length; i < j; i++) {
 							tmp2 = m[tmp.children_d[i]];
 							if(!tmp2.state.loaded && tmp2.original && tmp2.original.state && tmp2.original.state.undetermined && tmp2.original.state.undetermined === true) {
@@ -4186,8 +4137,7 @@
 							obj = inst.get_node(data.reference);
 						if(inst.is_selected(obj)) {
 							inst.delete_node(inst.get_selected());
-						}
-						else {
+						} else {
 							inst.delete_node(obj);
 						}
 					}
@@ -4208,8 +4158,7 @@
 									obj = inst.get_node(data.reference);
 								if(inst.is_selected(obj)) {
 									inst.cut(inst.get_selected());
-								}
-								else {
+								} else {
 									inst.cut(obj);
 								}
 							}
@@ -4224,8 +4173,7 @@
 									obj = inst.get_node(data.reference);
 								if(inst.is_selected(obj)) {
 									inst.copy(inst.get_selected());
-								}
-								else {
+								} else {
 									inst.copy(obj);
 								}
 							}
@@ -4432,8 +4380,7 @@
 					if($.vakata.context.settings.icons) {
 						str += "<"+"i ";
 						if(val.icon) {
-							if(val.icon.indexOf("/") !== -1 || val.icon.indexOf(".") !== -1) { str += " style='background:url(\"" + val.icon + "\") center center no-repeat' "; }
-							else { str += " class='" + val.icon + "' "; }
+							if(val.icon.indexOf("/") !== -1 || val.icon.indexOf(".") !== -1) { str += " style='background:url(\"" + val.icon + "\") center center no-repeat' "; } else { str += " class='" + val.icon + "' "; }
 						}
 						str += "><"+"/i><"+"span class='vakata-contextmenu-sep'>&#160;<"+"/span>";
 					}
@@ -4475,8 +4422,7 @@
 				// може да се спести е една проверка - дали няма някой от класовете вече нагоре
 				if(right_to_left) {
 					o[x - (w + 10 + o.outerWidth()) < 0 ? "addClass" : "removeClass"]("vakata-context-left");
-				}
-				else {
+				} else {
 					o[x + w + 10 > dw ? "addClass" : "removeClass"]("vakata-context-right");
 				}
 				if(y + h + 10 > dh) {
@@ -4798,8 +4744,7 @@
 							data.helper.find('.jstree-icon:eq(0)').removeClass('jstree-er').addClass('jstree-ok');
 							return;
 						}
-					}
-					else {
+					} else {
 						// if we are hovering a tree node
 						ref = $(data.event.target).closest('a');
 						if(ref && ref.length && ref.parent().is('.jstree-closed, .jstree-open, .jstree-leaf')) {
@@ -4808,11 +4753,9 @@
 							h = ref.height();
 							if(rel < h / 3) {
 								o = ['b', 'i', 'a'];
-							}
-							else if(rel > h - h / 3) {
+							} else if(rel > h - h / 3) {
 								o = ['a', 'i', 'b'];
-							}
-							else {
+							} else {
 								o = rel > h / 2 ? ['i', 'a', 'b'] : ['i', 'b', 'a'];
 							}
 							$.each(o, function (j, v) {
@@ -4896,8 +4839,7 @@
 						}
 					}
 					lastmv.ins[ data.data.origin && (data.data.origin.settings.dnd.always_copy || (data.data.origin.settings.dnd.copy && (data.event.metaKey || data.event.ctrlKey))) ? 'copy_node' : 'move_node' ](nodes, lastmv.par, lastmv.pos);
-				}
-				else {
+				} else {
 					i = $(data.event.target).closest('.jstree');
 					if(i.length && laster && laster.error && laster.error === 'check') {
 						i = i.jstree(true);
@@ -5061,8 +5003,7 @@
 						 * @param {Object} event the event that caused the start (probably mousemove)
 						 */
 						$.vakata.dnd._trigger("start", e);
-					}
-					else { return; }
+					} else { return; }
 				}
 
 				var d  = false, w  = false,
@@ -5294,8 +5235,7 @@
 								this.search(str, true);
 							});
 						}, this));
-				}
-				else {
+				} else {
 					a = $.extend({}, a);
 					if(!a.data) { a.data = {}; }
 					a.data.str = str;
@@ -5767,8 +5707,7 @@
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				tmp.type = tmp.id && m[tmp.id] && m[tmp.id].type ? m[tmp.id].type : "default";
 				if(options && options.no_id) {
 					tmp = this._delete_ids(tmp);

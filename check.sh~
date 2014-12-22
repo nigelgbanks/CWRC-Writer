@@ -1,0 +1,5 @@
+#!/bin/bash
+
+find . -type f -name "*.js" -exec jshint --verbose --config .jshintrc {} \;
+
+find . -type f -name "*.js" -exec jscs --verbose --config .jscsrc {} \;

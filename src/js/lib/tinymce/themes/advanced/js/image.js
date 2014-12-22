@@ -130,8 +130,7 @@ var ImageDialog = {
 			v = f.border.value;
 			if (v || v == '0') {
 				if (v == '0')
-					st['border'] = '0';
-				else
+					st['border'] = '0'; else
 					st['border'] = v + 'px solid black';
 			} else
 				delete st['border'];

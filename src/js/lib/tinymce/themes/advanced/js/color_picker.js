@@ -134,8 +134,7 @@ function insertAction() {
 	if (hexColor === '') {
 		var text = tinyMCEPopup.editor.getLang('advanced_dlg.invalid_color_value');
 		tinyMCEPopup.alert(text + ': ' + color);
-	}
-	else {
+	} else {
 		tinyMCEPopup.restoreSelection();
 
 		if (f)

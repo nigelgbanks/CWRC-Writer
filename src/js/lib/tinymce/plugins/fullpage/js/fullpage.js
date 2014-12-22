@@ -41,10 +41,8 @@
 			value = value || '';
 
 			if (elm.nodeName == "SELECT")
-				selectByValue(document.forms[0], id, value);
-			else if (elm.type == "checkbox")
-				elm.checked = !!value;
-			else
+				selectByValue(document.forms[0], id, value); else if (elm.type == "checkbox")
+				elm.checked = !!value; else
 				elm.value = value;
 		}
 	};
@@ -70,8 +68,7 @@
 			setVal('textcolor', styles['color']);
 
 			if (val = styles['background-image'])
-				setVal('bgimage', val.replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1"));
-			else
+				setVal('bgimage', val.replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1")); else
 				setVal('bgimage', '');
 
 			setVal('bgcolor', styles['background-color']);
@@ -116,30 +113,25 @@
 			styles['background-color'] = getVal('bgcolor');
 
 			if (val = getVal('bgimage'))
-				styles['background-image'] = "url('" + val + "')";
-			else
+				styles['background-image'] = "url('" + val + "')"; else
 				styles['background-image'] = '';
 
 			delete styles['margin'];
 
 			if (val = getVal('topmargin'))
-				styles['margin-top'] = val + "px";
-			else
+				styles['margin-top'] = val + "px"; else
 				styles['margin-top'] = '';
 
 			if (val = getVal('rightmargin'))
-				styles['margin-right'] = val + "px";
-			else
+				styles['margin-right'] = val + "px"; else
 				styles['margin-right'] = '';
 
 			if (val = getVal('bottommargin'))
-				styles['margin-bottom'] = val + "px";
-			else
+				styles['margin-bottom'] = val + "px"; else
 				styles['margin-bottom'] = '';
 
 			if (val = getVal('leftmargin'))
-				styles['margin-left'] = val + "px";
-			else
+				styles['margin-left'] = val + "px"; else
 				styles['margin-left'] = '';
 
 			// Serialize, parse and reserialize this will compress redundant styles

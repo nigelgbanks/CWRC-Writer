@@ -1,4 +1,4 @@
-/*jshint browser: true, devel:true*/
+/*jshint devel:true*/
 /*global define*/
 // a wrapper for the pub/sub pattern described here: http://api.jquery.com/jQuery.Callbacks/
 define([ 'jquery' ], function($) {

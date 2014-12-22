@@ -1,4 +1,4 @@
-/*jshint browser: true, devel: true*/
+/*jshint devel: true*/
 /*global define*/
 define([ 'jquery', 'jquery-ui', 'dialogForm' ], function($, jqueryUi, DialogForm) {
     'use strict';

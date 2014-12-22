@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global require, tinymce*/
 (function(tinymce) {
     'use strict';

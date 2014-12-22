@@ -71,20 +71,17 @@
 					// Find element to focus
 					if (e.shiftKey) {
 						if (v[0] == ':prev')
-							el = find(-1);
-						else
+							el = find(-1); else
 							el = DOM.get(v[0]);
 					} else {
 						if (v[1] == ':next')
-							el = find(1);
-						else
+							el = find(1); else
 							el = DOM.get(v[1]);
 					}
 
 					if (el) {
 						if (el.id && (ed = tinymce.get(el.id || el.name)))
-							ed.focus();
-						else
+							ed.focus(); else
 							window.setTimeout(function() {
 								if (!tinymce.isWebKit)
 									window.focus();

@@ -217,8 +217,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
     if ($parent.length) {
       var $input = this.$element.find('input')
       if ($input.prop('type') == 'radio') {
-        if ($input.prop('checked') && this.$element.hasClass('active')) changed = false
-        else $parent.find('.active').removeClass('active')
+        if ($input.prop('checked') && this.$element.hasClass('active')) changed = false else $parent.find('.active').removeClass('active')
       }
       if (changed) $input.prop('checked', !this.$element.hasClass('active')).trigger('change')
     }
@@ -238,8 +237,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
       if (!data) $this.data('bs.button', (data = new Button(this, options)))
 
-      if (option == 'toggle') data.toggle()
-      else if (option) data.setState(option)
+      if (option == 'toggle') data.toggle() else if (option) data.setState(option)
     })
   }
 
@@ -443,9 +441,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
       var action  = typeof option == 'string' ? option : options.slide
 
       if (!data) $this.data('bs.carousel', (data = new Carousel(this, options)))
-      if (typeof option == 'number') data.to(option)
-      else if (action) data[action]()
-      else if (options.interval) data.pause().cycle()
+      if (typeof option == 'number') data.to(option) else if (action) data[action]() else if (options.interval) data.pause().cycle()
     })
   }
 
@@ -1056,8 +1052,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
       var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
       if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
-      if (typeof option == 'string') data[option](_relatedTarget)
-      else if (options.show) data.show(_relatedTarget)
+      if (typeof option == 'string') data[option](_relatedTarget) else if (options.show) data.show(_relatedTarget)
     })
   }
 
@@ -1351,8 +1346,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
     var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
 
-    if (delta.left) offset.left += delta.left
-    else offset.top += delta.top
+    if (delta.left) offset.left += delta.left else offset.top += delta.top
 
     var arrowDelta          = delta.left ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
     var arrowPosition       = delta.left ? 'left'        : 'top'

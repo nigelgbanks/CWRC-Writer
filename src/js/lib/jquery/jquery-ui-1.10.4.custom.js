@@ -1375,8 +1375,7 @@ $.ui.position = {
 				if ( newOverRight < 0 || newOverRight < abs( overLeft ) ) {
 					position.left += myOffset + atOffset + offset;
 				}
-			}
-			else if ( overRight > 0 ) {
+			} else if ( overRight > 0 ) {
 				newOverLeft = position.left - data.collisionPosition.marginLeft + myOffset + atOffset + offset - offsetLeft;
 				if ( newOverLeft > 0 || abs( newOverLeft ) < overRight ) {
 					position.left += myOffset + atOffset + offset;
@@ -1410,8 +1409,7 @@ $.ui.position = {
 				if ( ( position.top + myOffset + atOffset + offset) > overTop && ( newOverBottom < 0 || newOverBottom < abs( overTop ) ) ) {
 					position.top += myOffset + atOffset + offset;
 				}
-			}
-			else if ( overBottom > 0 ) {
+			} else if ( overBottom > 0 ) {
 				newOverTop = position.top - data.collisionPosition.marginTop + myOffset + atOffset + offset - offsetTop;
 				if ( ( position.top + myOffset + atOffset + offset) > overBottom && ( newOverTop > 0 || abs( newOverTop ) < overBottom ) ) {
 					position.top += myOffset + atOffset + offset;
@@ -1956,8 +1954,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 						this.containment[ 2 ] + co.left,
 						this.containment[ 3 ] + co.top
 					];
-				}
-				else {
+				} else {
 					containment = this.containment;
 				}
 
@@ -3489,8 +3486,7 @@ $.ui.plugin.add("resizable", "containment", {
 			};
 		}
 
-		// i'm a node, so compute top, left, right, bottom
-		else {
+		// i'm a node, so compute top, left, right, bottom else {
 			element = $(ce);
 			p = [];
 			$([ "Top", "Right", "Left", "Bottom" ]).each(function(i, name) { p[i] = num(element.css("padding" + name)); });
@@ -3605,8 +3601,7 @@ $.ui.plugin.add("resizable", "alsoResize", {
 			};
 
 		if (typeof(o.alsoResize) === "object" && !o.alsoResize.parentNode) {
-			if (o.alsoResize.length) { o.alsoResize = o.alsoResize[0]; _store(o.alsoResize); }
-			else { $.each(o.alsoResize, function (exp) { _store(exp); }); }
+			if (o.alsoResize.length) { o.alsoResize = o.alsoResize[0]; _store(o.alsoResize); } else { $.each(o.alsoResize, function (exp) { _store(exp); }); }
 		}else{
 			_store(o.alsoResize);
 		}

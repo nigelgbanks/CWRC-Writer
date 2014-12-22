@@ -169,8 +169,7 @@
 
 				// If contentEditable mode we need to find out the position of the closest element
 				if (body != ed.getDoc().body)
-					posY = dom.getPos(ed.selection.getStart(), body).y;
-				else
+					posY = dom.getPos(ed.selection.getStart(), body).y; else
 					posY = body.scrollTop + dom.getViewPort(ed.getWin()).y;
 
 				// Styles needs to be applied after the element is added to the document since WebKit will otherwise remove all styles
@@ -349,8 +348,7 @@
 				each(items, function(v) {
 					// Remove or replace
 					if (v.constructor == RegExp)
-						h = h.replace(v, '');
-					else
+						h = h.replace(v, ''); else
 						h = h.replace(v[0], v[1]);
 				});
 			}
@@ -631,8 +629,7 @@
 						dom.setAttrib(el, 'style', '');
 
 						if (styleProps && npc > 0)
-							dom.setStyles(el, newStyle); // Add back the stored subset of styles
-						else // Remove empty span tags that do not have class attributes
+							dom.setStyles(el, newStyle); // Add back the stored subset of styles else // Remove empty span tags that do not have class attributes
 							if (el.nodeName == 'SPAN' && !el.className)
 								dom.remove(el, true);
 					});
@@ -708,8 +705,7 @@
 
 						// Remove span with the middot or the number
 						if (type == 'ul' && /^__MCE_ITEM__[\u2022\u00b7\u00a7\u00d8o\u25CF]/.test(html))
-							dom.remove(span);
-						else if (/^__MCE_ITEM__[\s\S]*\w+\.(&nbsp;|\u00a0)*\s*/.test(html))
+							dom.remove(span); else if (/^__MCE_ITEM__[\s\S]*\w+\.(&nbsp;|\u00a0)*\s*/.test(html))
 							dom.remove(span);
 					});
 
@@ -717,8 +713,7 @@
 
 					// Remove middot/list items
 					if (type == 'ul')
-						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*(&nbsp;|\u00a0)+\s*/, '');
-					else
+						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*(&nbsp;|\u00a0)+\s*/, ''); else
 						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^\s*[\w|'<'|'>']+\.(&nbsp;|\u00a0)+\s*/, '');;
 
 					// Create li and add paragraph data into the new li
@@ -768,8 +763,7 @@
 			function process(items) {
 				each(items, function(v) {
 					if (v.constructor == RegExp)
-						content = content.replace(v, "");
-					else
+						content = content.replace(v, ""); else
 						content = content.replace(v[0], v[1]);
 				});
 			};

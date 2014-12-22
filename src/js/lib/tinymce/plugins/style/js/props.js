@@ -37,8 +37,7 @@ function aggregateStyles(allStyles) {
 				if (parsedStyles.hasOwnProperty(name)) {
 					if (mergedStyles[name] === undefined) {
 						mergedStyles[name] = parsedStyles[name];
-					}
-					else if (name === 'text-decoration') {
+					} else if (name === 'text-decoration') {
 						if (mergedStyles[name].indexOf(parsedStyles[name]) === -1) {
 							mergedStyles[name] = mergedStyles[name] +' '+ parsedStyles[name];
 						}
@@ -301,8 +300,7 @@ function getVal(s, i) {
 
 function setValue(f, n, v) {
 	if (f.elements[n].type == "text")
-		f.elements[n].value = v;
-	else
+		f.elements[n].value = v; else
 		selectByValue(f, n, v, true, true);
 }
 
@@ -427,8 +425,7 @@ function applyAction() {
 
 		if (tinyMCEPopup.getWindowArg('applyStyleToBlocks')) {
 			nodes = ed.selection.getSelectedBlocks();
-		}
-		else {
+		} else {
 			nodes = ed.selection.getNode();
 		}
 
@@ -611,8 +608,7 @@ function showDisabledControls() {
 	for (i=0; i<f.length; i++) {
 		for (a=0; a<f[i].elements.length; a++) {
 			if (f[i].elements[a].disabled)
-				tinyMCEPopup.editor.dom.addClass(f[i].elements[a], "disabled");
-			else
+				tinyMCEPopup.editor.dom.addClass(f[i].elements[a], "disabled"); else
 				tinyMCEPopup.editor.dom.removeClass(f[i].elements[a], "disabled");
 		}
 	}

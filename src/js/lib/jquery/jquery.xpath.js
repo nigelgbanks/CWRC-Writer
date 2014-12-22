@@ -95,11 +95,9 @@ function cLexer(sValue) {
 		var nStack	= 0;
 		for (var nIndex = 0, nLength = aMatch.length; nIndex < nLength; nIndex++)
 			if (aMatch[nIndex] == '(:')
-				nStack++;
-			else
+				nStack++; else
 			if (aMatch[nIndex] == ':)' && nStack)
-				nStack--;
-			else
+				nStack--; else
 			if (!nStack && !/^\s/.test(aMatch[nIndex]))
 				this[this.length++]	= aMatch[nIndex];
 		if (nStack)
@@ -289,22 +287,18 @@ cStaticContext.prototype.getURIForPrefix	= function(sPrefix) {
 
 cStaticContext.js2xs	= function(vItem) {
 		if (typeof vItem == "boolean")
-		vItem	= new cXSBoolean(vItem);
-	else
+		vItem	= new cXSBoolean(vItem); else
 	if (typeof vItem == "number")
-		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : fNumericLiteral_parseValue(cString(vItem));
-	else
+		vItem	=(fIsNaN(vItem) ||!fIsFinite(vItem)) ? new cXSDouble(vItem) : fNumericLiteral_parseValue(cString(vItem)); else
 		vItem	= new cXSString(cString(vItem));
 		return vItem;
 };
 
 cStaticContext.xs2js	= function(vItem) {
 	if (vItem instanceof cXSBoolean)
-		vItem	= vItem.valueOf();
-	else
+		vItem	= vItem.valueOf(); else
 	if (fXSAnyAtomicType_isNumeric(vItem))
-		vItem	= vItem.valueOf();
-	else
+		vItem	= vItem.valueOf(); else
 		vItem	= vItem.toString();
 		return vItem;
 };
@@ -506,8 +500,7 @@ cForExpr.prototype.evaluate	= function (oContext) {
 		for (var nIndex = 0, nLength = oSequence1.length; nIndex < nLength; nIndex++) {
 			oContext.pushVariable(sUri, oSequence1[nIndex]);
 			if (nBinding < oSelf.bindings.length)
-				arguments.callee(oSelf, nBinding);
-			else
+				arguments.callee(oSelf, nBinding); else
 				oSequence	= oSequence.concat(oSelf.returnExpr.evaluate(oContext));
 			oContext.popVariable(sUri);
 		}
@@ -661,8 +654,7 @@ cQuantifiedExpr.prototype.evaluate	= function (oContext) {
 		for (var nIndex = 0, nLength = oSequence1.length; (nIndex < nLength) && (bEvery ? bResult :!bResult); nIndex++) {
 			oContext.pushVariable(sUri, oSequence1[nIndex]);
 			if (nBinding < oSelf.bindings.length)
-				arguments.callee(oSelf, nBinding);
-			else
+				arguments.callee(oSelf, nBinding); else
 				bResult	= fFunction_sequence_toEBV(oSelf.satisfiesExpr.evaluate(oContext), oContext);
 			oContext.popVariable(sUri);
 		}
@@ -768,26 +760,20 @@ function fComparisonExpr_GeneralComp(oExpr, oContext) {
 			if (bLeft && bRight) {
 								vLeft	= cXSString.cast(vLeft);
 				vRight	= cXSString.cast(vRight);
-			}
-			else {
+			} else {
 								if (bLeft) {
 										if (vRight instanceof cXSDayTimeDuration)
-						vLeft	= cXSDayTimeDuration.cast(vLeft);
-					else
+						vLeft	= cXSDayTimeDuration.cast(vLeft); else
 					if (vRight instanceof cXSYearMonthDuration)
-						vLeft	= cXSYearMonthDuration.cast(vLeft);
-					else
+						vLeft	= cXSYearMonthDuration.cast(vLeft); else
 										if (vRight.primitiveKind)
 						vLeft	= hStaticContext_dataTypes[vRight.primitiveKind].cast(vLeft);
-				}
-				else
+				} else
 				if (bRight) {
 										if (vLeft instanceof cXSDayTimeDuration)
-						vRight	= cXSDayTimeDuration.cast(vRight);
-					else
+						vRight	= cXSDayTimeDuration.cast(vRight); else
 					if (vLeft instanceof cXSYearMonthDuration)
-						vRight	= cXSYearMonthDuration.cast(vRight);
-					else
+						vRight	= cXSYearMonthDuration.cast(vRight); else
 										if (vLeft.primitiveKind)
 						vRight	= hStaticContext_dataTypes[vLeft.primitiveKind].cast(vRight);
 				}
@@ -851,73 +837,59 @@ hComparisonExpr_ValueComp_operators['eq']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			sOperator	= "numeric-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSBoolean) {
 		if (oRight instanceof cXSBoolean)
 			sOperator	= "boolean-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
 			return hStaticContext_operators["numeric-equal"].call(oContext, hStaticContext_functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
 			sOperator	= "date-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
 			sOperator	= "time-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
 			sOperator	= "dateTime-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDuration) {
 		if (oRight instanceof cXSDuration)
 			sOperator	= "duration-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSGYearMonth) {
 		if (oRight instanceof cXSGYearMonth)
 			sOperator	= "gYearMonth-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSGYear) {
 		if (oRight instanceof cXSGYear)
 			sOperator	= "gYear-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSGMonthDay) {
 		if (oRight instanceof cXSGMonthDay)
 			sOperator	= "gMonthDay-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSGMonth) {
 		if (oRight instanceof cXSGMonth)
 			sOperator	= "gMonth-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSGDay) {
 		if (oRight instanceof cXSGDay)
 			sOperator	= "gDay-equal";
-	}
-		else
+	} else
 	if (oLeft instanceof cXSQName) {
 		if (oRight instanceof cXSQName)
 			sOperator	= "QName-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSHexBinary) {
 		if (oRight instanceof cXSHexBinary)
 			sOperator	= "hexBinary-equal";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSBase64Binary) {
 		if (oRight instanceof cXSBase64Binary)
 			sOperator	= "base64Binary-equal";
@@ -938,38 +910,31 @@ hComparisonExpr_ValueComp_operators['gt']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			sOperator	= "numeric-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSBoolean) {
 		if (oRight instanceof cXSBoolean)
 			sOperator	= "boolean-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
 			return hStaticContext_operators["numeric-greater-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
 			sOperator	= "date-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
 			sOperator	= "time-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
 			sOperator	= "dateTime-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "yearMonthDuration-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "dayTimeDuration-greater-than";
@@ -987,38 +952,31 @@ hComparisonExpr_ValueComp_operators['lt']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			sOperator	= "numeric-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSBoolean) {
 		if (oRight instanceof cXSBoolean)
 			sOperator	= "boolean-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
 			return hStaticContext_operators["numeric-less-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(0));
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
 			sOperator	= "date-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
 			sOperator	= "time-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
 			sOperator	= "dateTime-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "yearMonthDuration-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "dayTimeDuration-less-than";
@@ -1036,38 +994,31 @@ hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hStaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight) || hStaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
-	}
-	else
+	} else
 	if (oLeft instanceof cXSBoolean) {
 		if (oRight instanceof cXSBoolean)
 			sOperator	= "boolean-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
 			return hStaticContext_operators["numeric-greater-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(-1));
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
 			sOperator	= "date-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
 			sOperator	= "time-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
 			sOperator	= "dateTime-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "yearMonthDuration-less-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "dayTimeDuration-less-than";
@@ -1085,38 +1036,31 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			return hStaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight) || hStaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
-	}
-	else
+	} else
 	if (oLeft instanceof cXSBoolean) {
 		if (oRight instanceof cXSBoolean)
 			sOperator	= "boolean-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSString) {
 		if (oRight instanceof cXSString)
 			return hStaticContext_operators["numeric-less-than"].call(oContext, hStaticContext_functions["compare"].call(oContext, oLeft, oRight), new cXSInteger(1));
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
 			sOperator	= "date-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
 			sOperator	= "time-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
 			sOperator	= "dateTime-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "yearMonthDuration-greater-than";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "dayTimeDuration-greater-than";
@@ -1199,60 +1143,48 @@ hAdditiveExpr_operators['+']	= function(oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			sOperator	= "numeric-add";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSYearMonthDuration)
-			sOperator	= "add-yearMonthDuration-to-date";
-		else
+			sOperator	= "add-yearMonthDuration-to-date"; else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "add-dayTimeDuration-to-date";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSDate) {
 			sOperator	= "add-yearMonthDuration-to-date";
 			bReverse	= true;
-		}
-		else
+		} else
 		if (oRight instanceof cXSDateTime) {
 			sOperator	= "add-yearMonthDuration-to-dateTime";
 			bReverse	= true;
-		}
-		else
+		} else
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "add-yearMonthDurations";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDate) {
 			sOperator	= "add-dayTimeDuration-to-date";
 			bReverse	= true;
-		}
-		else
+		} else
 		if (oRight instanceof cXSTime) {
 			sOperator	= "add-dayTimeDuration-to-time";
 			bReverse	= true;
-		}
-		else
+		} else
 		if (oRight instanceof cXSDateTime) {
 			sOperator	= "add-dayTimeDuration-to-dateTime";
 			bReverse	= true;
-		}
-		else
+		} else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "add-dayTimeDurations";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "add-dayTimeDuration-to-time";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSYearMonthDuration)
-			sOperator	= "add-yearMonthDuration-to-dateTime";
-		else
+			sOperator	= "add-yearMonthDuration-to-dateTime"; else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "add-dayTimeDuration-to-dateTime";
 	}
@@ -1269,43 +1201,33 @@ hAdditiveExpr_operators['-']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			sOperator	= "numeric-subtract";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDate) {
 		if (oRight instanceof cXSDate)
-			sOperator	= "subtract-dates";
-		else
+			sOperator	= "subtract-dates"; else
 		if (oRight instanceof cXSYearMonthDuration)
-			sOperator	= "subtract-yearMonthDuration-from-date";
-		else
+			sOperator	= "subtract-yearMonthDuration-from-date"; else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "subtract-dayTimeDuration-from-date";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSTime) {
 		if (oRight instanceof cXSTime)
-			sOperator	= "subtract-times";
-		else
+			sOperator	= "subtract-times"; else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "subtract-dayTimeDuration-from-time";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		if (oRight instanceof cXSDateTime)
-			sOperator	= "subtract-dateTimes";
-		else
+			sOperator	= "subtract-dateTimes"; else
 		if (oRight instanceof cXSYearMonthDuration)
-			sOperator	= "subtract-yearMonthDuration-from-dateTime";
-		else
+			sOperator	= "subtract-yearMonthDuration-from-dateTime"; else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "subtract-dayTimeDuration-from-dateTime";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "subtract-yearMonthDurations";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "subtract-dayTimeDurations";
@@ -1383,24 +1305,20 @@ hMultiplicativeExpr_operators['*']		= function (oLeft, oRight, oContext) {
 
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			sOperator	= "numeric-multiply";
-		else
+			sOperator	= "numeric-multiply"; else
 		if (oRight instanceof cXSYearMonthDuration) {
 			sOperator	= "multiply-yearMonthDuration";
 			bReverse	= true;
-		}
-		else
+		} else
 		if (oRight instanceof cXSDayTimeDuration) {
 			sOperator	= "multiply-dayTimeDuration";
 			bReverse	= true;
 		}
-	}
-	else {
+	} else {
 		if (oLeft instanceof cXSYearMonthDuration) {
 			if (fXSAnyAtomicType_isNumeric(oRight))
 				sOperator	= "multiply-yearMonthDuration";
-		}
-		else
+		} else
 		if (oLeft instanceof cXSDayTimeDuration) {
 			if (fXSAnyAtomicType_isNumeric(oRight))
 				sOperator	= "multiply-dayTimeDuration";
@@ -1419,20 +1337,16 @@ hMultiplicativeExpr_operators['div']	= function (oLeft, oRight, oContext) {
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
 			sOperator	= "numeric-divide";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSYearMonthDuration) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			sOperator	= "divide-yearMonthDuration";
-		else
+			sOperator	= "divide-yearMonthDuration"; else
 		if (oRight instanceof cXSYearMonthDuration)
 			sOperator	= "divide-yearMonthDuration-by-yearMonthDuration";
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDayTimeDuration) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			sOperator	= "divide-dayTimeDuration";
-		else
+			sOperator	= "divide-dayTimeDuration"; else
 		if (oRight instanceof cXSDayTimeDuration)
 			sOperator	= "divide-dayTimeDuration-by-dayTimeDuration";
 	}
@@ -1690,8 +1604,7 @@ cStepExpr.prototype.applyPredicates	= function(oSequence, oContext) {
 						if (oSequence2.length == 1 && fXSAnyAtomicType_isNumeric(oSequence2[0])) {
 				if (oSequence2[0].valueOf() == nIndex + 1)
 					oSequence.push(oSequence1[nIndex]);
-			}
-			else
+			} else
 			if (fFunction_sequence_toEBV(oSequence2, oContext))
 				oSequence.push(oSequence1[nIndex]);
 		}
@@ -1744,13 +1657,11 @@ function fAxisStep_parse (oLexer, oStaticContext) {
 					, "Expected node test expression in axis step"
 			);
 				oStep	= new cAxisStep(sAxis, oExpr);
-	}
-	else
+	} else
 	if (sAxis == '..') {
 		oLexer.next();
 		oStep	= new cAxisStep("parent", new cKindTest("node"));
-	}
-	else
+	} else
 	if (sAxis == '@') {
 		oLexer.next();
 		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
@@ -1758,8 +1669,7 @@ function fAxisStep_parse (oLexer, oStaticContext) {
 					, "Expected node test expression in axis step"
 			);
 				oStep	= new cAxisStep("attribute", oExpr);
-	}
-	else {
+	} else {
 		if (oLexer.eof() ||!(oExpr = fNodeTest_parse(oLexer, oStaticContext)))
 			return;
 		oStep	= new cAxisStep(oExpr instanceof cKindTest && oExpr.name == "attribute" ? "attribute" : "child", oExpr);
@@ -1936,8 +1846,7 @@ cPathExpr.prototype.evaluate	= function (oContext) {
 						oContext.item	= oSequence[nIndex];
 						for (var nRightIndex = 0, oSequence2 = this.items[nItemIndex].evaluate(oContext), nRightLength = oSequence2.length; nRightIndex < nRightLength; nRightIndex++)
 				if ((nItemIndex < nItemLength - 1) && !oContext.DOMAdapter.isNode(oSequence2[nRightIndex]))
-					throw new cException("XPTY0019");
-				else
+					throw new cException("XPTY0019"); else
 				if (fArray_indexOf(oSequence1, oSequence2[nRightIndex]) ==-1)
 					oSequence1.push(oSequence2[nRightIndex]);
 		}
@@ -1992,29 +1901,22 @@ function fKindTest_parse (oLexer, oStaticContext) {
 				var oTest	= new cKindTest(sName);
 		if (oLexer.peek() != ')') {
 			if (sName == "document-node") {
-							}
-			else
+							} else
 			if (sName == "element") {
-							}
-			else
+							} else
 			if (sName == "attribute") {
-							}
-			else
+							} else
 			if (sName == "processing-instruction") {
-							}
-			else
+							} else
 			if (sName == "schema-attribute") {
-							}
-			else
+							} else
 			if (sName == "schema-element") {
 							}
-		}
-		else {
+		} else {
 			if (sName == "schema-attribute")
 				throw new cException("XPST0003"
 						, "Expected attribute declaration in 'schema-attribute' kind test"
-				);
-			else
+				); else
 			if (sName == "schema-element")
 				throw new cException("XPST0003"
 						, "Expected element declaration in 'schema-element' kind test"
@@ -2196,8 +2098,7 @@ function fNumericLiteral_parseValue(sValue) {
 	if (aMatch) {
 		var cType	= cXSInteger;
 		if (aMatch[5])
-			cType	= cXSDouble;
-		else
+			cType	= cXSDouble; else
 		if (aMatch[2] || aMatch[3])
 			cType	= cXSDecimal;
 		return new cType(+sValue);
@@ -2350,8 +2251,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		throw new cException("XPST0017"
 				, "Unknown system function: " + sUri + '()'
 		);
-	}
-	else
+	} else
 	if (this.namespaceURI == sNS_XSD) {
 		if ((fFunction = hStaticContext_dataTypes[this.localName]) && this.localName != "NOTATION" && this.localName != "anyAtomicType") {
 						fFunctionCall_prepare(this.localName, [[cXSAnyAtomicType]], fFunction, aArguments, oContext);
@@ -2360,8 +2260,7 @@ cFunctionCall.prototype.evaluate	= function (oContext) {
 		throw new cException("XPST0017"
 				, "Unknown type constructor function: " + sUri + '()'
 		);
-	}
-	else
+	} else
 	if (fFunction = oContext.staticContext.getFunction(sUri)) {
 				var vResult	= fFunction.apply(oContext, aArguments);
 				return vResult == null ? [] : vResult instanceof cArray ? vResult : [vResult];
@@ -2385,8 +2284,7 @@ function fFunctionCall_prepare(sName, aParameters, fFunction, aArguments, oConte
 		if (nArgumentsLength > nParametersLength)
 		throw new cException("XPST0017"
 				, "Function " + sName + "() must have " + (nParametersLength ? " no more than " : '') + nParametersLength + " argument" + (nParametersLength > 1 || !nParametersLength ? 's' : '')
-		);
-	else
+		); else
 	if (nArgumentsLength < nParametersRequired)
 		throw new cException("XPST0017"
 				, "Function " + sName + "() must have " + (nParametersRequired == nParametersLength ? "exactly" : "at least") + ' ' + nParametersRequired + " argument" + (nParametersLength > 1 ? 's' : '')
@@ -2424,19 +2322,16 @@ function fFunctionCall_assertSequenceItemType(oContext, oSequence, cItemType
 							, "Required item type of " + sSource + " is " + cItemType
 					);
 			}
-		}
-		else
+		} else
 				if (cItemType == cXSAnyAtomicType || cItemType.prototype instanceof cXSAnyAtomicType) {
 						vItem	= fFunction_sequence_atomize([vItem], oContext)[0];
 						if (cItemType != cXSAnyAtomicType) {
 								if (vItem instanceof cXSUntypedAtomic)
-					vItem	= cItemType.cast(vItem);
-								else
+					vItem	= cItemType.cast(vItem); else
 				if (cItemType == cXSString) {
 					if (vItem instanceof cXSAnyURI)
 						vItem	= cXSString.cast(vItem);
-				}
-				else
+				} else
 				if (cItemType == cXSDouble) {
 					if (fXSAnyAtomicType_isNumeric(vItem))
 						vItem	= cItemType.cast(vItem);
@@ -2459,14 +2354,12 @@ function fFunctionCall_assertSequenceCardinality(oContext, oSequence, sCardinali
 			throw new cException("XPTY0004"
 					, "Required cardinality of " + sSource + " is one or zero"
 			);
-	}
-	else
+	} else
 	if (sCardinality == '+') {			if (nLength < 1)
 			throw new cException("XPTY0004"
 					, "Required cardinality of " + sSource + " is one or more"
 			);
-	}
-	else
+	} else
 	if (sCardinality != '*') {			if (nLength != 1)
 			throw new cException("XPTY0004"
 					, "Required cardinality of " + sSource + " is exactly one"
@@ -2742,8 +2635,7 @@ cCastableExpr.prototype.evaluate	= function(oContext) {
 		sOccurence	= this.type.occurence;
 
 	if (oSequence1.length > 1)
-		return [new cXSBoolean(false)];
-	else
+		return [new cXSBoolean(false)]; else
 	if (!oSequence1.length)
 		return [new cXSBoolean(sOccurence == '?')];
 
@@ -2897,8 +2789,7 @@ function fSequenceType_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof() && (oExpr = fItemType_parse(oLexer, oStaticContext))) {
 		sOccurence	= oLexer.peek();
 		if (sOccurence == '?' || sOccurence == '*' || sOccurence == '+')
-			oLexer.next();
-		else
+			oLexer.next(); else
 			sOccurence	= null;
 
 		return new cSequenceType(oExpr, sOccurence);
@@ -2920,8 +2811,7 @@ function fSingleType_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof() && (oExpr = fAtomicType_parse(oLexer, oStaticContext))) {
 		sOccurence	= oLexer.peek();
 		if (sOccurence == '?')
-			oLexer.next();
-		else
+			oLexer.next(); else
 			sOccurence	= null;
 
 		return new cSingleType(oExpr, sOccurence);
@@ -3158,8 +3048,7 @@ function fXSDate_normalize(oValue, bDay) {
 				oValue.day	-= nDay;
 				nDay = fXSDate_getDaysForYearMonth(oValue.year, oValue.month);
 			}
-		}
-		else
+		} else
 		if (oValue.day < 1) {
 			while (oValue.day < 1) {
 				oValue.month	-= 1;
@@ -3179,8 +3068,7 @@ function fXSDate_normalize(oValue, bDay) {
 		if (oValue.year == 0)
 			oValue.year	= 1;
 		oValue.month	= oValue.month % 12;
-	}
-	else
+	} else
 	if (oValue.month < 1) {
 		oValue.year		+= ~~(oValue.month / 12) - 1;
 		if (oValue.year == 0)
@@ -4629,8 +4517,7 @@ function fOperator_compareDateTimes(oLeft, oRight, sComparator) {
 function fOperator_addYearMonthDuration2DateTime(oLeft, oRight, sOperator) {
 	var oValue;
 	if (oLeft instanceof cXSDate)
-		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
-	else
+		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative); else
 	if (oLeft instanceof cXSDateTime)
 		oValue	= new cXSDateTime(oLeft.year, oLeft.month, oLeft.day, oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone, oLeft.negative);
 		oValue.year		= oValue.year + oRight.year * (sOperator == '-' ?-1 : 1);
@@ -4648,8 +4535,7 @@ function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
 		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
 		fXSDate_normalize(oValue);
-	}
-	else
+	} else
 	if (oLeft instanceof cXSDateTime) {
 		oValue	= new cXSDateTime(oLeft.year, oLeft.month, oLeft.day, oLeft.hours, oLeft.minutes, oLeft.seconds, oLeft.timezone, oLeft.negative);
 		oValue.seconds	= oValue.seconds + oRight.seconds * (sOperator == '-' ?-1 : 1);
@@ -4959,13 +4845,11 @@ fStaticContext_defineSystemFunction("resolve-uri",	[[cXSString, '?'], [cXSString
 			for (var nIndex = 0, nLength = aUriSegments.length; nIndex < nLength; nIndex++) {
 				if (aUriSegments[nIndex] == '..') {
 					if (aBaseUriSegments.length > nBaseUriStart)
-						aBaseUriSegments.pop();
-					else {
+						aBaseUriSegments.pop(); else {
 						aBaseUriSegments.push(aUriSegments[nIndex]);
 						nBaseUriStart++;
 					}
-				}
-				else
+				} else
 				if (aUriSegments[nIndex] != '.')
 					aBaseUriSegments.push(aUriSegments[nIndex]);
 			}
@@ -5144,8 +5028,7 @@ function fFunction_dateTime_getComponent(oDateTime, sName) {
 		if (nTimezone == null)
 			return null;
 		return new cXSDayTimeDuration(0, cMath.abs(~~(nTimezone / 60)), cMath.abs(nTimezone % 60), 0, nTimezone < 0);
-	}
-	else {
+	} else {
 		var nValue	= oDateTime[sName];
 		if (!(oDateTime instanceof cXSDate)) {
 			if (sName == "hours")
@@ -5164,24 +5047,20 @@ function fFunction_dateTime_adjustTimezone(oDateTime, oTimezone) {
 
 		var oValue;
 	if (oDateTime instanceof cXSDate)
-		oValue	= new cXSDate(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.timezone, oDateTime.negative);
-	else
+		oValue	= new cXSDate(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.timezone, oDateTime.negative); else
 	if (oDateTime instanceof cXSTime)
-		oValue	= new cXSTime(oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
-	else
+		oValue	= new cXSTime(oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative); else
 		oValue	= new cXSDateTime(oDateTime.year, oDateTime.month, oDateTime.day, oDateTime.hours, oDateTime.minutes, oDateTime.seconds, oDateTime.timezone, oDateTime.negative);
 
 		if (oTimezone == null)
-		oValue.timezone	= null;
-	else {
+		oValue.timezone	= null; else {
 		var nTimezone	= fOperator_dayTimeDuration_toSeconds(oTimezone) / 60;
 		if (oDateTime.timezone != null) {
 			var nDiff	= nTimezone - oDateTime.timezone;
 			if (oDateTime instanceof cXSDate) {
 				if (nDiff < 0)
 					oValue.day--;
-			}
-			else {
+			} else {
 				oValue.minutes	+= nDiff % 60;
 				oValue.hours	+= ~~(nDiff / 60);
 			}
@@ -5202,8 +5081,7 @@ fStaticContext_defineSystemFunction("name",	[[cXTNode, '?', true]],	function(oNo
 					, "name() function called when the context item is not a node"
 			);
 		oNode	= this.item;
-	}
-	else
+	} else
 	if (oNode == null)
 		return new cXSString('');
 		var vValue	= hStaticContext_functions["node-name"].call(this, oNode);
@@ -5217,8 +5095,7 @@ fStaticContext_defineSystemFunction("local-name",	[[cXTNode, '?', true]],	functi
 					, "local-name() function called when the context item is not a node"
 			);
 		oNode	= this.item;
-	}
-	else
+	} else
 	if (oNode == null)
 		return new cXSString('');
 		return new cXSString(this.DOMAdapter.getProperty(oNode, "localName") || '');
@@ -5231,8 +5108,7 @@ fStaticContext_defineSystemFunction("namespace-uri",	[[cXTNode, '?', true]],	fun
 					, "namespace-uri() function called when the context item is not a node"
 			);
 		oNode	= this.item;
-	}
-	else
+	} else
 	if (oNode == null)
 		return cXSAnyURI.cast(new cXSString(''));
 		return cXSAnyURI.cast(new cXSString(this.DOMAdapter.getProperty(oNode, "namespaceURI") || ''));
@@ -5285,8 +5161,7 @@ fStaticContext_defineSystemFunction("root",	[[cXTNode, '?', true]],	function(oNo
 					, "root() function called when the context item is not a node"
 			);
 		oNode	= this.item;
-	}
-	else
+	} else
 	if (oNode == null)
 		return null;
 
@@ -5329,8 +5204,7 @@ fStaticContext_defineSystemFunction("round-half-to-even",	[[cXSDouble, '?'], [cX
 			oRounded= new cXSInteger(nRounded);
 			nDecimal= cMath.abs(hStaticContext_operators["numeric-subtract"].call(this, oRounded, hStaticContext_operators["numeric-divide"].call(this, oValue, oPower)));
 		return hStaticContext_operators["numeric-multiply"].call(this, hStaticContext_operators["numeric-add"].call(this, oRounded, new cXSDecimal(nDecimal == 0.5 && nRounded % 2 ?-1 : 0)), oPower);
-	}
-	else {
+	} else {
 		var oPower	= new cXSInteger(cMath.pow(10, nPrecision)),
 			nRounded= cMath.round(hStaticContext_operators["numeric-multiply"].call(this, oValue, oPower)),
 			oRounded= new cXSInteger(nRounded);
@@ -5477,8 +5351,7 @@ fStaticContext_defineSystemFunction("insert-before",	[[cXTItem, '*'], [cXSIntege
 	var nLength 	= oSequence1.length,
 		nPosition	= oPosition.valueOf();
 	if (nPosition < 1)
-		nPosition	= 1;
-	else
+		nPosition	= 1; else
 	if (nPosition > nLength)
 		nPosition	= nLength + 1;
 
@@ -5625,8 +5498,7 @@ fStaticContext_defineSystemFunction("min",	[[cXSAnyAtomicType, '*'], [cXSString,
 fStaticContext_defineSystemFunction("sum",	[[cXSAnyAtomicType, '*'], [cXSAnyAtomicType, '?', true]],	function(oSequence1, oZero) {
 	if (!oSequence1.length) {
 		if (arguments.length > 1)
-			return oZero;
-		else
+			return oZero; else
 			return new cXSDouble(0);
 
 		return null;
@@ -5726,8 +5598,7 @@ function fFunction_sequence_atomize(oSequence1, oContext) {
 		oItem	= oSequence1[nIndex];
 		vItem	= null;
 				if (oItem == null)
-			vItem	= null;
-				else
+			vItem	= null; else
 		if (oContext.DOMAdapter.isNode(oItem)) {
 			var fGetProperty	= oContext.DOMAdapter.getProperty;
 			switch (fGetProperty(oItem, "nodeType")) {
@@ -5743,8 +5614,7 @@ function fFunction_sequence_atomize(oSequence1, oContext) {
 					vItem	= new cXSUntypedAtomic(oNode ? fGetProperty(oNode, "textContent") : '');
 					break;
 			}
-		}
-				else
+		} else
 		if (oItem instanceof cXSAnyAtomicType)
 			vItem	= oItem;
 
@@ -5887,8 +5757,7 @@ fStaticContext_defineSystemFunction("translate",	[[cXSString, '?'], [cXSString],
 		aReturn	= [];
 	for (var nIndex = 0, nLength = aValue.length, nPosition; nIndex < nLength; nIndex++)
 		if ((nPosition = aMap.indexOf(aValue[nIndex])) ==-1)
-			aReturn[aReturn.length]	= aValue[nIndex];
-		else
+			aReturn[aReturn.length]	= aValue[nIndex]; else
 		if (nPosition < nTranslateLength)
 			aReturn[aReturn.length]	= aTranslate[nPosition];
 
@@ -5973,15 +5842,13 @@ function fFunction_string_createRegExp(sValue, sFlags) {
 			sCharCurr	= sValue.charAt(nIndex);
 			if (sCharPrev != '\\') {
 				if (sCharCurr == '[')
-					bValue	= true;
-				else
+					bValue	= true; else
 				if (sCharCurr == ']')
 					bValue	= false;
 			}
 						if (bValue || !(bFlagX && rValue.test(sCharCurr))) {
 								if (!bValue && (bFlagS && sCharCurr == '.' && sCharPrev != '\\'))
-					aValue[aValue.length]	= '(?:.|\\s)';
-				else
+					aValue[aValue.length]	= '(?:.|\\s)'; else
 					aValue[aValue.length]	= sCharCurr;
 			}
 			sCharPrev	= sCharCurr;
@@ -6085,15 +5952,13 @@ cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 			if (oParent.nodeType == 1  && (sUri = oParent.getAttribute("xml:base")))
 				sBaseURI	= fResolveUri(new cXSString(sUri), new cXSString(sBaseURI)).toString();
 				return sBaseURI;
-	}
-	else
+	} else
 	if (sName == "textContent") {
 		var aText = [];
 		(function(oNode) {
 			for (var nIndex = 0, oChild; oChild = oNode.childNodes[nIndex]; nIndex++)
 				if (oChild.nodeType == 3  || oChild.nodeType == 4 )
-					aText.push(oChild.data);
-				else
+					aText.push(oChild.data); else
 				if (oChild.nodeType == 1  && oChild.firstChild)
 					arguments.callee(oChild);
 		})(oNode);
@@ -6167,8 +6032,7 @@ cLXDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
 
 		for (; oNode && oNode.nodeType != 9  ; oNode = oNode.parentNode)
 		if (sPrefix == this.getProperty(oChild, "prefix"))
-			return this.getProperty(oNode, "namespaceURI");
-		else
+			return this.getProperty(oNode, "namespaceURI"); else
 		if (oNode.nodeType == 1)				for (var oAttributes = this.getProperty(oNode, "attributes"), nIndex = 0, nLength = oAttributes.length, sName = "xmlns" + ':' + sPrefix; nIndex < nLength; nIndex++)
 				if (this.getProperty(oAttributes[nIndex], "nodeName") == sName)
 					return this.getProperty(oAttributes[nIndex], "value");
@@ -6327,8 +6191,7 @@ function fXPath_evaluate(oQuery, sExpression, fNSResolver) {
 		oAdapter	= oL2DOMAdapter;
 
 		if (bOldMS)
-		oAdapter	= oStaticContext == oHTMLStaticContext ? oMSHTMLDOMAdapter : oMSXMLDOMAdapter;
-	else
+		oAdapter	= oStaticContext == oHTMLStaticContext ? oMSHTMLDOMAdapter : oMSXMLDOMAdapter; else
 	if (bOldW3 && oStaticContext == oHTMLStaticContext)
 		oAdapter	= oL2HTMLDOMAdapter;
 

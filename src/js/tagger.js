@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global define, tinymce*/
 define([ 'jquery', 'entity' ], function($, Entity) {
     'use strict';
@@ -266,11 +266,9 @@ define([ 'jquery', 'entity' ], function($, Entity) {
         tagger.getCurrentTag = function(id) {
             var tag = {entity: null, struct: null};
             if (id !== null) {
-                if (w.entitiesManager.getEntity(id) !== undefined) tag.entity = w.entitiesManager.getEntity(id);
-                else if (w.structs[id]) tag.struct = $('#' + id, w.editor.getBody());
+                if (w.entitiesManager.getEntity(id) !== undefined) tag.entity = w.entitiesManager.getEntity(id); else if (w.structs[id]) tag.struct = $('#' + id, w.editor.getBody());
             } else {
-                if (w.entitiesManager.getCurrentEntity() !== null) tag.entity = w.entitiesManager.getEntity(w.entitiesManager.getCurrentEntity());
-                else if (w.editor.currentStruct !== null) tag.struct = $('#' + w.editor.currentStruct, w.editor.getBody());
+                if (w.entitiesManager.getCurrentEntity() !== null) tag.entity = w.entitiesManager.getEntity(w.entitiesManager.getCurrentEntity()); else if (w.editor.currentStruct !== null) tag.struct = $('#' + w.editor.currentStruct, w.editor.getBody());
             }
             return tag;
         };

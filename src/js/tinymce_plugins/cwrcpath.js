@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 (function(exports, undefined) {
     'use strict';
     var modules = {};

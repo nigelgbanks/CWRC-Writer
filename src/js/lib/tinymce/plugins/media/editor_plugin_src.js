@@ -40,8 +40,7 @@
 
 			for (i = 0; true; i++) {
 				if (obj[i])
-					out[i] = obj[i];
-				else
+					out[i] = obj[i]; else
 					break;
 			}
 
@@ -636,8 +635,7 @@
 
 			var n = video || audio || object || embed;
 			if (n)
-				node.replace(n);
-			else
+				node.replace(n); else
 				node.remove();
 		},
 
@@ -833,8 +831,7 @@
 
 			if (video) {
 				if (node.name === 'video')
-					type = lookup.video.name;
-				else if (node.name === 'audio')
+					type = lookup.video.name; else if (node.name === 'audio')
 					type = lookup.audio.name;
 			}
 

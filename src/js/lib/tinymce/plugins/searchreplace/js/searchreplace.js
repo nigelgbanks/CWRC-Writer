@@ -109,8 +109,7 @@ var SearchReplaceDialog = {
 				}
 
 				if (fo)
-					tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.allreplaced'));
-				else
+					tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.allreplaced')); else
 					tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.notfound'));
 
 				return;
@@ -142,8 +141,7 @@ var SearchReplaceDialog = {
 			tinyMCEPopup.storeSelection();
 		} else {
 			if (!w.find(s, ca, b, false, false, false, false))
-				tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.notfound'));
-			else
+				tinyMCEPopup.alert(ed.getLang('searchreplace_dlg.notfound')); else
 				fix();
 		}
 	}

@@ -119,8 +119,7 @@ function insertTable() {
  		}
 
 		if (background != '')
-			elm.style.backgroundImage = "url('" + background + "')";
-		else
+			elm.style.backgroundImage = "url('" + background + "')"; else
 			elm.style.backgroundImage = '';
 
 /*		if (tinyMCEPopup.getParam("inline_styles")) {
@@ -200,8 +199,7 @@ function insertTable() {
 
 	if (caption) {
 		if (!tinymce.isIE || tinymce.isIE11)
-			html += '<caption><br data-mce-bogus="1"/></caption>';
-		else
+			html += '<caption><br data-mce-bogus="1"/></caption>'; else
 			html += '<caption></caption>';
 	}
 
@@ -210,8 +208,7 @@ function insertTable() {
 
 		for (var x=0; x<cols; x++) {
 			if (!tinymce.isIE || tinymce.isIE11)
-				html += '<td><br data-mce-bogus="1"/></td>';
-			else
+				html += '<td><br data-mce-bogus="1"/></td>'; else
 				html += '<td></td>';
 		}
 
@@ -248,8 +245,7 @@ function insertTable() {
 		// Fixes a bug in IE where the caret cannot be placed after the table if the table is at the end of the document
 		if (tinymce.isIE && !tinymce.isIE11 && node.nextSibling == null) {
 			if (inst.settings.forced_root_block)
-				dom.insertAfter(dom.create(inst.settings.forced_root_block), node);
-			else
+				dom.insertAfter(dom.create(inst.settings.forced_root_block), node); else
 				dom.insertAfter(dom.create('br', {'data-mce-bogus': '1'}), node);
 		}
 
@@ -402,14 +398,12 @@ function changedSize() {
 
 /*	var width = formObj.width.value;
 	if (width != "")
-		st['width'] = tinyMCEPopup.getParam("inline_styles") ? getCSSSize(width) : "";
-	else
+		st['width'] = tinyMCEPopup.getParam("inline_styles") ? getCSSSize(width) : ""; else
 		st['width'] = "";*/
 
 	var height = formObj.height.value;
 	if (height != "")
-		st['height'] = getCSSSize(height);
-	else
+		st['height'] = getCSSSize(height); else
 		st['height'] = "";
 
 	formObj.style.value = dom.serializeStyle(st);
@@ -444,8 +438,7 @@ function changedBorder() {
 
 	// Update border width if the element has a color
 	if (formObj.border.value != "" && (isCssSize(formObj.border.value) || formObj.bordercolor.value != ""))
-		st['border-width'] = cssSize(formObj.border.value);
-	else {
+		st['border-width'] = cssSize(formObj.border.value); else {
 		if (!formObj.border.value) {
 			st['border'] = '';
 			st['border-width'] = '';
@@ -477,8 +470,7 @@ function changedStyle() {
 	var st = dom.parseStyle(formObj.style.value);
 
 	if (st['background-image'])
-		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\(['\"]?([^'\"]*)['\"]?\\)", 'gi'), "$1");
-	else
+		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\(['\"]?([^'\"]*)['\"]?\\)", 'gi'), "$1"); else
 		formObj.backgroundimage.value = '';
 
 	if (st['width'])

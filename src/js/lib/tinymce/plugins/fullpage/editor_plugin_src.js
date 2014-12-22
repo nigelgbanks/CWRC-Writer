@@ -87,8 +87,7 @@
 				var name = meta.attr('name'), httpEquiv = meta.attr('http-equiv'), matches;
 
 				if (name)
-					data['meta' + name.toLowerCase()] = meta.attr('content');
-				else if (httpEquiv == "Content-Type") {
+					data['meta' + name.toLowerCase()] = meta.attr('content'); else if (httpEquiv == "Content-Type") {
 					matches = /charset\s*=\s*(.*)\s*/gi.exec(meta.attr('content'));
 
 					if (matches)
@@ -128,8 +127,7 @@
 
 			function addHeadNode(node) {
 				if (headElement.firstChild)
-					headElement.insert(node, headElement.firstChild);
-				else
+					headElement.insert(node, headElement.firstChild); else
 					headElement.append(node);
 			};
 
@@ -140,8 +138,7 @@
 				headElement = new Node('head', 1);
 
 				if (elm.firstChild)
-					elm.insert(headElement, elm.firstChild, true);
-				else
+					elm.insert(headElement, elm.firstChild, true); else
 					elm.append(headElement);
 			}
 
@@ -169,8 +166,7 @@
 					elm = new Node('#doctype', 10);
 
 					if (data.xml_pi)
-						headerFragment.insert(elm, headerFragment.firstChild);
-					else
+						headerFragment.insert(elm, headerFragment.firstChild); else
 						addHeadNode(elm);
 				}
 
@@ -215,8 +211,7 @@
 
 					if (meta.attr('name') == name) {
 						if (value)
-							meta.attr('content', value);
-						else
+							meta.attr('content', value); else
 							meta.remove();
 
 						return;
@@ -237,8 +232,7 @@
 			elm = headerFragment.getAll('link')[0];
 			if (elm && elm.attr('rel') == 'stylesheet') {
 				if (data.stylesheet)
-					elm.attr('href', data.stylesheet);
-				else
+					elm.attr('href', data.stylesheet); else
 					elm.remove();
 			} else if (data.stylesheet) {
 				elm = new Node('link', 1);

@@ -190,8 +190,7 @@ function getCSSSize(size) {
 	// Add px
 	if (/^[0-9]+$/.test(size))
 		size += 'px';
-	// Sanity check, IE doesn't like broken values
-	else if (!(/^[0-9\.]+(px|%|in|cm|mm|em|ex|pt|pc)$/i.test(size)))
+	// Sanity check, IE doesn't like broken values else if (!(/^[0-9\.]+(px|%|in|cm|mm|em|ex|pt|pc)$/i.test(size)))
 		return "";
 
 	return size;

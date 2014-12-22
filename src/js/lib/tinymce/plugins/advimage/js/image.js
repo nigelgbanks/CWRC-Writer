@@ -80,8 +80,7 @@ var ImageDialog = {
 
 		// Check swap image if valid data
 		if (nl.onmouseoversrc.value || nl.onmouseoutsrc.value)
-			this.setSwapImage(true);
-		else
+			this.setSwapImage(true); else
 			this.setSwapImage(false);
 
 		this.changeAppearance();
@@ -376,8 +375,7 @@ var ImageDialog = {
 				v = getSelectValue(f, 'align');
 				if (v) {
 					if (v == 'left' || v == 'right')
-						dom.setStyle(img, 'float', v);
-					else
+						dom.setStyle(img, 'float', v); else
 						img.style.verticalAlign = v;
 				}
 			}
@@ -393,17 +391,14 @@ var ImageDialog = {
 				v = f.border.value;
 				if (v || v == '0') {
 					if (v == '0')
-						img.style.border = isIE ? '0' : '0 none none';
-					else {
+						img.style.border = isIE ? '0' : '0 none none'; else {
 						var isOldIE = tinymce.isIE && (!document.documentMode || document.documentMode < 9);
 
 						if (b.length == 3 && b[isOldIE ? 2 : 1])
-							bStyle = b[isOldIE ? 2 : 1];
-						else if (!bStyle || bStyle == 'none')
+							bStyle = b[isOldIE ? 2 : 1]; else if (!bStyle || bStyle == 'none')
 							bStyle = 'solid';
 						if (b.length == 3 && b[isIE ? 0 : 2])
-							bColor = b[isOldIE ? 0 : 2];
-						else if (!bColor || bColor == 'none')
+							bColor = b[isOldIE ? 0 : 2]; else if (!bColor || bColor == 'none')
 							bColor = 'black';
 						img.style.border = v + 'px ' + bStyle + ' ' + bColor;
 					}
@@ -454,8 +449,7 @@ var ImageDialog = {
 		u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
 		if (!st)
-			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this);" onerror="ImageDialog.resetImageData();" />');
-		else
+			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this);" onerror="ImageDialog.resetImageData();" />'); else
 			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this, 1);" />');
 	}
 };

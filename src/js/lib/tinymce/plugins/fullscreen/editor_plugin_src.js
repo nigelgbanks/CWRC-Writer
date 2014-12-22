@@ -43,8 +43,7 @@
 
 				if (ed.getParam('fullscreen_is_enabled')) {
 					if (ed.getParam('fullscreen_new_window'))
-						closeFullscreen(); // Call to close in fullscreen.htm
-					else {
+						closeFullscreen(); // Call to close in fullscreen.htm else {
 						DOM.win.setTimeout(function() {
 							var fullscreenEditor = ed;
 
@@ -101,8 +100,7 @@
 
 					// Use fixed position if it exists
 					if (tinymce.isIE6 || document.compatMode == 'BackCompat')
-						posCss = 'absolute;top:' + vp.y;
-					else
+						posCss = 'absolute;top:' + vp.y; else
 						posCss = 'fixed;top:0';
 
 					n = DOM.add(DOM.doc.body, 'div', {

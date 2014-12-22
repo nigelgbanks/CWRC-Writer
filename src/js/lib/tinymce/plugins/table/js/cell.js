@@ -106,8 +106,7 @@ function updateAction() {
 
 			if (ed.getParam("accessibility_warnings", 1)) {
 				if (celltype == "th" && scope == "")
-					tinyMCEPopup.confirm(ed.getLang('table_dlg.missing_scope', '', true), doUpdate);
-				else
+					tinyMCEPopup.confirm(ed.getLang('table_dlg.missing_scope', '', true), doUpdate); else
 					doUpdate(1);
 
 				return;
@@ -229,8 +228,7 @@ function updateCell(td, skip_id) {
 	td.style.backgroundColor = formObj.bgcolor.value;
 
 	if (formObj.backgroundimage.value != "")
-		td.style.backgroundImage = "url('" + formObj.backgroundimage.value + "')";
-	else
+		td.style.backgroundImage = "url('" + formObj.backgroundimage.value + "')"; else
 		td.style.backgroundImage = '';
 
 	if (curCellType != celltype) {
@@ -267,14 +265,12 @@ function changedSize() {
 
 	var width = formObj.width.value;
 	if (width != "")
-		st['width'] = getCSSSize(width);
-	else
+		st['width'] = getCSSSize(width); else
 		st['width'] = "";
 
 	var height = formObj.height.value;
 	if (height != "")
-		st['height'] = getCSSSize(height);
-	else
+		st['height'] = getCSSSize(height); else
 		st['height'] = "";
 
 	formObj.style.value = ed.dom.serializeStyle(st);
@@ -295,8 +291,7 @@ function changedStyle() {
 	var st = ed.dom.parseStyle(formObj.style.value);
 
 	if (st['background-image'])
-		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1");
-	else
+		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1"); else
 		formObj.backgroundimage.value = '';
 
 	if (st['width'])

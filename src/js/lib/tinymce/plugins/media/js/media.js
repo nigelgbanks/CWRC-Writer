@@ -52,8 +52,7 @@
 			var elm = get(id);
 
 			if (elm.nodeName == "SELECT")
-				selectByValue(document.forms[0], id, value);
-			else if (elm.type == "checkbox") {
+				selectByValue(document.forms[0], id, value); else if (elm.type == "checkbox") {
 				if (typeof(value) == 'string') {
 					value = value.toLowerCase();
 					value = (!name && value === 'true') || (name && value === name.toLowerCase());
@@ -82,8 +81,7 @@
 
 			html = self.getMediaListHTML('medialist', 'src', 'media', 'media');
 			if (html == "")
-				get("linklistrow").style.display = 'none';
-			else
+				get("linklistrow").style.display = 'none'; else
 				get("linklistcontainer").innerHTML = html;
 
 			if (isVisible('filebrowser'))
@@ -176,8 +174,7 @@
 						formItemName = type == 'global' ? name : type + '_' + name;
 
 						if (type == 'global')
-						list = data;
-					else if (type == 'video' || type == 'audio') {
+						list = data; else if (type == 'video' || type == 'audio') {
 							list = data.video.attrs;
 
 							if (!list && !to_form)

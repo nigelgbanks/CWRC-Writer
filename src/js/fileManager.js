@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global define*/
 // Contains the load and save dialogs, as well as file related functions.
 define([ 'jquery', 'jquery-ui' ], function($, jqueryUi) {

@@ -244,8 +244,7 @@
 
 						DOM.removeClass(id + '_wrapper', 'mceMaximized');
 					} else if (n.className == 'mceMove')
-						return t._startDrag(id, e, n.className);
-					else if (DOM.hasClass(n, 'mceResize'))
+						return t._startDrag(id, e, n.className); else if (DOM.hasClass(n, 'mceResize'))
 						return t._startDrag(id, e, n.className.substring(13));
 				}
 			});
@@ -356,8 +355,7 @@
 			var i, n, t = this, dom = tinymce.DOM;
 
 			if (is(ne, 'string'))
-				te.appendChild(dom.doc.createTextNode(ne));
-			else if (ne.length) {
+				te.appendChild(dom.doc.createTextNode(ne)); else if (ne.length) {
 				te = te.appendChild(dom.create(ne[0], ne[1]));
 
 				for (i=2; i<ne.length; i++)

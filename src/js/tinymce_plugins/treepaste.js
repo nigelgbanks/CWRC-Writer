@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global require, tinymce*/
 /**
  * Modified version of the paste plugin.  Works in conjunction with the structure tree for more reliable copy paste.

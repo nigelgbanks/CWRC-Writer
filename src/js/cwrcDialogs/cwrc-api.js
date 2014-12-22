@@ -1,12 +1,13 @@
+/*jshint devel: true*/
+/*global require*/
 /**
  * @author mpm1
  *
  * Requires jQuery
  */
 function CwrcAnnotion(url, jq) {
-    if (!jq) {
-        jq = $;
-    }
+    'use strict';
+    jq = jq || require('jquery');
 
     // Public Functions
     this.searchAnnotion = function(searchObject) {
@@ -98,9 +99,8 @@ function CwrcAnnotion(url, jq) {
 }
 
 function CwrcEntity(type, url, jq) {
-    if (!jq) {
-        jq = $;
-    }
+    'use strict';
+    jq = jq || require('jquery');
 
     // Public Functions
     this.searchEntity = function(searchObject) {
@@ -109,10 +109,10 @@ function CwrcEntity(type, url, jq) {
         var restrictions = searchObject.restrictions !== undefined ? searchObject.restrictions : [];
 
         return jq.ajax({
-            url: url + "search/" + type,
+            url: url + 'search/' + type,
             type: 'GET',
             async: true,
-            dataType: "json",
+            dataType: 'json',
             data: {
                 query: searchObject.query,
                 limit: limit,
@@ -120,21 +120,20 @@ function CwrcEntity(type, url, jq) {
                 restrictions: restrictions
             },
             success: function(data) {
-                result = data === "" ? {} : data;
-
+                var result = data === '' ? {} : data;
                 searchObject.success(result);
             },
             error: function(error) {
                 searchObject.error(error);
             }
         });
-    }
+    };
 
     this.getEntity = function(pid) {
         var result = result;
 
         jq.ajax({
-            url: url + type + "/" + pid,
+            url: url + type + '/' + pid,
             type: 'GET',
             async: false,
             success: function(data) {
@@ -146,7 +145,7 @@ function CwrcEntity(type, url, jq) {
         });
 
         return result;
-    }
+    };
 
     this.newEntity = function(data) {
         var result = result;
@@ -168,7 +167,7 @@ function CwrcEntity(type, url, jq) {
         });
 
         return result;
-    }
+    };
 
     this.modifyEntity = function(pid, data) {
         var result = result;
@@ -191,13 +190,13 @@ function CwrcEntity(type, url, jq) {
 
         //return jq.parseJSON(result);
         return result;
-    }
+    };
 
     this.deleteEntity = function(pid) {
         var result = result;
 
         jq.ajax({
-            url: url + type + "/" + pid,
+            url: url + type + '/' + pid,
             type: 'POST',
             async: false,
             data: {
@@ -212,21 +211,20 @@ function CwrcEntity(type, url, jq) {
         });
 
         return result;
-    }
+    };
 
     this.listEntity = function(totalPerPage, page) {
-        alert("Page " + page);
-    }
+        alert('Page ' + page);
+    };
 }
 
 function CwrcApi(url, jq) {
-    if (!jq) {
-        jq = $;
-    }
+    'use strict';
+    jq = jq || require('jquery');
 
     // Class creation
-    if (url.indexOf("/", (url.length - 1)) == -1) {
-        url = url + "/";
+    if (url.indexOf('/', (url.length - 1)) === -1) {
+        url = url + '/';
     }
 
     // Private variables
@@ -244,7 +242,7 @@ function CwrcApi(url, jq) {
     // Private functions
     this.updateIsInitialized = function() {
         jq.ajax({
-            url: url + "is_initialized",
+            url: url + 'is_initialized',
             type: 'POST',
             data: {
                 name: name
@@ -253,11 +251,10 @@ function CwrcApi(url, jq) {
                 _this.isInitialized = JSON.parse(data).result;
             },
             error: function(error) {
-                result = error;
                 _this.isInitialized = false;
             }
         });
-    }
+    };
 
     // Public functions
     /**
@@ -265,11 +262,10 @@ function CwrcApi(url, jq) {
      * var name The cookie to obtaine the information from
      */
     this.initializeWithCookieData = function(data) {
-        var result = result;
-
+        var result;
 
         jq.ajax({
-            url: url + "initialize_cookie",
+            url: url + 'initialize_cookie',
             type: 'POST',
             async: false,
             data: {
@@ -284,16 +280,14 @@ function CwrcApi(url, jq) {
             }
         });
 
-
         return result;
-    }
+    };
 
     this.initializeWithLogin = function(username, password) {
-        var result = result;
-
+        var result;
 
         jq.ajax({
-            url: url + "initialize_user",
+            url: url + 'initialize_user',
             type: 'POST',
             async: false,
             data: {
@@ -309,16 +303,15 @@ function CwrcApi(url, jq) {
             }
         });
 
-
         return result;
-    }
+    };
 
     this.logout = function() {
-        var result = result;
+        var result;
 
         if (!_this.isInitialized()) {
             jq.ajax({
-                url: url + "logout",
+                url: url + 'logout',
                 type: 'POST',
                 async: false,
                 success: function(data) {
@@ -332,7 +325,7 @@ function CwrcApi(url, jq) {
 
         _this.isInitialized = false;
         return result;
-    }
+    };
 
     //this.updateIsInitialized();
 

@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global define*/
 define([ 'jquery', 'objtree' ], function($, objTree) {
     'use strict';
@@ -229,8 +229,7 @@ define([ 'jquery', 'objtree' ], function($, objTree) {
 
             function findTextNode(node, direction) {
                 function doFind(currNode, dir, reps) {
-                    if (reps > 20) return null; // prevent infinite recursion
-                    else {
+                    if (reps > 20) return null; // prevent infinite recursion else {
                         var newNode;
                         if (dir == 'back') {
                             newNode = currNode.lastChild || currNode.previousSibling || currNode.parentNode.previousSibling;

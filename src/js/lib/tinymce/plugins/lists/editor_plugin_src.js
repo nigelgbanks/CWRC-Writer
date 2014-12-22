@@ -308,10 +308,8 @@
 
 				var ul;
 				if (prevSibling.tagName === 'UL' || prevSibling.tagName === 'OL')
-					ul = prevSibling;
-				else if (prevSibling.previousSibling && (prevSibling.previousSibling.tagName === 'UL' || prevSibling.previousSibling.tagName === 'OL'))
-					ul = prevSibling.previousSibling;
-				else
+					ul = prevSibling; else if (prevSibling.previousSibling && (prevSibling.previousSibling.tagName === 'UL' || prevSibling.previousSibling.tagName === 'OL'))
+					ul = prevSibling.previousSibling; else
 					return;
 
 				var li = lastLI(ul);
@@ -329,8 +327,7 @@
 				// copy the image an its text to the list item
 				var clone = n.parentNode.cloneNode(true);
 				if (clone.tagName === 'P' || clone.tagName === 'DIV')
-					addChildren(clone, li);
-				else
+					addChildren(clone, li); else
 					li.appendChild(clone);
 
 				// remove the old copy of the image

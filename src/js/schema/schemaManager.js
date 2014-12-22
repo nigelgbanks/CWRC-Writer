@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global define*/
 define([ 'jquery', 'tinymce', 'mapper' ], function($, tinymce, Mapper) {
     'use strict';

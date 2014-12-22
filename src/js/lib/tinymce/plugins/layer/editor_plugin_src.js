@@ -124,8 +124,7 @@
 			tinymce.each(dom.select('div,p', e), function(e) {
 				if (/^(absolute|relative|fixed)$/i.test(e.style.position)) {
 					if (s)
-						dom.addClass(e, 'mceItemVisualAid');
-					else
+						dom.addClass(e, 'mceItemVisualAid'); else
 						dom.removeClass(e, 'mceItemVisualAid');
 
 					dom.addClass(e, 'mceItemLayer');

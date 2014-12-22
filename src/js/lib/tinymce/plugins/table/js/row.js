@@ -146,8 +146,7 @@ function updateRow(tr_elm, skip_id, skip_parent) {
 	tr_elm.style.backgroundColor = formObj.bgcolor.value;
 
 	if (formObj.backgroundimage.value != "")
-		tr_elm.style.backgroundImage = "url('" + formObj.backgroundimage.value + "')";
-	else
+		tr_elm.style.backgroundImage = "url('" + formObj.backgroundimage.value + "')"; else
 		tr_elm.style.backgroundImage = '';
 
 	// Setup new rowtype
@@ -168,8 +167,7 @@ function updateRow(tr_elm, skip_id, skip_parent) {
 			newParent = doc.createElement(dest);
 
 			if (theTable.firstChild.nodeName == 'CAPTION')
-				inst.dom.insertAfter(newParent, theTable.firstChild);
-			else
+				inst.dom.insertAfter(newParent, theTable.firstChild); else
 				theTable.insertBefore(newParent, theTable.firstChild);
 		}
 
@@ -200,8 +198,7 @@ function changedStyle() {
 	var st = dom.parseStyle(formObj.style.value);
 
 	if (st['background-image'])
-		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1");
-	else
+		formObj.backgroundimage.value = st['background-image'].replace(new RegExp("url\\('?([^']*)'?\\)", 'gi'), "$1"); else
 		formObj.backgroundimage.value = '';
 
 	if (st['height'])
@@ -219,8 +216,7 @@ function changedSize() {
 
 	var height = formObj.height.value;
 	if (height != "")
-		st['height'] = getCSSSize(height);
-	else
+		st['height'] = getCSSSize(height); else
 		st['height'] = "";
 
 	formObj.style.value = dom.serializeStyle(st);

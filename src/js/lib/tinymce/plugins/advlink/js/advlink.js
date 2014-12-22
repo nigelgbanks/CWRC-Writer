@@ -35,15 +35,13 @@ function init() {
 	// Link list
 	html = getLinkListHTML('linklisthref','href');
 	if (html == "")
-		document.getElementById("linklisthrefrow").style.display = 'none';
-	else
+		document.getElementById("linklisthrefrow").style.display = 'none'; else
 		document.getElementById("linklisthrefcontainer").innerHTML = html;
 
 	// Anchor list
 	html = getAnchorListHTML('anchorlist','href');
 	if (html == "")
-		document.getElementById("anchorlistrow").style.display = 'none';
-	else
+		document.getElementById("anchorlistrow").style.display = 'none'; else
 		document.getElementById("anchorlistcontainer").innerHTML = html;
 
 	// Resize some elements
@@ -104,8 +102,7 @@ function init() {
 
 		// Parse onclick data
 		if (onclick != null && onclick.indexOf('window.open') != -1)
-			parseWindowOpen(onclick);
-		else
+			parseWindowOpen(onclick); else
 			parseFunction(onclick);
 
 		// Select by the values
@@ -229,8 +226,7 @@ function parseLink(link) {
 		for (var i=0; i<variableNames.length; i++) {
 			// Is string value
 			if (variableNames[i].indexOf("'${") != -1)
-				regExp += "'(.*)'";
-			else // Number value
+				regExp += "'(.*)'"; else // Number value
 				regExp += "([0-9]*)";
 
 			replaceStr += "$" + (i+1);
@@ -325,15 +321,13 @@ function buildOnClick() {
 
 	if (formObj.popupleft.value != "") {
 		if (formObj.popupleft.value != "c")
-			onclick += "left=" + formObj.popupleft.value + ",";
-		else
+			onclick += "left=" + formObj.popupleft.value + ","; else
 			onclick += "left='+(screen.availWidth/2-" + (formObj.popupwidth.value/2) + ")+',";
 	}
 
 	if (formObj.popuptop.value != "") {
 		if (formObj.popuptop.value != "c")
-			onclick += "top=" + formObj.popuptop.value + ",";
-		else
+			onclick += "top=" + formObj.popuptop.value + ","; else
 			onclick += "top='+(screen.availHeight/2-" + (formObj.popupheight.value/2) + ")+',";
 	}
 

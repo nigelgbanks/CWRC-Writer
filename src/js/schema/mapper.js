@@ -1,4 +1,4 @@
-/*jshint browser: true, devel:true*/
+/*jshint devel:true*/
 /*global define, require*/
 // TODO add IDs
 define([ 'jquery', 'entity', 'jquery.xpath' ], function($, Entity) {

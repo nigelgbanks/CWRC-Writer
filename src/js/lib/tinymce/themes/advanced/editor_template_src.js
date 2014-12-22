@@ -662,8 +662,7 @@
 			});
 
 			if (DOM.get(s.theme_advanced_toolbar_container))
-				DOM.get(s.theme_advanced_toolbar_container).appendChild(p);
-			else
+				DOM.get(s.theme_advanced_toolbar_container).appendChild(p); else
 				DOM.insertAfter(p, n);
 
 			Event.add(ed.id + '_path_row', 'click', function(e) {
@@ -816,8 +815,7 @@
 				etb = DOM.add(n, 'tbody');
 
 				if (p.firstChild.className == 'mceOldBoxModel')
-					p.firstChild.appendChild(c);
-				else
+					p.firstChild.appendChild(c); else
 					p.insertBefore(c, p.firstChild);
 
 				t._addToolbars(etb, o);

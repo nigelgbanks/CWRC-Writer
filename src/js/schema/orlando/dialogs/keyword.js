@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global define*/
 define(['jquery', 'jquery-ui', 'dialogForm', 'jquery.watermark'], function($, jqueryUi, DialogForm) {
     'use strict';

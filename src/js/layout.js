@@ -1,4 +1,4 @@
-/*jshint browser: true*/
+
 /*global require*/
 function setupLayoutAndModules(w, EntitiesList, Relations, Selection, StructureTree, Validation) {
     'use strict';

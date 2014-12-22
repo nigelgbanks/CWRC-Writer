@@ -109,8 +109,7 @@
 				val = parseInt(val);
 
 				if (val === 1)
-					td.removeAttribute(name, 1);
-				else
+					td.removeAttribute(name, 1); else
 					td.setAttribute(name, val, 1);
 			}
 		}
@@ -157,8 +156,7 @@
 						node = cloneNode(node, false);
 
 						if (!formatNode)
-							formatNode = curNode = node;
-						else if (curNode)
+							formatNode = curNode = node; else if (curNode)
 							curNode.appendChild(node);
 
 						curNode = node;
@@ -419,8 +417,7 @@
 
 			if (newRow.hasChildNodes()) {
 				if (!before)
-					dom.insertAfter(newRow, rowElm);
-				else
+					dom.insertAfter(newRow, rowElm); else
 					rowElm.parentNode.insertBefore(newRow, rowElm);
 			}
 		};
@@ -483,8 +480,7 @@
 							colSpan = getSpanVal(cell, 'colSpan');
 
 							if (colSpan > 1)
-								setSpanVal(cell, 'colSpan', colSpan - 1);
-							else
+								setSpanVal(cell, 'colSpan', colSpan - 1); else
 								dom.remove(cell);
 						});
 
@@ -526,8 +522,7 @@
 						rowSpan = getSpanVal(cell, 'rowSpan');
 
 						if (rowSpan <= 1)
-							dom.remove(cell);
-						else
+							dom.remove(cell); else
 							setSpanVal(cell, 'rowSpan', rowSpan - 1);
 
 						lastCell = cell;
@@ -614,8 +609,7 @@
 
 				// Add before/after
 				if (before)
-					targetRow.parentNode.insertBefore(row, targetRow);
-				else
+					targetRow.parentNode.insertBefore(row, targetRow); else
 					dom.insertAfter(row, targetRow);
 			});
 
@@ -907,8 +901,7 @@
 
 						try {
 							if (sel.removeAllRanges)
-								sel.removeAllRanges();
-							else
+								sel.removeAllRanges(); else
 								sel.empty();
 						} catch (ex) {
 							// IE9 might throw errors here
@@ -933,8 +926,7 @@
 								// Text node
 								if (node.nodeType == 3 && tinymce.trim(node.nodeValue).length != 0) {
 									if (start)
-										rng.setStart(node, 0);
-									else
+										rng.setStart(node, 0); else
 										rng.setEnd(node, node.nodeValue.length);
 
 									return;
@@ -943,8 +935,7 @@
 								// BR element
 								if (node.nodeName == 'BR') {
 									if (start)
-										rng.setStartBefore(node);
-									else
+										rng.setStartBefore(node); else
 										rng.setEndBefore(node);
 
 									return;
@@ -1249,8 +1240,7 @@
 
 					if (last && last.nodeName == 'TABLE') {
 						if (ed.settings.forced_root_block)
-							ed.dom.add(ed.getBody(), ed.settings.forced_root_block, null, tinymce.isIE && !tinymce.isIE11 ? '&nbsp;' : '<br data-mce-bogus="1" />');
-						else
+							ed.dom.add(ed.getBody(), ed.settings.forced_root_block, null, tinymce.isIE && !tinymce.isIE11 ? '&nbsp;' : '<br data-mce-bogus="1" />'); else
 							ed.dom.add(ed.getBody(), 'br', {'data-mce-bogus': '1'});
 					}
 				};
