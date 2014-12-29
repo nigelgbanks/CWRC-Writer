@@ -1,8 +1,8 @@
 define(['jquery', 'jquery-ui'], function($, jqueryUi) {
-	
+
 return function(writer) {
 	var w = writer;
-	
+
 	// TODO add validation
 	$(document.body).append(''+
 	'<div id="addSchemaDialog">'+
@@ -19,7 +19,7 @@ return function(writer) {
 			'<input type="text" name="cssUrl" value=""/>'+
 		'</div>'+
 	'</div>');
-	
+
 	var d = $('#addSchemaDialog');
 	d.dialog({
 		modal: true,
@@ -29,7 +29,7 @@ return function(writer) {
 			$('#addSchemaDialog').parent().find('.ui-dialog-titlebar-close').hide();
 		},
 		title: 'Add Schema',
-		height: 170,
+		height: 300,
 		width: 300,
 		autoOpen: false,
 		buttons: {
@@ -46,7 +46,7 @@ return function(writer) {
 			}
 		}
 	});
-	
+
 	return {
 		show: function(config) {
 			$('#addSchemaDialog input').val('');
