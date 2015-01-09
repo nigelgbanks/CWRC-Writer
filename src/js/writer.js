@@ -387,7 +387,6 @@ return function(config) {
 	
 	function _onChangeHandler(ed, event) {
 		if (ed.isDirty()) {
-			$('br', ed.getBody()).remove();
 			
 			var doUpdate = w.tagger.findNewAndDeletedTags();
 			if (doUpdate) {

@@ -146,6 +146,8 @@ return function(writer) {
 			openingTag += '>';
 			array.push(openingTag);
 			array.push('</'+tag+'>');
+		} else if (node.prop('tagName').toLowerCase() == 'br') {
+			array = ['\n', ''];
 		} else {
 			// not a valid tag so return empty strings
 			array = ['', ''];
@@ -1090,7 +1092,7 @@ return function(writer) {
 					if (el.nodeType == 1) {
 						doBuild(el, isInline);
 					} else if (el.nodeType == 3) {
-						editorString += el.data;
+						editorString += el.data.replace(/\n/g, '<br/>');
 					}
 				});
 				
