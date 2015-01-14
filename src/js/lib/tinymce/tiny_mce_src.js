@@ -17695,110 +17695,11 @@ tinymce.onAddEditor.add(function(tinymce, ed) {
 			}
 
 			undoManager.beforeChange();
+			container.parentNode.insertBefore(
+				document.createElement('br'),
+				container.splitText(offset)
+			);
 
-			// If editable root isn't block nor the root of the editor
-			if (!dom.isBlock(editableRoot) && editableRoot != dom.getRoot()) {
-				if (!newBlockName || shiftKey) {
-					insertBr();
-				}
-
-				return;
-			}
-
-			// Wrap the current node and it's sibling in a default block if it's needed.
-			// for example this <td>text|<b>text2</b></td> will become this <td><p>text|<b>text2</p></b></td>
-			// This won't happen if root blocks are disabled or the shiftKey is pressed
-			if ((newBlockName && !shiftKey) || (!newBlockName && shiftKey)) {
-				container = wrapSelfAndSiblingsInDefaultBlock(container, offset);
-			}
-
-			// Find parent block and setup empty block paddings
-			parentBlock = dom.getParent(container, dom.isBlock);
-			containerBlock = parentBlock ? dom.getParent(parentBlock.parentNode, dom.isBlock) : null;
-
-			// Setup block names
-			parentBlockName = parentBlock ? parentBlock.nodeName.toUpperCase() : ''; // IE < 9 & HTML5
-			containerBlockName = containerBlock ? containerBlock.nodeName.toUpperCase() : ''; // IE < 9 & HTML5
-
-			// Enter inside block contained within a LI then split or insert before/after LI
-			if (containerBlockName == 'LI' && !evt.ctrlKey) {
-				parentBlock = containerBlock;
-				parentBlockName = containerBlockName;
-			}
-
-			// Handle enter in LI
-			if (parentBlockName == 'LI') {
-				if (!newBlockName && shiftKey) {
-					insertBr();
-					return;
-				}
-
-				// Handle enter inside an empty list item
-				if (dom.isEmpty(parentBlock)) {
-					// Let the list plugin or browser handle nested lists for now
-					if (/^(UL|OL|LI)$/.test(containerBlock.parentNode.nodeName)) {
-						return false;
-					}
-
-					handleEmptyListItem();
-					return;
-				}
-			}
-
-			// Don't split PRE tags but insert a BR instead easier when writing code samples etc
-			if (parentBlockName == 'PRE' && settings.br_in_pre !== false) {
-				if (!shiftKey) {
-					insertBr();
-					return;
-				}
-			} else {
-				// If no root block is configured then insert a BR by default or if the shiftKey is pressed
-				if ((!newBlockName && !shiftKey && parentBlockName != 'LI') || (newBlockName && shiftKey)) {
-					insertBr();
-					return;
-				}
-			}
-
-			// Default block name if it's not configured
-			newBlockName = newBlockName || 'P';
-
-			// Insert new block before/after the parent block depending on caret location
-			if (isCaretAtStartOrEndOfBlock()) {
-				// If the caret is at the end of a header we produce a P tag after it similar to Word unless we are in a hgroup
-				if (/^(H[1-6]|PRE)$/.test(parentBlockName) && containerBlockName != 'HGROUP') {
-					newBlock = createNewBlock(newBlockName);
-				} else {
-					newBlock = createNewBlock();
-				}
-
-				// Split the current container block element if enter is pressed inside an empty inner block element
-				if (settings.end_container_on_empty_block && canSplitBlock(containerBlock) && dom.isEmpty(parentBlock)) {
-					// Split container block for example a BLOCKQUOTE at the current blockParent location for example a P
-					newBlock = dom.split(containerBlock, parentBlock);
-				} else {
-					dom.insertAfter(newBlock, parentBlock);
-				}
-
-				moveToCaretPosition(newBlock);
-			} else if (isCaretAtStartOrEndOfBlock(true)) {
-				// Insert new block before
-				newBlock = parentBlock.parentNode.insertBefore(createNewBlock(), parentBlock);
-				renderBlockOnIE(newBlock);
-			} else {
-				// Extract after fragment and insert it after the current block
-				tmpRng = rng.cloneRange();
-				tmpRng.setEndAfter(parentBlock);
-				fragment = tmpRng.extractContents();
-				trimLeadingLineBreaks(fragment);
-				newBlock = fragment.firstChild;
-				dom.insertAfter(fragment, parentBlock);
-				trimInlineElementsOnLeftSideOfBlock(newBlock);
-				addBrToBlockIfNeeded(parentBlock);
-				moveToCaretPosition(newBlock);
-			}
-
-			dom.setAttrib(newBlock, 'id', ''); // Remove ID since it needs to be document unique
-			undoManager.add();
 		}
 
 		editor.onKeyDown.add(function(ed, evt) {
