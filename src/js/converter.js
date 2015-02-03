@@ -1092,7 +1092,21 @@ return function(writer) {
 					if (el.nodeType == 1) {
 						doBuild(el, isInline);
 					} else if (el.nodeType == 3) {
-						editorString += el.data.replace(/\n/g, '<br/>');
+						var text_child = false;
+						var traversal_node = el;
+						while (traversal_node.parentNode) {
+							traversal_node = traversal_node.parentNode;
+							if (traversal_node.tagName === 'text') {
+								text_child = true;
+								break;
+							}
+						}
+						if (text_child) {
+							editorString += el.data.replace(/\n/g, '<br/>');
+						}
+						else {
+							editorString += el.data;
+						}
 					}
 				});
 				
