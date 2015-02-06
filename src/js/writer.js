@@ -756,11 +756,6 @@ return function(config) {
 						ed.execCommand('addEntity', 'date');
 					}
 				});
-				ed.addButton('addevent', {title: 'Tag Event', image: w.cwrcRootUrl+'img/cake.png', 'class': 'entityButton event',
-					onclick : function() {
-						ed.execCommand('addEntity', 'event');
-					}
-				});
 				ed.addButton('addorg', {title: 'Tag Organization', image: w.cwrcRootUrl+'img/group.png', 'class': 'entityButton org',
 					onclick : function() {
 						ed.execCommand('addEntity', 'org');
