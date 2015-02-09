@@ -69,7 +69,14 @@ define([
     var dialogNames = ['citation', 'correction', 'date', 'keyword', 'link', 'note', 'org', 'person', 'place', 'title'];
 
     var loadSchemaDialogs = function(schemaId) {
-      if (schemaId === 'tei') {
+      // get root element
+      var schemaXML = w.schemaManager.schemaXML;
+      var startEl = $('start element:first', schemaXML).attr('name');
+      if (!startEl) {
+        var startName = $('start ref:first', schemaXML).attr('name');
+        startEl = $('define[name="'+startName+'"] element', schemaXML).attr('name');
+      }
+      if (schemaId === 'tei' || startEl === 'TEI') {
         // TODO destroy previously loaded dialogs
         if (schemaDialogs[schemaId] == null) {
           var parent = schemaDialogs[schemaId] = {};
