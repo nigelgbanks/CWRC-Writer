@@ -2969,7 +2969,14 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			// specs has data and source
 			var that = search.result();
 			that.id = index;
-			that.name = $(specs).find("name").text() + ", " + $(specs).find("countryName").text();
+			var country_name = $(specs).find("countryName").text();
+			var local_name = $(specs).find("name").text();
+			if (country_name) {
+				that.name = local_name + ", " + country_name;
+			}
+			else {
+				that.name = local_name;
+			}
 
 
 			that.htmlify = function(){
