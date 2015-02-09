@@ -70,6 +70,7 @@ define([
 
     var loadSchemaDialogs = function(schemaId) {
       // get root element
+      var schemaDialogId;
       var schemaXML = w.schemaManager.schemaXML;
       var startEl = $('start element:first', schemaXML).attr('name');
       if (!startEl) {
@@ -77,12 +78,13 @@ define([
         startEl = $('define[name="'+startName+'"] element', schemaXML).attr('name');
       }
       if (schemaId === 'tei' || startEl === 'TEI') {
+        schemaDialogId = 'tei';
         // TODO destroy previously loaded dialogs
-        if (schemaDialogs[schemaId] == null) {
-          var parent = schemaDialogs[schemaId] = {};
+        if (schemaDialogs[schemaDialogId] == null) {
+          var parent = schemaDialogs[schemaDialogId] = {};
           var schemaDialogNames = [];
           schemaDialogNames = $.map(dialogNames, function(name, i) {
-            return 'dialogs/schemas/'+schemaId+'/'+name;
+            return 'dialogs/schemas/'+schemaDialogId+'/'+name;
           });
           require(schemaDialogNames, function() {
             if (arguments.length != schemaDialogNames.length) {
