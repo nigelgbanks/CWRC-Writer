@@ -146,7 +146,7 @@ return function(writer) {
 			openingTag += '>';
 			array.push(openingTag);
 			array.push('</'+tag+'>');
-		} else if (node.prop('tagName').toLowerCase() == 'br') {
+		} else if (node.length && node.prop('tagName').toLowerCase() == 'br') {
 			array = ['\n', ''];
 		} else {
 			// not a valid tag so return empty strings
@@ -485,29 +485,43 @@ return function(writer) {
 	 * @param doc An XML DOM
 	 */
 	converter.processDocument = function(doc) {
+		var schemaId = false;
 		var rootName = doc.firstChild.nodeName;
-		// TODO need a better way of tying this to the schemas config
-		// grab the schema from xml-model
+		var xmlModelData;
+		var schemaUrl;
+		var urlParts;
+		var fileName;
 		if (rootName == 'xml-model') {
-			var xmlModelData = doc.firstChild.data;
-			var schemaUrl = xmlModelData.match(/href="([^"]*)"/)[1];
-			var urlParts = schemaUrl.match(/^(.*):\/\/([a-z\-.]+)(?=:[0-9]+)?\/(.*)/);
-			var fileName = urlParts[3];
-			var schemaId = '';
-			if (fileName.indexOf('events') != -1) {
-				schemaId = 'events';
-			} else if (fileName.toLowerCase().indexOf('biography') != -1) {
-				schemaId = 'biography';
-			} else if (fileName.toLowerCase().indexOf('writing') != -1) {
-				schemaId = 'writing';
-			} else if (fileName.toLowerCase().indexOf('tei') != -1) {
-				schemaId = 'tei';
-			} else {
-				schemaId = 'customSchema';
-				w.schemaManager.schemas.customSchema = {
-					name: 'Custom Schema',
-					url: schemaUrl
-				};
+			xmlModelData = doc.firstChild.data;
+			schemaUrl = xmlModelData.match(/href="([^"]*)"/)[1];
+			// First look for matching URL to pick the proper schemaId.
+			for(var index in w.schemaManager.schemas) {
+				if (w.schemaManager.schemas[index].url === schemaUrl) {
+					schemaId = index;
+					break;
+				}
+			}
+			// No defined schemaId known for this documents schema. Try to do a
+			// best guess.
+			if (schemaId === false) {
+				urlParts = schemaUrl.match(/^(.*):\/\/([a-z\-.]+)(?=:[0-9]+)?\/(.*)/);
+				fileName = urlParts[3];
+				if (fileName.indexOf('events') != -1) {
+					schemaId = 'events';
+				} else if (fileName.toLowerCase().indexOf('biography') != -1) {
+					schemaId = 'biography';
+				} else if (fileName.toLowerCase().indexOf('writing') != -1) {
+					schemaId = 'writing';
+				} else if (fileName.toLowerCase().indexOf('tei') != -1) {
+					schemaId = 'tei';
+				} else {
+					// All else has failed create a custom schemaId.
+					schemaId = 'customSchema';
+					w.schemaManager.schemas.customSchema = {
+						name: 'Custom Schema',
+						url: schemaUrl
+					};
+				}
 			}
 			w.schemaManager.loadSchema(schemaId, false, function() {
 				doProcessing(doc);
@@ -534,7 +548,7 @@ return function(writer) {
 		}
 	};
 	
-	function doProcessing(doc) {
+	function doProcessing (doc) {
 		// reset the stores
 		w.entities = {};
 		w.structs = {};
@@ -607,7 +621,10 @@ return function(writer) {
 			});
 		}
 	}
-	
+	// Needs to be public, to be able to process documents after the schema
+	// changes.
+	converter.doProcessing = doProcessing;
+
 	function processRdf(rdfs) {
 		var doc = rdfs.parents().last()[0].parentNode;
 		
