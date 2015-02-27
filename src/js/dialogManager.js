@@ -115,15 +115,28 @@ define([
      */
     var pm = {
       show: function(type, config) {
+        var schemaXML = w.schemaManager.schemaXML;
+        var startEl = $('start element:first', schemaXML).attr('name');
+        var schemaId = w.schemaManager.schemaId;
+        var schemaDialogId = w.schemaManager.schemaId;
+        var typeParts;
+        if (!startEl) {
+          var startName = $('start ref:first', schemaXML).attr('name');
+          startEl = $('define[name="'+startName+'"] element', schemaXML).attr('name');
+        }
+        // Reset the Dialog ID based on the leading element.
+        if (schemaId === 'tei' || startEl === 'TEI') {
+          schemaDialogId = 'tei';
+        }
         if (type.indexOf('schema/') === 0) {
-          var typeParts = type.split('/');
-          var type = typeParts[1];
-          schemaDialogs[w.schemaManager.schemaId][type].show(config);
+          typeParts = type.split('/');
+          type = typeParts[1];
+          schemaDialogs[schemaDialogId][type].show(config);
         } else {
           if (dialogs[type]) {
             dialogs[type].show(config);
-          } else if (schemaDialogs[w.schemaManager.schemaId][type]) {
-            schemaDialogs[w.schemaManager.schemaId][type].show(config);
+          } else if (schemaDialogs[schemaDialogId][type]) {
+            schemaDialogs[schemaDialogId][type].show(config);
           }
         }
       },
