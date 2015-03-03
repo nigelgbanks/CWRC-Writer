@@ -499,7 +499,12 @@ return function(writer) {
 		delete w.entities[id];
 		var node = $('span[name="'+id+'"]', w.editor.getBody());
 		var parent = node[0].parentNode;
-		node.remove();
+		var contents = node.contents();
+		if (contents.length > 0) {
+			contents.unwrap();
+		} else {
+			node.remove();
+		}
 		parent.normalize();
 		
 		w.event('entityRemoved').publish(id);
