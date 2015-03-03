@@ -45,7 +45,15 @@ return function(writer) {
 		}
 		
 		function postSetup() {
-			if (w.schemaManager.schemaId == 'tei') {
+			var schemaXML = w.schemaManager.schemaXML;
+			var isTEI = w.schemaManager.schemaId === 'tei';
+			var startEl = $('start element:first', schemaXML).attr('name');
+			if (!startEl) {
+				var startName = $('start ref:first', schemaXML).attr('name');
+				startEl = $('define[name="'+startName+'"] element', schemaXML).attr('name');
+				isTEI = startEl === 'TEI';
+			}
+			if (isTEI) {
 				iframe.contentWindow.tinymce.DOM.counter = tinymce.DOM.counter + 1;
 				
 				cwrcWriter.event('documentLoaded').subscribe(function() {
