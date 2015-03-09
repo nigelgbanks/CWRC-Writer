@@ -298,7 +298,7 @@ return function(writer) {
 				// To allow this function to exit recursion it must be able to return false.
 				var ret = true;
 				parent.contents().each(function(index, element) {
-					var el = $(this), start, end, finished, isTag, isEntity;
+					var el = $(this), start, end, finished;
 					if (el.attr('name') === id) {
 						// Some tags are not the start or the end, they are used for
 						// highlighting the entity.
@@ -323,15 +323,13 @@ return function(writer) {
 					}
 					// An Tag or an Entity that is not the one we're looking for.
 					else {
-						// If the element is a Tag we can ignore it, but we must count the
-						// characters in the entity spans as the order in which they are
-						// created when the document is loaded could throw off the offsets.
-						isTag = el.attr('_tag') !== undefined;
-						isEntity = el.attr('_entity') !== undefined;
-						if (!isTag && isEntity) {
-							ret = getOffset(el);
-							return ret;
-						}
+						// We must use all intermediate node's text to ensure an accurate
+						// text count. As the order in which entities are wrapped in spans
+						// when the document is loaded will not be guarantee to be in an
+						// order in which replicates the state the document was in at the
+						// time it was saved.
+						ret = getOffset(el);
+						return ret;
 					}
 				});
 				return ret;
@@ -1317,7 +1315,7 @@ return function(writer) {
 		function getTextNode(parent) {
 			var ret = true;
 			parent.contents().each(function(index, element) {
-				var el = $(this), start, end, finished, isTag, isEntity;
+				var el = $(this);
 				// Not sure why the &nbsp; text nodes would not be counted but as long
 				// as we are consistent in both the saving and loading it should be
 				// fine.
@@ -1333,15 +1331,12 @@ return function(writer) {
 				}
 				// An Tag or an Entity that is not the one we're looking for.
 				else {
-					// If the element is a Tag we can ignore it, but we must count the
-					// characters in the entity spans as the order in which they are
-					// created when the document is loaded could throw off the offsets.
-					isTag = el.attr('_tag') !== undefined;
-					isEntity = el.attr('_entity') !== undefined;
-					if (!isTag && isEntity) {
-						ret = getTextNode(el);
-						return ret;
-					}
+					// We must use all intermediate node's text to ensure an accurate text
+					// count. As the order in which entities are wrapped in spans when the
+					// document is loaded will not be guarantee to be in an order in which
+					// replicates the state the document was in at the time it was saved.
+					ret = getTextNode(el);
+					return ret;
 				}
 			});
 			return ret;
