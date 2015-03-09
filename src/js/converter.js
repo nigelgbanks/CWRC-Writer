@@ -1335,8 +1335,6 @@ return function(writer) {
 					// count. As the order in which entities are wrapped in spans when the
 					// document is loaded will not be guarantee to be in an order in which
 					// replicates the state the document was in at the time it was saved.
-					// defined to be in the same order in which they were present on
-					// saving.
 					ret = getTextNode(el);
 					return ret;
 				}
