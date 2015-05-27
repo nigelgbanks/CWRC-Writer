@@ -31,9 +31,9 @@ return function(config) {
 	);
 	$(document.body).append(''+
 	  '<div id="entitiesTextImageAnnotationMenu" class="contextMenu" style="display: none;"><ul>'+
-	  '<li id="editAnnotation"><ins style="background:url('+w.cwrcRootUrl+'img/tag_blue_edit.png) center center no-repeat;" />Edit Annotation</li>'+
+	  '<li id="editAnnotation"><ins style="background:url('+w.cwrcRootUrl+'img/tag_blue_edit.png) center center no-repeat;" />Edit Text Image Annotation</li>'+
+	  '<li id="removeImageAnnotation"><ins style="background:url('+w.cwrcRootUrl+'img/cross.png) center center no-repeat;" />Remove Text Image Annotation</li>'+
 	  '<li id="removeEntity"><ins style="background:url('+w.cwrcRootUrl+'img/cross.png) center center no-repeat;" />Remove Entity</li>'+
-	  '<li id="removeImageAnnotation"><ins style="background:url('+w.cwrcRootUrl+'img/cross.png) center center no-repeat;" />Remove Image Annotation</li>'+
 	  '</ul></div>'
 	);
 	
@@ -236,11 +236,11 @@ return function(config) {
 			'editAnnotation': function(tag) {
 			  w.tagger.editImageAnnotation($(tag).attr('name'));
 			},
-			'removeEntity': function(tag) {
-			  w.tagger.removeEntity($(tag).attr('name'));
-			},
 			'removeImageAnnotation': function(tag) {
 			  w.tagger.removeImageAnnotation($(tag).attr('name'));
+			},
+			'removeEntity': function(tag) {
+			  w.tagger.removeEntity($(tag).attr('name'));
 			}
 		  },
 		  shadow: false,
@@ -248,7 +248,8 @@ return function(config) {
 			backgroundColor: '#FFFFFF',
 			border: '1px solid #D4D0C8',
 			boxShadow: '1px 1px 2px #CCCCCC',
-			padding: '0px'
+			padding: '0px',
+			width: 'auto'
 		  },
 		  itemStyle: {
 			fontFamily: 'Tahoma,Verdana,Arial,Helvetica',

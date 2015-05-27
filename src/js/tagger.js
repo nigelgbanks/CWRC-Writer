@@ -751,7 +751,7 @@ return function(writer) {
 		  }
 		} else {
 		  // The annotation was deleted.
-		  alert("The image annotation associated with this entity has already been deleted.");
+		  alert("The text image annotation associated with this entity has already been deleted.");
 		}
 	  } else {
 		alert('Tag not recognized!');
@@ -770,7 +770,7 @@ return function(writer) {
 		  Drupal.IslandoraImageAnnotationDialog.getInstance().show(annotation);
 		} else {
 		  // The annotation was deleted.
-		  alert("The image annotation associated with this entity has been deleted.");
+		  alert("The text image annotation associated with this entity has been deleted.");
 		}
 	  } else {
 		alert('Tag not recognized!');

@@ -646,7 +646,7 @@ return function(config) {
 				  w.highlightEntity(node.li_attr.name); // highlight the entity, otherwise editing will not function
 				  return {
 					'editAnnotation': {
-					  label: 'Edit Text-Image Annotation',
+					  label: 'Edit Text Image Annotation',
 					  icon: w.cwrcRootUrl+'img/tag_blue_edit.png',
 					  action: function(obj) {
 						var id = obj.reference.parent('li').attr('name');
@@ -654,7 +654,7 @@ return function(config) {
 					  }
 					},
 					'deleteAnnotation': {
-					  label: 'Delete Text-Image Annotation',
+					  label: 'Delete Text Image Annotation',
 					  icon: w.cwrcRootUrl+'img/tag_blue_delete.png',
 					  action: function(obj) {
 						var id = obj.reference.parent('li').attr('name');
