@@ -743,11 +743,10 @@ return function(writer) {
 	tagger.removeImageAnnotation = function(id) {
 	  var tag = tagger.getCurrentTag(id);
 	  if (tag.entity.info.attributes.id) {
-		console.log(tag.entity);
 		var annotation = Drupal.IslandoraImageAnnotation.getInstance().getAnnotation(tag.entity.info.attributes.id);
 		if (annotation) {
 		  if (confirm("Permanently Delete Annotation '" + tag.entity.info.attributes.title + "'")) {
-			Drupal.IslandoraImageAnnotation.getInstance().deleteAnnotation(annotation);
+			Drupal.IslandoraImageAnnotation.getInstance().deleteAnnotation(tag.entity.info.attributes.id);
 		  }
 		} else {
 		  // The annotation was deleted.
