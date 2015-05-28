@@ -735,6 +735,46 @@ return function(writer) {
 		
 		w.event('tagContentsRemoved').publish(id);
 	};
+
+	/**
+	 * A custom EMIC function to remove image annotation linked to entity tags
+	 * @param {String} id The id of the tag to remove
+	 */
+	tagger.removeImageAnnotation = function(id) {
+	  var tag = tagger.getCurrentTag(id);
+	  if (tag.entity.info.attributes.id) {
+		var annotation = Drupal.IslandoraImageAnnotation.getInstance().getAnnotation(tag.entity.info.attributes.id);
+		if (annotation) {
+		  if (confirm("Permanently Delete Annotation '" + tag.entity.info.attributes.title + "'")) {
+			Drupal.IslandoraImageAnnotation.getInstance().deleteAnnotation(tag.entity.info.attributes.id);
+		  }
+		} else {
+		  // The annotation was deleted.
+		  alert("The text image annotation associated with this entity has already been deleted.");
+		}
+	  } else {
+		alert('Tag not recognized!');
+	  }
+	};
+
+	/**
+	 * A custom EMIC function to trigger image annotation edit from linked entity
+	 * @param {String} id The id of the tag to remove
+	 */
+	tagger.editImageAnnotation = function(id) {
+	  var tag = tagger.getCurrentTag(id);
+	  if (tag.entity.info.attributes.id) {
+		var annotation = Drupal.IslandoraImageAnnotation.getInstance().getAnnotation(tag.entity.info.attributes.id);
+		if (annotation) {
+		  Drupal.IslandoraImageAnnotationDialog.getInstance().show(annotation);
+		} else {
+		  // The annotation was deleted.
+		  alert("The text image annotation associated with this entity has been deleted.");
+		}
+	  } else {
+		alert('Tag not recognized!');
+	  }
+	};
 	
 	w.event('tagRemoved').subscribe(tagger.findNewAndDeletedTags);
 	w.event('tagContentsRemoved').subscribe(tagger.findNewAndDeletedTags);

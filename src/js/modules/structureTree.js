@@ -641,8 +641,37 @@ return function(config) {
 				if (node.li_attr.id === 'cwrc_tree_root') return {};
 				
 				var parentNode = $tree.jstree('get_node', node.parents[0]);
-				
-				if (w.entities[node.li_attr.name]) {
+			    // Handle annoations?
+			    if (w.entities[node.li_attr.name] && w.entities[node.li_attr.name].props.type == "textimagelink") {
+				  w.highlightEntity(node.li_attr.name); // highlight the entity, otherwise editing will not function
+				  return {
+					'editAnnotation': {
+					  label: 'Edit Text Image Annotation',
+					  icon: w.cwrcRootUrl+'img/tag_blue_edit.png',
+					  action: function(obj) {
+						var id = obj.reference.parent('li').attr('name');
+						w.tagger.editImageAnnotation(id);
+					  }
+					},
+					'deleteAnnotation': {
+					  label: 'Delete Text Image Annotation',
+					  icon: w.cwrcRootUrl+'img/tag_blue_delete.png',
+					  action: function(obj) {
+						var id = obj.reference.parent('li').attr('name');
+						w.tagger.removeImageAnnotation(id);
+					  }
+					},
+					'deleteEntity': {
+					  label: 'Delete Entity',
+					  icon: w.cwrcRootUrl+'img/tag_blue_delete.png',
+					  action: function(obj) {
+						var id = obj.reference.parent('li').attr('name');
+						w.tagger.removeTag(id);
+					  }
+					}
+				  };
+				}
+				else if (w.entities[node.li_attr.name]) {
 					// entity tag
 					w.highlightEntity(node.li_attr.name); // highlight the entity, otherwise editing will not function
 					return {

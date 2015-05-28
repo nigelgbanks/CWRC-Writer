@@ -29,6 +29,13 @@ return function(config) {
 		'<li class="separator" id="copyEntity"><ins style="background:url('+w.cwrcRootUrl+'img/tag_blue_copy.png) center center no-repeat;" />Copy Entity</li>'+
 		'</ul></div>'
 	);
+	$(document.body).append(''+
+	  '<div id="entitiesTextImageAnnotationMenu" class="contextMenu" style="display: none;"><ul>'+
+	  '<li id="editAnnotation"><ins style="background:url('+w.cwrcRootUrl+'img/tag_blue_edit.png) center center no-repeat;" />Edit Text Image Annotation</li>'+
+	  '<li id="removeImageAnnotation"><ins style="background:url('+w.cwrcRootUrl+'img/cross.png) center center no-repeat;" />Remove Text Image Annotation</li>'+
+	  '<li id="removeEntity"><ins style="background:url('+w.cwrcRootUrl+'img/cross.png) center center no-repeat;" />Remove Entity</li>'+
+	  '</ul></div>'
+	);
 	
 	$('#sequence').button().click(function() {
 		w.entitiesList.update('sequence');
@@ -164,9 +171,9 @@ return function(config) {
 				}
 			});
 		}
-		
+
 		$('#entities > ul').html(entitiesString);
-		$('#entities > ul > li').hover(function() {
+		$('#entities > ul > li:not(.textimagelink)').hover(function() {
 			if (!$(this).hasClass('selected')) {
 				$(this).addClass('over');
 			}
@@ -212,7 +219,54 @@ return function(config) {
 				border: 'none'
 			}
 		});
-		
+
+		$('.textimagelink').hover(function() {
+		  if (!$(this).hasClass('selected')) {
+			$(this).addClass('over');
+		  }
+		}, function() {
+		  if (!$(this).hasClass('selected')) {
+			$(this).removeClass('over');
+		  }
+		}).mousedown(function(event) {
+		  $(this).removeClass('over');
+		  w.highlightEntity(this.getAttribute('name'), null, true);
+		}).contextMenu('entitiesTextImageAnnotationMenu', {
+		  bindings: {
+			'editAnnotation': function(tag) {
+			  w.tagger.editImageAnnotation($(tag).attr('name'));
+			},
+			'removeImageAnnotation': function(tag) {
+			  w.tagger.removeImageAnnotation($(tag).attr('name'));
+			},
+			'removeEntity': function(tag) {
+			  w.tagger.removeEntity($(tag).attr('name'));
+			}
+		  },
+		  shadow: false,
+		  menuStyle: {
+			backgroundColor: '#FFFFFF',
+			border: '1px solid #D4D0C8',
+			boxShadow: '1px 1px 2px #CCCCCC',
+			padding: '0px',
+			width: 'auto'
+		  },
+		  itemStyle: {
+			fontFamily: 'Tahoma,Verdana,Arial,Helvetica',
+			fontSize: '11px',
+			color: '#000',
+			lineHeight: '20px',
+			padding: '0px',
+			cursor: 'pointer',
+			textDecoration: 'none',
+			border: 'none'
+		  },
+		  itemHoverStyle: {
+			color: '#000',
+			backgroundColor: '#DBECF3',
+			border: 'none'
+		  }
+		});
 		if (w.editor.currentEntity) {
 			$('#entities > ul > li[name="'+w.editor.currentEntity+'"]').addClass('selected').find('div[class="info"]').show();
 		}
