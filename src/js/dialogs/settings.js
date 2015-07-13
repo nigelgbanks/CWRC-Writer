@@ -142,7 +142,7 @@ return function(writer, config) {
 		modal: true,
 		resizable: true,
 		closeOnEscape: true,
-		height: 150,
+		height: 250,
 		width: 250,
 		autoOpen: false,
 		buttons: {
