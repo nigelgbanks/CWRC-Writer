@@ -17695,10 +17695,7 @@ tinymce.onAddEditor.add(function(tinymce, ed) {
 			}
 
 			undoManager.beforeChange();
-			container.parentNode.insertBefore(
-				document.createElement('br'),
-				container.splitText(offset)
-			);
+			insertBr();
 
 		}
 
