@@ -1675,17 +1675,9 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 						break;
 					}
 				}
-				if (
-						(
-								path.length > 0
-									&&
-								i < children.length - 1
-								//&& children[i+1].nodeName != last(path).name
-									&& !hasSibling)
-							||
-						i === children.length - 1) {
-						path.pop();
-					}
+				if ((path.length > 0 && i < children.length - 1 && !hasSibling) || i === children.length - 1) {
+					path.pop();
+				}
 
 			}
 		}
@@ -1739,30 +1731,30 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			return result;
 		}
 
-        // recursively traversal depending on type of node
-        // if textnode or attribute then add to the interface model
-        var visitNodeCWRCPopulate = function (node, path) {
+		// recursively traversal depending on type of node
+		// if textnode or attribute then add to the interface model
+		var visitNodeCWRCPopulate = function (node, path) {
 
-            // recursively handle the child nodes
-            if (node.childNodes && node.childNodes.length > 0) {
-                visitChildrenPopulate(node.childNodes, path);
-            }
-            // special handling of an attribute
-            if (node.attributes && node.attributes.length > 0) {
-                visitChildrenPopulate(node.attributes, path);
-            }
+			// recursively handle the child nodes
+			if (node.childNodes && node.childNodes.length > 0) {
+				visitChildrenPopulate(node.childNodes, path);
+			}
+			// special handling of an attribute
+			if (node.attributes && node.attributes.length > 0) {
+				visitChildrenPopulate(node.attributes, path);
+			}
 
-            var parentPath = path.slice(0, path.length - 1);
-            var nodeValue = $.trim(node.nodeValue);
-            if (node.nodeType === 3 && nodeValue !== "") {
-                foundAndFilled(nodeValue, parentPath, entity.viewModel().interfaceFields());
-            } else if (node.nodeType === 2 && nodeValue !== "") {
-                // firefox does not represent an attribute value as a text node
-                // ToDo prevent on other browsers the attribute values
-                // from being added twice
-                foundAndFilled(nodeValue, path, entity.viewModel().interfaceFields());
-            }
-        }
+			var parentPath = path.slice(0, path.length - 1);
+			var nodeValue = $.trim(node.nodeValue);
+			if (node.nodeType === 3 && nodeValue !== "") {
+				foundAndFilled(nodeValue, parentPath, entity.viewModel().interfaceFields());
+			} else if (node.nodeType === 2 && nodeValue !== "") {
+				// firefox does not represent an attribute value as a text node
+				// ToDo prevent on other browsers the attribute values
+				// from being added twice
+				foundAndFilled(nodeValue, path, entity.viewModel().interfaceFields());
+			}
+		}
 
 		var getFromFields = function(currentSection, field) {
 			var nodeNumber = currentSection.count;
