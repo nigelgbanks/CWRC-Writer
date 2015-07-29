@@ -1,10 +1,10 @@
 define(['jquery', 'jquery-ui', 'dialogForm'], function($, jqueryUi, DialogForm) {
-	
+
 return function(writer) {
 	var w = writer;
-	
+
 	var id = 'link';
-	
+
 	var html = ''+
 	'<div id="'+id+'Dialog">'+
 		'<div>'+
@@ -13,17 +13,17 @@ return function(writer) {
 			'<button>Check Link</button>'+
 		'</div>'+
 	'</div>';
-	
+
 	var dialog = new DialogForm({
 		writer: w,
 		id: id,
 		width: 345,
-		height: 125,
+		height: 250,
 		type: 'link',
 		title: 'Tag Link',
 		html: html
 	});
-	
+
 	$('#'+id+'Dialog button').button().click(function() {
 		var src = $('#'+id+'_input').val();
 		if (src != '') {
@@ -37,7 +37,7 @@ return function(writer) {
 			}
 		}
 	});
-	
+
 	return {
 		show: function(config) {
 			dialog.show(config);
