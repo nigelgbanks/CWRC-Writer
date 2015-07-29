@@ -1612,83 +1612,83 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		var populateCWRC = function(opts) {
 			// cwrc
 
-            var workingXML = null;
-            if (typeof(opts.data)=='string')
-            {
-              // if string parse into JQuery DOM
-              workingXML = $.parseXML(opts.data);
-            }
-            else
-            {
-              // else assume AJAX load has completed parse
-              // on a 'text/xml' mime type
-              workingXML = opts.data;
-            }
+			var workingXML = null;
+			if (typeof(opts.data)=='string')
+			{
+				// if string parse into JQuery DOM
+				workingXML = $.parseXML(opts.data);
+			}
+			else
+			{
+				// else assume AJAX load has completed parse
+				// on a 'text/xml' mime type
+				workingXML = opts.data;
+			}
 			var path = [];
 
 			visitChildrenPopulate(workingXML.childNodes, path);
 
 		}
 
-        // recursively traverse the XML DOM tree via a depth first search
-        // if locate a text node or and attribute node
-        // then add it to the interface model so that it will
-        // appear in the rendered form
-        // keep a stack representing the path traversal of the XML tree
-        var visitChildrenPopulate = function (children, path) {
+		// recursively traverse the XML DOM tree via a depth first search
+		// if locate a text node or and attribute node
+		// then add it to the interface model so that it will
+		// appear in the rendered form
+		// keep a stack representing the path traversal of the XML tree
+		var visitChildrenPopulate = function (children, path) {
 
-            var hasSibling = false;
+			var hasSibling = false;
 
-            for (var i = 0; children && i < children.length; ++i) {
-                // if an empty "#text" node, skip
-                if (children[i].nodeName === "#text" && children[i].nodeType == 3 && ($.trim(children[i].nodeValue)) === "") {
-                    continue;
-                }
+			for (var i = 0; children && i < children.length; ++i) {
+				// if an empty "#text" node, skip
+				if (children[i].nodeName === "#text" && children[i].nodeType == 3 && ($.trim(children[i].nodeValue)) === "") {
+					continue;
+				}
 
-                // check if top of the stack has the same element
-                // as the last element name in the XML node
-                // if so, don't increment the count on the last element
-                // name in the path, otherwise create item add it to the
-                // stack
-                if (path.length > 0 && children[i].nodeName == last(path).name) {
-                    last(path).count++;
-                } else {
-                    path.push({
-                        name : children[i].nodeName,
-                        count : 1
-                    });
-                }
+				// check if top of the stack has the same element
+				// as the last element name in the XML node
+				// if so, don't increment the count on the last element
+				// name in the path, otherwise create item add it to the
+				// stack
+				if (path.length > 0 && children[i].nodeName == last(path).name) {
+					last(path).count++;
+				} else {
+					path.push({
+						name : children[i].nodeName,
+						count : 1
+					});
+				}
 
-                //console.log("vC.... "  + last(path).count + ":" + last(path).name );
+				//console.log("vC.... "  + last(path).count + ":" + last(path).name );
 
-                visitNodeCWRCPopulate(children[i], path);
+				visitNodeCWRCPopulate(children[i], path);
 
-                // check if any of the sibiling nodes have the same path
-                // if so, don't pop the last element name off the stack
-                // element nodes may be interleaved with "text" nodes
-                hasSibling = false;
-                lastPathName = last(path).name;
-                for (var j = i + 1; children[j] && j < children.length; j++) {
-                    tmpNode = children[j];
-                    if (tmpNode && tmpNode.nodeName == lastPathName && tmpNode.nodeType == 1) {
-                        hasSibling = true;
-                        break;
-                    }
-                }
-                if (
-                    (
-                        path.length > 0
-                          &&
-                        i < children.length - 1
-                        //&& children[i+1].nodeName != last(path).name
-                          && !hasSibling)
-                    ||
-                  i === children.length - 1) {
-                  path.pop();
-                }
+				// check if any of the sibiling nodes have the same path
+				// if so, don't pop the last element name off the stack
+				// element nodes may be interleaved with "text" nodes
+				hasSibling = false;
+				lastPathName = last(path).name;
+				for (var j = i + 1; children[j] && j < children.length; j++) {
+					tmpNode = children[j];
+					if (tmpNode && tmpNode.nodeName == lastPathName && tmpNode.nodeType == 1) {
+						hasSibling = true;
+						break;
+					}
+				}
+				if (
+						(
+								path.length > 0
+									&&
+								i < children.length - 1
+								//&& children[i+1].nodeName != last(path).name
+									&& !hasSibling)
+							||
+						i === children.length - 1) {
+						path.pop();
+					}
 
-          }
-        }
+			}
+		}
 
 		var extractTitleMODS = function(opts){
 			var mods = $(opts.data);
@@ -2430,10 +2430,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.htmlifyCWRCPerson = function(){
 
 			var data = search.selectedData;
-            // if string parse into JQuery DOM
-            // else assume AJAX load has completed parse
-            // on a 'text/xml' mime type
-            var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 
 			// nationality
 			// var nationalitySelector = "";
@@ -2493,10 +2493,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.htmlifyCWRCOrganization = function() {
 
 			var data = search.selectedData;
-            // if string parse into JQuery DOM
-            // else assume AJAX load has completed parse
-            // on a 'text/xml' mime type
-            var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 			// url
 			data.url = location.protocol + '//' + location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + data.id;
 			return search.completeHtmlifyOrganization(data);
@@ -2531,10 +2531,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.htmlifyCWRCTitle = function() {
 
 			var data = search.selectedData;
-            // if string parse into JQuery DOM
-            // else assume AJAX load has completed parse
-            // on a 'text/xml' mime type
-            var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 			// author,
 			data.authors = [];//"Author";
 			var authorSelector = "mods > name"; //
@@ -2581,10 +2581,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 
 		search.htmlifyCWRCPlace = function() {
 			var data = search.selectedData;
-            // if string parse into JQuery DOM
-            // else assume AJAX load has completed parse
-            // on a 'text/xml' mime type
-            var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 
 			// First administrative division, country (displayed in line, separated by commas - if possible),
 			var firstSelector = "entity > place > description > firstAdministrativeDivision";
