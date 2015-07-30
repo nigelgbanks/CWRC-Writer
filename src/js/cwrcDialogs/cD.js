@@ -1609,34 +1609,77 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 
 		}
 
-		var visitChildrenPopulate = function(children, path) {
-			for (var i=0; i< children.length; ++i) {
-
-				if (path.length > 0 && children[i].nodeName == last(path).name) {
-					last(path).count++;
-				} else {
-					path.push({name: children[i].nodeName, count: 1});
-				}
-
-				visitNodeCWRCPopulate(children[i], path);
-
-				if ((path.length > 0 && i < children.length-1 && children[i+1].nodeName != last(path).name) ||
-					i === children.length - 1) {
-						path.pop();
-				}
-
-
-			}
-		}
-
 		var populateCWRC = function(opts) {
 			// cwrc
 
-			var workingXML = $.parseXML(opts.data);
+			var workingXML = null;
+			if (typeof(opts.data)=='string')
+			{
+				// if string parse into JQuery DOM
+				workingXML = $.parseXML(opts.data);
+			}
+			else
+			{
+				// else assume AJAX load has completed parse
+				// on a 'text/xml' mime type
+				workingXML = opts.data;
+			}
 			var path = [];
 
 			visitChildrenPopulate(workingXML.childNodes, path);
 
+		}
+
+		// recursively traverse the XML DOM tree via a depth first search
+		// if locate a text node or and attribute node
+		// then add it to the interface model so that it will
+		// appear in the rendered form
+		// keep a stack representing the path traversal of the XML tree
+		var visitChildrenPopulate = function (children, path) {
+
+			var hasSibling = false;
+
+			for (var i = 0; children && i < children.length; ++i) {
+				// if an empty "#text" node, skip
+				if (children[i].nodeName === "#text" && children[i].nodeType == 3 && ($.trim(children[i].nodeValue)) === "") {
+					continue;
+				}
+
+				// check if top of the stack has the same element
+				// as the last element name in the XML node
+				// if so, don't increment the count on the last element
+				// name in the path, otherwise create item add it to the
+				// stack
+				if (path.length > 0 && children[i].nodeName == last(path).name) {
+					last(path).count++;
+				} else {
+					path.push({
+						name : children[i].nodeName,
+						count : 1
+					});
+				}
+
+				//console.log("vC.... "  + last(path).count + ":" + last(path).name );
+
+				visitNodeCWRCPopulate(children[i], path);
+
+				// check if any of the sibiling nodes have the same path
+				// if so, don't pop the last element name off the stack
+				// element nodes may be interleaved with "text" nodes
+				hasSibling = false;
+				lastPathName = last(path).name;
+				for (var j = i + 1; children[j] && j < children.length; j++) {
+					tmpNode = children[j];
+					if (tmpNode && tmpNode.nodeName == lastPathName && tmpNode.nodeType == 1) {
+						hasSibling = true;
+						break;
+					}
+				}
+				if ((path.length > 0 && i < children.length - 1 && !hasSibling) || i === children.length - 1) {
+					path.pop();
+				}
+
+			}
 		}
 
 		var extractTitleMODS = function(opts){
@@ -1688,28 +1731,29 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 			return result;
 		}
 
-		var visitNodeCWRCPopulate = function(node, path) {
+		// recursively traversal depending on type of node
+		// if textnode or attribute then add to the interface model
+		var visitNodeCWRCPopulate = function (node, path) {
 
-			// path.push(node.nodeName);
+			// recursively handle the child nodes
+			if (node.childNodes && node.childNodes.length > 0) {
+				visitChildrenPopulate(node.childNodes, path);
+			}
+			// special handling of an attribute
+			if (node.attributes && node.attributes.length > 0) {
+				visitChildrenPopulate(node.attributes, path);
+			}
 
-			visitChildrenPopulate(node.childNodes, path);
-
-			var parentPath = path.slice(0, path.length-1);
+			var parentPath = path.slice(0, path.length - 1);
 			var nodeValue = $.trim(node.nodeValue);
 			if (node.nodeType === 3 && nodeValue !== "") {
 				foundAndFilled(nodeValue, parentPath, entity.viewModel().interfaceFields());
-
-				// var atts = node.parentNode.attributes;
-				// for (var attIndex =0; attIndex < atts.length; ++attIndex) {
-				// 	var currentAtt = atts.item(attIndex);
-				// 	parentPath.push({name: currentAtt.name, count : 1});
-				// 	foundAndFilled(currentAtt.value, parentPath, entity.viewModel().interfaceFields());
-				// 	parentPath.pop();
-				// }
-
+			} else if (node.nodeType === 2 && nodeValue !== "") {
+				// firefox does not represent an attribute value as a text node
+				// ToDo prevent on other browsers the attribute values
+				// from being added twice
+				foundAndFilled(nodeValue, path, entity.viewModel().interfaceFields());
 			}
-
-			// path.pop();
 		}
 
 		var getFromFields = function(currentSection, field) {
@@ -2378,7 +2422,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.htmlifyCWRCPerson = function(){
 
 			var data = search.selectedData;
-			var workingXML = $.parseXML(data.data);
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 
 			// nationality
 			// var nationalitySelector = "";
@@ -2438,7 +2485,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.htmlifyCWRCOrganization = function() {
 
 			var data = search.selectedData;
-			var workingXML = $.parseXML(data.data);
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 			// url
 			data.url = location.protocol + '//' + location.protocol + '//' + document.domain + Drupal.settings.basePath + "islandora/object/" + data.id;
 			return search.completeHtmlifyOrganization(data);
@@ -2473,7 +2523,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 		search.htmlifyCWRCTitle = function() {
 
 			var data = search.selectedData;
-			var workingXML = $.parseXML(data.data);
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 			// author,
 			data.authors = [];//"Author";
 			var authorSelector = "mods > name"; //
@@ -2520,7 +2573,10 @@ define('cwrcDialogs', ['jquery', 'jquery-ui', 'bootstrap-datepicker'], function 
 
 		search.htmlifyCWRCPlace = function() {
 			var data = search.selectedData;
-			var workingXML = $.parseXML(data.data);
+			// if string parse into JQuery DOM
+			// else assume AJAX load has completed parse
+			// on a 'text/xml' mime type
+			var workingXML = (typeof(data.data)=='string') ? $.parseXML(data.data) : data.data;
 
 			// First administrative division, country (displayed in line, separated by commas - if possible),
 			var firstSelector = "entity > place > description > firstAdministrativeDivision";
