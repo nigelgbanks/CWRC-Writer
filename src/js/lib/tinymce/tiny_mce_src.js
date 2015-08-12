@@ -17694,6 +17694,9 @@ tinymce.onAddEditor.add(function(tinymce, ed) {
 				return;
 			}
 
+		        // Find parent block and setup empty block paddings
+			parentBlock = dom.getParent(container, dom.isBlock);
+			
 			undoManager.beforeChange();
 			insertBr();
 
